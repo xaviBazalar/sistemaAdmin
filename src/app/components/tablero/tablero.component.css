@@ -1,0 +1,78 @@
+
+
+
+.recordar-contraseña{
+    display: flex;
+}
+
+
+.recordar-contraseña > ul > li {
+    list-style: none;
+    
+}
+
+.recordar-contraseña > ul > li > a{
+    color: red;
+}
+
+
+
+/* SOLICITUDES*/
+
+.solicitudes{
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.btn-nuevo{
+  
+  display: block;
+  margin-left: 1000px;
+  
+}
+
+
+
+/* NUEVA SOLICITUD */
+
+.gerencia-2{
+    display: flex;
+  
+}
+
+/* TAREA SOLICITADA */
+
+.tarea-campus{
+    display: flex;
+}
+
+.tarea-campus2{
+    display: flex;
+}
+
+
+
+/* INFORMACION REQUWERIDA */
+.form{
+    display: flex;
+}
+
+
+/* ESTADO SOLICITUD */
+
+.solicitud-1{
+    display: flex;
+}
+
+.solicitud-1 .tiempo-estimado{
+    display: flex;
+}
+
+
+/* TABLERO */
+
+.card-tablero{
+    display: flex;
+    border-bottom: solid 2px;
+}

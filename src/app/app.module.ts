@@ -8,11 +8,13 @@ import {APP_ROUTING} from './app-routers'
 // import { AppRoutingModule } from './app-routers';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { TableroComponent } from './components/tablero/tablero.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    TableroComponent
   ],
   imports: [
     BrowserModule,
