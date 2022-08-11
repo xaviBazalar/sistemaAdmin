@@ -1,70 +1,181 @@
 <div class="container">
 
-    <div>
+    <div class="py-3">
         <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
     </div>
-    
     <div class="row">
-
-        <div class="col-3 d-flex flex-row mr-3">
-            <label for="">Gerencia</label>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Mantenimiento</option>
+        <div class="col-3 input-group mb-3" style="width: 25%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
+            <select class="form-select" >
+                <option selected></option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
         </div>
-        
     </div>
-     
     <div class="row">
-
-        <div class="col-3 d-flex flex-row mr-3">
-            <label for="">Gerencia</label>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Mantenimiento</option>
+        <div class="col-3 input-group mb-3" style="width: 25%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+            <select class="form-select" >
+                <option selected></option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
-            
+
+        </div>
+        <div class="input-group mb-3 form-check" style="width: 25%;">
+            <input type="checkbox" class="form-check-input"id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
+        </div>
+        <div  class="input-group mb-3 form-check" style="width: 25%;">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
-        
     </div>
+    <hr>
+    <div>
+        <h2>TAREA SOLICITADA</h2>
+    </div>
+    <div class="row">
+        <div class="col-3 input-group mb-3" style="width: 25%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+            <select class="form-select" >
+                <option selected>Memoria Reajuste Historico</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
+        <div class="input-group mb-3 form-check" style="width: 25%;">
+            <input type="checkbox" class="form-check-input"id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
+        </div>
+        <div  class="input-group mb-3 form-check" style="width: 50%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
+            <input  class="form-input" type="text"  value="MMR-001">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 input-group mb-3" style="width: 35%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+            <select class="form-select" >
+                <option selected>Alessandro Cosio</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
+        <div class="col-3 input-group mb-3" style="width: 35%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Backoffice</label>
+            <select class="form-select" >
+                <option selected>Francisco Gutierrez</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+        </div>
+       
+    </div>
+
+    <div class="row" >
+        <div class="col-2 input-group mb-3 " style="width: 10%;">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Mensaje/Obs</label>
+        </div>
+        <textarea class="form-textarea mb-3 input-group" name="" id="basic-url" cols="10" rows="3"  style="width: 80%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
+    </div>
+    <hr>
+    <div>
+        <h2>INFORMACION REQUERIDA</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-6 " >
+            <div  class=" mb-3 form-check" style="width: 100%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
+                <input  class="form-input" type="text"  value="Examinar" id="basic-url">
+            </div>
+            <div class="input-group mb-3 "style="width: 100%;" >
+                <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
+                <textarea class="form-textarea " name="" id="basic-url" cols="10" rows="3"  style="width: 60%;"  placeholder="Observaciones"></textarea>
+                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+            </div>
+                
+        </div>
+                
+        <div class="col-6"  >
+            <h5 class="py-1">Lista Documentos Requeridos</h5>
+            <hr>
+            
+            <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  Dcto para la Tarea Uno /Word/Observacion
+                </label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Dcto para la Tarea Uno /Excel/Observacion
+                </label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Dcto para la Tarea Uno /Pdf/Observacion
+                </label>
+              </div>
+              
+            
+
+                
+
+        </div>
+
+
+                
+                
+                
+                
+           
+    
+            
+
+
+
+    </div>
+
+        
+       
+            
+
+    
+       
+    
+    
+
+
+
+
+</div>
+
+    
+
+    
+
            
 
 
 
 
 
-    <div class="nueva-solicitud">
-
-        <form action="" method="get">
-
-            <div class="gerencia-">
-                <input type="texto" class="" placeholder="Mantenimiento">
-            </div>
-
-            <div class="gerencia-2">
-                <div>
-                    <label for="">Contrato</label>
-                    <input type="texto" class="" placeholder="454000807- KOMATSU">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input"id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
-                </div>
 
 
-            </div>
-        </form>
-    </div>
-    <hr>
-
-    <div class="tarea-solicitada">
-        <h2>TAREA SOLICITADA</h2>
+    <!-- <div class="tarea-solicitada">
 
         <form action="" method="get">
             <div class="tarea-campus">
@@ -133,8 +244,7 @@
                
 
             <div class="lista">
-                <h5>Lista Documentos Requeridos</h5>
-                <hr>
+                
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
@@ -229,7 +339,7 @@
 
            
 
-
+ -->
 
                
 
