@@ -1,0 +1,29 @@
+.box-info-solicitud{
+    display: flex;
+    width: 50%;
+}
+
+.box-info-solicitud p{
+    width: 50%;
+}
+
+.resultado-input{
+    background: orange;
+}
+
+
+.input-color{
+    background: orange;
+}
+
+.input-color-proceso{
+    background: green;
+}
+
+.linea-bitacora{
+    margin-left: 40px;
+}
+
+.tamaño-estable{
+    resize: none;
+}

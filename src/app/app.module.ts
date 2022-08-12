@@ -12,6 +12,7 @@ import { TableroComponent } from './components/tablero/tablero.component';
 import { NuevaSolicitudComponent } from './components/nueva-solicitud/nueva-solicitud.component';
 import { MisSolicitudesComponent } from './components/mis-solicitudes/mis-solicitudes.component';
 import { ListaComponent } from './components/lista/lista.component';
+import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ListaComponent } from './components/lista/lista.component';
     TableroComponent,
     NuevaSolicitudComponent,
     MisSolicitudesComponent,
-    ListaComponent
+    ListaComponent,
+    VerSolicitudComponent
   ],
   imports: [
     BrowserModule,
