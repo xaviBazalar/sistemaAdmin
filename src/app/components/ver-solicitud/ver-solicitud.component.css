@@ -20,10 +20,15 @@
     background: green;
 }
 
+.titulo-bitacora{
+    margin-left: 98px;
+}
+
 .linea-bitacora{
     margin-left: 40px;
 }
 
 .tamaño-estable{
     resize: none;
+    margin-left: 40px;
 }
