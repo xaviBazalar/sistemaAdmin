@@ -30,7 +30,7 @@
             <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
         </div>
         <div  class="input-group mb-3 form-check" style="width: 25%;">
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-success  px-5">Buscar</button>
         </div>
     </div>
     <hr>
@@ -70,7 +70,7 @@
 
         </div>
         <div class="col-3 input-group mb-3" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Backoffice</label>
+            <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
             <select class="form-select" >
                 <option selected>Francisco Gutierrez</option>
                 <option value="1">One</option>
@@ -99,15 +99,15 @@
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
                 <input  class="form-input" type="text"  value="Examinar" id="basic-url">
             </div>
-            <div class="input-group mb-3 "style="width: 100%;" >
+            <div class="input-group mb-3 d-flex justify-content-between "style="width: 100%;" >
                 <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
                 <textarea class="form-textarea " name="" id="basic-url" cols="10" rows="3"  style="width: 60%;"  placeholder="Observaciones"></textarea>
-                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                <button type="submit" class="btn btn-success  m-3" style="width: 20%;">Subir</button>
             </div>
                 
         </div>
                 
-        <div class="col-6"  >
+        <div class="col-6" >
             <h5 class="py-1">Lista Documentos Requeridos</h5>
             <hr>
             
@@ -130,222 +130,96 @@
                 </label>
               </div>
               
-            
-
+        </div>
+    </div>
+    <hr>
+    <div>
+        <h2>ESTADO SOLICITUD</h2>
+    </div>
+    <div class="row">
+        
                 
+        <div class="col-6" >
+            <div class="col-3 input-group mb-3" style="width: 60%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                <input type="date" name="" id="">
+            </div>
+            <div class="col-3 input-group mb-3" style="width: 60%;">
+                <label for="basic-url" class="form-label" style="margin-right: 32px;margin-top: 8px;">Fecha Inicio</label>
+                <input type="date" name="" id="">
+            </div>
 
         </div>
-
-
-                
-                
-                
-                
-           
-    
-            
-
-
-
-    </div>
-
-        
-       
-            
-
-    
-       
-    
-    
-
-
-
-
-</div>
-
-    
-
-    
-
+        <div class="col-6" >
+            <div class="col-3 input-group mb-3" style="width: 60%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
+                <select class="form-select" >
+                    <option selected>POR HACER</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="col-3 input-group mb-3" style="width: 60%;">
+                <p >Tiempo estimado : 7 Dias</p>
+            </div>
            
 
-
-
-
-
-
-
-    <!-- <div class="tarea-solicitada">
-
-        <form action="" method="get">
-            <div class="tarea-campus">
-                <div>
-                    <label for="">Contrato</label>
-                    <input type="texto" class="" placeholder="454000807- KOMATSU">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input"id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Tarea no definida</label>
-                </div>
-                <div>
-                    <label for="">Solicitud</label>
-                    <input type="texto" class="" placeholder="MMR-001">
-                </div>
-            </div>
-
-            <div class="tarea-campus2">
-
-                <div>
-                    <label for="">GST</label>
-                    <input type="texto" class="" placeholder="Alessandro Cosio">
-                </div>
-
-                <div>
-                    <label for="">Backoffice</label>
-                    <input type="texto" class="" placeholder="Francisco Gutierrez">
-                </div>
-
-
-
-            </div>
-
-            <div class="tarea-campus3">
-
-                <div>
-                    <label for="">Mensaje / Obs</label>
-                   <textarea name="" id="" cols="100" rows="3" >
-                    Agradecemos tu ayuda para la revisión y validación de montos
-                   </textarea>
-                </div>
-
-            </div>
-        </form>
+        </div>
     </div>
     <hr>
 
-    <div class="informacion-requerida">
-        <h2>INFORMACION REQUERIDA</h2>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
+        <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>
+        <button type="button" class="btn btn-success" >Enviar Solicitud</button>
 
-        <form class="form" action="" method="get">
-            <div >
-                <div>
-                    <label for="">Ruta</label>
-                    <input type="texto" class="" placeholder="Examinar...">
-                </div>
-                <div>
-                   <label for="">Obs</label>
-                   <textarea name="" id="" cols="5" rows="2" >
-                    Observaciones
-                   </textarea>
-                   <button type="button" class="btn btn-secondary" disabled>Subir</button>
-                </div>
-            </div>
-                   
-               
-
-            <div class="lista">
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Dcto para la Tarea Uno / Word/ Observacion
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Dcto para la Tarea Uno / Excel/ Observacion
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Dcto para la Tarea Uno / Pdf/ Observacion
-                    </label>
-                  </div>
-                </div>
-         </form>
     </div>
-    <hr>
 
+    
+</div>
+            
+
+                
+
+
+
+                
+                
+                
+                
+           
+    
+            
+
+
+
+
+        
+       
+            
+
+    
+       
+    
     
 
 
-    <div class="estado-solicitud">
-        <h2>ESTADO SOLICITUD   <small>(Uso interno)</small></h2>
-       
-
-       <div class="solicitud-1">
-
-        <div >
-            <div >
-                <label for="">Fecha Solicitud</label>
-                <input type="date" class="" >
-            </div>
-
-            <div >
-                <label for="">Fecha Inicio</label>
-                <input type="date" class="" >
-            </div>
-
-        </div>
-
-        <div >
-            <div >
-                <label for="">Estado Solicitud</label>
-                <input type="text" class="" placeholder="POR HACER" >
-            </div>
-
-            <div class="tiempo-estimado" >
-                <label for="">Tiempo Estimado:</label>
-                <p> 7 Días</p>
-            </div>
-
-        </div>
-
-       </div>
-
-       
-        
-
-      
-       
-       
-     </div>
-     <hr>
-
-     <div class="btn-solicitud">
-         <button type="button" class="btn btn-primary btn-lg " disabled>Guardar Solicitud</button>
-         <button type="button" class="btn btn-primary btn-lg">Enviar Solicitud</button>
-
-    </div>
-</div>
-        
 
 
 
+    
 
-
-
-
-               
-
-
-
-
-          
-
-               
+    
 
            
 
- -->
-
-               
 
 
 
 
+
+
+    
 
                
 
