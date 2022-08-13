@@ -1,0 +1,14 @@
+.box-check{
+    display: flex;
+    align-items: self-end;
+}
+
+.box-check input{
+    margin-right: 8px;
+    bottom: 4px;
+    position: relative;
+}
+
+.input-group label{
+    width: 128px;
+}

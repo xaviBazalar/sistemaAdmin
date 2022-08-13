@@ -1,10 +1,10 @@
 <div class="container">
 
-    <div class="py-3">
+    <div class="py-3 mb-3">
         <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
     </div>
     <div class="row">
-        <div class="col-3 input-group mb-3" style="width: 25%;">
+        <div class="col-3 input-group mb-3" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
             <select class="form-select" >
                 <option selected></option>
@@ -14,8 +14,8 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-3 input-group mb-3" style="width: 25%;">
+    <div class="row mb-5">
+        <div class="col-3 input-group mb-3" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
             <select class="form-select" >
                 <option selected></option>
@@ -25,20 +25,20 @@
             </select>
 
         </div>
-        <div class="input-group mb-3 form-check" style="width: 25%;">
+        <div class="input-group mb-3 form-check box-check" style="width: 25%;">
             <input type="checkbox" class="form-check-input"id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
         </div>
-        <div  class="input-group mb-3 form-check" style="width: 25%;">
+        <div  class="input-group mb-3 form-check " style="width: 40%;">
             <button type="submit" class="btn btn-success  px-5">Buscar</button>
         </div>
     </div>
     <hr>
-    <div>
+    <div class="py-3 mb-3">
         <h2>TAREA SOLICITADA</h2>
     </div>
-    <div class="row">
-        <div class="col-3 input-group mb-3" style="width: 25%;">
+    <div class="row mb-3" >
+        <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
             <select class="form-select" >
                 <option selected>Memoria Reajuste Historico</option>
@@ -48,18 +48,18 @@
             </select>
 
         </div>
-        <div class="input-group mb-3 form-check" style="width: 25%;">
+        <div class="input-groupform-check box-check" style="width: 35%;">
             <input type="checkbox" class="form-check-input"id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
         </div>
-        <div  class="input-group mb-3 form-check" style="width: 50%;">
+        <div  class="input-group form-check" style="width: 30%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
-            <input  class="form-input" type="text"  value="MMR-001">
+            <input  class="form-control" type="text"  value="MMR-001">
             
         </div>
     </div>
-    <div class="row">
-        <div class="col-3 input-group mb-3" style="width: 35%;">
+    <div class="row mb-3">
+        <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
             <select class="form-select" >
                 <option selected>Alessandro Cosio</option>
@@ -69,7 +69,7 @@
             </select>
 
         </div>
-        <div class="col-3 input-group mb-3" style="width: 35%;">
+        <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
             <select class="form-select" >
                 <option selected>Francisco Gutierrez</option>
@@ -82,31 +82,31 @@
        
     </div>
 
-    <div class="row" >
-        <div class="col-2 input-group mb-3 " style="width: 10%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Mensaje/Obs</label>
-        </div>
-        <textarea class="form-textarea mb-3 input-group" name="" id="basic-url" cols="10" rows="3"  style="width: 80%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
+    <div class="row mb-5" >
+        <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs</label>
+        <textarea class="form-control" name="" id="basic-url" cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
     </div>
     <hr>
-    <div>
+    <div class="py-3 mb-3">
         <h2>INFORMACION REQUERIDA</h2>
     </div>
 
-    <div class="row">
-        <div class="col-6 " >
-            <div  class=" mb-3 form-check" style="width: 100%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
-                <input  class="form-input" type="text"  value="Examinar" id="basic-url">
+    <div class="row mb-5">
+        <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
+            <div class="col-3 input-group mb-3" style="width: 70%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
+                <input  class="form-control" type="text"  value="Examinar" id="basic-url">
             </div>
-            <div class="input-group mb-3 d-flex justify-content-between "style="width: 100%;" >
+            <div class="col-3  input-group mb-3" style="width: 70%;" >
                 <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
-                <textarea class="form-textarea " name="" id="basic-url" cols="10" rows="3"  style="width: 60%;"  placeholder="Observaciones"></textarea>
-                <button type="submit" class="btn btn-success  m-3" style="width: 20%;">Subir</button>
+                <textarea class="form-control " name="" id="basic-url" cols="10" rows="3"  placeholder="Observaciones"></textarea>
+                
             </div>
-                
+            <div class="col-3  input-group mb-3" style="width: 30%;" >
+                <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
+            </div>
+            
         </div>
-                
         <div class="col-6" >
             <h5 class="py-1">Lista Documentos Requeridos</h5>
             <hr>
@@ -132,25 +132,21 @@
               
         </div>
     </div>
+                
+        
+
     <hr>
-    <div>
+    <div class="py-3 mb-3">
         <h2>ESTADO SOLICITUD</h2>
     </div>
     <div class="row">
         
                 
-        <div class="col-6" >
-            <div class="col-3 input-group mb-3" style="width: 60%;">
+       
+            <div class="col-3 input-group mb-3" style="width: 35%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
-                <input type="date" name="" id="">
+                <input class="form-control" type="date" name="" id="">
             </div>
-            <div class="col-3 input-group mb-3" style="width: 60%;">
-                <label for="basic-url" class="form-label" style="margin-right: 32px;margin-top: 8px;">Fecha Inicio</label>
-                <input type="date" name="" id="">
-            </div>
-
-        </div>
-        <div class="col-6" >
             <div class="col-3 input-group mb-3" style="width: 60%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
                 <select class="form-select" >
@@ -160,22 +156,24 @@
                     <option value="3">Three</option>
                 </select>
             </div>
+    </div>
+    <div class="row">
+            <div class="col-3 input-group mb-3" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                <input class="form-control" type="date" name="" id="">
+            </div>
             <div class="col-3 input-group mb-3" style="width: 60%;">
                 <p >Tiempo estimado : 7 Dias</p>
             </div>
-           
-
-        </div>
     </div>
+ 
     <hr>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
         <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>
         <button type="button" class="btn btn-success" >Enviar Solicitud</button>
-
     </div>
-
-    
+ 
 </div>
             
 
