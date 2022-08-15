@@ -13,7 +13,13 @@
 
 
 .input-color{
-    background: orange;
+    background: #ff8352;
+    border: none;
+    border-radius: 0;
+    color:#fff;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    max-width: 59%;
 }
 
 .input-color-proceso{
@@ -31,4 +37,14 @@
 .tamaño-estable{
     resize: none;
     margin-left: 40px;
+}
+
+.pl-3{
+    padding-left: 40px;
+}
+
+h4{
+    font-weight: 400;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
 }

@@ -32,4 +32,21 @@
     width: 100%;
 }
 
+.sidebar div a{
+    width:100%;
+    padding: 10px;
+}
+
+.sidebar div a img{
+    width: 34px;
+    margin: auto;
+    display: block;
+}
+
+h4{
+    font-weight: 400;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
+}
+
    
