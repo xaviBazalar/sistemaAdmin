@@ -24,4 +24,12 @@
     background: #d5ebeb;
     z-index: 9999;
     top: 0px;
+    display: flex;
+    flex-wrap: wrap;
 }
+
+.sidebar>div{
+    width: 100%;
+}
+
+   
