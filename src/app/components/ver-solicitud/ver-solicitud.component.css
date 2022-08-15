@@ -23,7 +23,13 @@
 }
 
 .input-color-proceso{
-    background: green;
+    background: #d7eb5a;
+    border: none;
+    border-radius: 0;
+    color:black;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    max-width: 38%;
 }
 
 .titulo-bitacora{
@@ -48,3 +54,14 @@ h4{
     font-size: 1.3em;
     letter-spacing: 0.5px;
 }
+
+
+.mt-proceso{
+    margin-top: 82px
+}
+
+.input-dp{
+    width: 48%;
+}
+   
+
