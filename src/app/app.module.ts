@@ -13,6 +13,7 @@ import { NuevaSolicitudComponent } from './components/nueva-solicitud/nueva-soli
 import { MisSolicitudesComponent } from './components/mis-solicitudes/mis-solicitudes.component';
 import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.
     NuevaSolicitudComponent,
     MisSolicitudesComponent,
     ListaComponent,
-    VerSolicitudComponent
+    VerSolicitudComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

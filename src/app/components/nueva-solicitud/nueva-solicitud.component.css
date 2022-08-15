@@ -12,3 +12,12 @@
 .input-group label{
     width: 128px;
 }
+
+.icon-upload{
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: -40px;
+    top: 4px;
+    cursor: pointer;
+}
