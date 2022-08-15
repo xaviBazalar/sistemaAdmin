@@ -63,5 +63,16 @@ h4{
 .input-dp{
     width: 48%;
 }
-   
 
+.box-proceso label{
+    width: 134px;
+}
+   
+.tiempo-estimado{
+    display: flex;
+    align-items: center;
+}
+
+.tiempo-estimado span{
+    margin-left: 8px !important;
+}
