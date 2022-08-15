@@ -63,5 +63,51 @@ h4{
 .input-dp{
     width: 48%;
 }
+
+.box-proceso label{
+    width: 134px;
+}
    
+.tiempo-estimado{
+    display: flex;
+    align-items: center;
+    padding-left: 135px;
+}
+
+.tiempo-estimado span{
+    margin-left: 8px !important;
+
+}
+
+.text-obs{
+    border: none;
+    padding: 1px;
+}
+
+
+.box-bitacora{
+    margin-left: 132px
+
+}
+
+.btn-interactuar{
+   
+    border: none;
+    border-radius: 0;
+    color:#fff;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+   
+}
+
+.titulo-i{
+    margin-left: 15px;
+}
+
+.items-proceso > i{
+    margin-left: 30px;
+    border: none;
+    color: #ff8352;
+}
+
 

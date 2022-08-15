@@ -139,36 +139,46 @@
             </div>
         </div>
         
-        <div class="col-7 mt-proceso" >
+        <div class="col-7 mt-proceso box-proceso" >
 
             <div class="col-7 input-group mb-3 mx-5">
-                <label for="basic-url" class="form-label" style="margin-right: 58px;margin-top: 8px;">Estado</label>
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">Estado</label>
                 <input  class="form-control input-color-proceso " type="text"  value="EN PROCESO"  >
             </div>
             <div class="col-7 input-group mb-3 mx-5 input-dp" >
-                <label for="basic-url" class="form-label" style="margin-right: 25px;margin-top: 8px;">Fecha Inicio</label>
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Inicio</label>
                 <input  class="form-control"  type="date"   >
             </div>
             <div class="col-7 input-group mb-3 mx-5" style="width: 80%;">
-                <label for="basic-url" class="form-label" style="margin-right: 81px;margin-top: 8px; ">GST</label>
+                <label for="basic-url" class="form-label" style="margin-top: 8px; ">GST</label>
                 <input  class="form-control" type="text"   value="Alessandro Cosio / Francisco Gutierrez">
             </div>
-            <div class="col-3 input-group mb-3 mx-5 input-dp">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega</label>
+            <div class="col-3 input-group mb-2 mx-5 input-dp">
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Entrega</label>
                 <input  class="form-control" type="date"style="width: 40%;"  value="EN PROCESO">
             </div>
-            <div class="col-3 input-group mb-3 mx-5 ">
-              <div class="">Tiempo estimado : 7 Días</div> 
+
+            <div class="col-7 input-group mb-3 mx-5 tiempo-estimado">
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">
+                    Tiempo estimado :
+                </label> 
+                <span>7 Días</span>
             </div>
-            <div class="col-7 input-group mb-3 mx-5 ">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Mensaje/Obs</label>
-                <textarea  class="form-control" name="" id="" cols="10" rows="4" placeholder="Agradecemos tu ayuda para la revision y validacion de montos.Importante:Tenemos mantención mayor de planta y se requiere asistencia del servicio" style="width: 70%;" ></textarea>
+            <div class="col-7 input-group mb-4  mx-5 ">
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">Mensaje/Obs</label>
+                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="Agradecemos tu ayuda para la revision y validacion de montos.Importante:Tenemos mantención mayor de planta y se requiere asistencia del servicio" style="width: 70%;" ></textarea>
+
             </div>
 
-            <h4 class="mx-5">Bitacora</h4>
-            <hr class="linea-bitacora">
-            <textarea class=" form-control"  name="" id="" cols="20" rows="22" style="width: 85%;" class="tamaño-estable" placeholder="02/ 08 Solicitud ingresada // Inicio solicitud en Proceso // 03/08 Lista de verificacion actualizada// 03/08 Prioridad establecida a ALTA "></textarea>
+            <div class="col-7 box-bitacora" style="width: 70%;">
+                <h5 class="mx-5">Bitacora</h5>
+                <hr class="linea-bitacora">
+                <textarea class=" form-control"  name="" id="" cols="20" rows="22" style="width: 100%;" class="tamaño-estable" placeholder="02/ 08 Solicitud ingresada // Inicio solicitud en Proceso // 03/08 Lista de verificacion actualizada// 03/08 Prioridad establecida a ALTA "></textarea>
 
+            </div>
+        </div>
+
+            
 
                 
 
@@ -179,7 +189,6 @@
         
         
         
-        </div>
 
     </div>
     <hr>
@@ -187,93 +196,108 @@
     <div class="row my-3">
         <h4>ITERACCIONES</h4>
 
-        <div class="col-7 input-group mb-3 mx-5  my-5">
+        <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
             <label for="basic-url" class="form-label" style="margin-right: 25px;margin-top: 8px;">Mensaje/Obs</label>
-            <textarea name="" id="" cols="10" rows="4" class="tamaño-estable" placeholder="Se adjunta el resultado de la revísíon de Kpi solicitados.Estamos a atento a sus observaciones." style="width: 70%;" ></textarea>
+            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" placeholder="Se adjunta el resultado de la revísíon de Kpi solicitados.Estamos a atento a sus observaciones." style="width: 70%;" ></textarea>
         </div>
 
-        <div class="col-7 input-group mb-3 mx-5  ">
+        <div class="col-7 input-group mb-3 mx-5  align-items-center">
             <label for="basic-url" class="form-label" style="margin-right: 16px;margin-top: 8px;">Feedback ADC</label>
-            <textarea name="" id="" cols="10" rows="4" class="tamaño-estable" style="width: 70%;" ></textarea>
+            <textarea class=" form-control" name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
         </div>
        
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary me-md-2 px-5" type="button">Interactuar</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" disabled>Interactuar</button>
         </div>
 
 
     </div>
     <hr>
 
-    <table class="table table-light table-striped border border-1" >
+    <div class="row my-4">
+
+        <h4>HISTORIAL RESULTADO SOLICITUD</h4>
+        
+        <table class="table form-control" >
 
 
-        <thead class="bg-#F53621">
-            <tr>
-                <th scope="col">Sol.N°</th>
-                <th scope="col">Situacion</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Frecuencia</th>
-                <th scope="col">Asignada</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Resultado</th>
-                <th scope="col">...</th>
-            </tr>
+            <thead class="bg-#F53621">
+                <tr>
+                    <th scope="col">N°<i class="titulo-i fa-solid fa-angle-down"></i> </th>
+                    <th scope="col">Resultado<i class="titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">Fecha<i class="titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">Enviado por</th>
+                    <th scope="col">Mensaje<i class="titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">Fecha<i class="titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">Feedback<i class=" titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">...</th>
+                </tr>
+    
+            </thead>
+    
+    
+    
+    
+    
+    
+            <tbody>
+    
+                <tr>
+                    <td>#MM-001 </td>
+                    <td>
+                        <div class="items-proceso"> 
+                            <i class="fa-solid fa-circle "></i>
+                            <p>En Espera</p>
+                        </div>
+                    </td>
+                    <td>
+                        02 Ago 2022<br>
+                        Enviado
+                    </td>
+                        ACosio<br>
+                        FGutierrez
+                    
+                        
+                    
+                    
+                    <td>
+                        
+                        
+    
+                    </td>
+                    <td>
+                        <p>MES</p>
+                        <p>1 vez</p>
+                    </td>
+                    
+                    
+                    <td>
+                        <a href=""><i>o</i></a>
+                        <p>En Espera</p>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-lg active"
+                            role="button" aria-pressed="true">Ver</a>
+                    </td>
+    
+                </tr>
+    
+              
+    
+            </tbody>
+    
+        </table>
 
-        </thead>
+
+
+    </div>
+
+    
 
 
 
 
-
-
-        <tbody>
-
-            <tr>
-                <td>#MM-001</td>
-                <td>Enviada</td>
-                <td>
-                    <p>455222112 Explor-K</p>
-                    <p>Apertura Libro</p>
-                </td>
-                <td>
-                    <p>02 Ago 2022</p>
-                    <p>Solicitado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Proceso</p>
-
-                </td>
-                <td>
-                    <p>MES</p>
-                    <p>1 vez</p>
-                </td>
-                <td>
-                    <p>Acosio FGutierrez</p>
-                </td>
-                <td>
-                    <p>03 Ago 2022</p>
-                    <p>Iniciado</p>
-                </td>
-                <td>
-                    <a href=""><i>o</i></a>
-                    <p>En Espera</p>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-primary btn-lg active"
-                        role="button" aria-pressed="true">Ver</a>
-                </td>
-
-            </tr>
-
-          
-
-        </tbody>
-
-    </table>
+    
 
 
 
