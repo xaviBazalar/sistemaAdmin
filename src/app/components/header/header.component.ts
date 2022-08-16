@@ -21,6 +21,31 @@ export class HeaderComponent implements OnInit {
     });
    }
 
+   mostrar= true;
+
+   itemMenu:any= [
+    {
+      titulo:"MisSolictudes",
+      url:"/misSolicitudes"
+    },
+    {
+      titulo:"VerSolicitudes",
+      url:"/verSolicitud"
+    },
+    {
+      titulo:"NuevaSolicitud",
+      url:"/nuevaSolicitud"
+    },
+    {
+      titulo:"Lista",
+      url:"/lista"
+    },
+    {
+      titulo:"VerSolicitud",
+      url:"/verSolicitud"
+    },
+  ];
+
   ngOnInit(): void {
 
   }

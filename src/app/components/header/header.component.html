@@ -7,12 +7,22 @@
         </div>
     </div>
 </div>
+
 <div class="sidebar"  *ngIf="showHeader">
-    <div>
-        <a routerLink="/nuevaSolicitud">
+    
+    
+    <div class="div-menu" >
+        <i class="fa-solid fa-bars " (click)="mostrar = !mostrar"></i>
+    </div>
+        
+
+    
+    <div style="background: #f9f9f9;" *ngIf="mostrar">
+        <a  *ngFor="let item of itemMenu"   (click)="mostrar = !mostrar" routerLink="{{item.url}}">
             <img src="assets/icons/icon-board-x.png"/>
+            <small class="link-menu">{{ item.titulo }}</small>
         </a>
-        <a routerLink="/misSolicitudes">
+        <!-- <a routerLink="/misSolicitudes">
             <img src="assets/icons/icon-board-x.png"/>
         </a>
         <a routerLink="/lista">
@@ -23,7 +33,7 @@
         </a>
         <a routerLink="/tablero">
             <img src="assets/icons/icon-board-x.png"/>
-        </a>
+        </a> -->
     </div>
 </div>
 

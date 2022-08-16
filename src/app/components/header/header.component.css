@@ -8,6 +8,8 @@
     width: 30px;
 }
 
+
+
 .logo{
     width: 164px;
 }
@@ -19,7 +21,7 @@
 
 .sidebar{
     width: 60px;
-    height: 856px;
+    /* height: 856px; */
     position: fixed;
     background: #d5ebeb;
     z-index: 9999;
@@ -38,9 +40,27 @@
 }
 
 .sidebar div a img{
-    width: 34px;
-    margin: auto;
-    display: block;
+    width: 40px;
+    margin-left: 2px;
+    margin-bottom: 1px;
+    margin-bottom: -1px;
+    margin-top: 11px;
+    
+}
+.div-menu{
+
+    height: 75px;
+    background-color:#00768e;
+  
+}
+
+.sidebar i{
+
+    margin-left: 13px;
+    margin-top: 20px;
+    font-size: 36px;
+    color: #ffffff;
+
 }
 
 h4{
@@ -48,5 +68,20 @@ h4{
     font-size: 1.3em;
     letter-spacing: 0.5px;
 }
+
+.link-menu{
+    margin-left: 3px;
+    font-size: 11px;
+}
+
+
+
+
+
+
+
+
+
+
 
    
