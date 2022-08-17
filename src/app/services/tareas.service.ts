@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TareasService {
 
-  constructor() { }
+  url:string=environment.baseUrl;
+
+  constructor(private http:HttpClient) { }
+
+  getTareas(){
+    return this.http.get(`${this.url}/tareas`)
+  }
+
+  
 }

@@ -7,10 +7,9 @@
         <div class="col-3 input-group mb-3" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
             <select class="form-select" >
-                <option selected></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="{{gerencia._id}}" *ngFor="let gerencia of listaGerencias" value="1">
+                    {{gerencia.nombre_gerencia}}
+                </option>
             </select>
         </div>
     </div>
@@ -18,10 +17,7 @@
         <div class="col-3 input-group mb-3" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
             <select class="form-select" >
-                <option selected></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option *ngFor="let gerencia of listaGerencias" value="1">One</option>
             </select>
 
         </div>
@@ -41,10 +37,10 @@
         <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
             <select class="form-select" >
-                <option selected>Memoria Reajuste Historico</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option  value="{{tarea._id}}" *ngFor="let tarea of listatareas">
+                    {{tarea.nombre_tarea}}
+                </option>
+               
             </select>
 
         </div>
@@ -62,20 +58,15 @@
         <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
             <select class="form-select" >
-                <option selected>Alessandro Cosio</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST">{{usuario.nombre}}</option>
+
             </select>
 
         </div>
         <div class="col-3 input-group" style="width: 35%;">
             <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
             <select class="form-select" >
-                <option selected>Francisco Gutierrez</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
             </select>
 
         </div>
@@ -154,10 +145,10 @@
             <div class="col-3 input-group mb-3" style="width: 60%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
                 <select class="form-select" >
-                    <option selected>POR HACER</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
+                       {{estado.nombre_estado}}
+                    </option>
+
                 </select>
             </div>
     </div>

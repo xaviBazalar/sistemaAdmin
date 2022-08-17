@@ -6,17 +6,12 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
-
+export class GerenciasService {
   url:string=environment.baseUrl;
-
   constructor(private http:HttpClient) { }
 
-  getUsuarios(){
-    return this.http.get(`${this.url}/usuarios`)
+  getGerencias(){
+    return this.http.get(`${this.url}/gerencia`) 
   }
   
-
-
- 
 }
