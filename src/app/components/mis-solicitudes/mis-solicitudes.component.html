@@ -68,7 +68,7 @@
                     <p>En Espera</p>
                 </td>
                 <td>
-                    <a routerLink="/solicitud/{{solicitud._id}}"><button type="submit" class="btn btn-primary px-5" >Ver</button></a>
+                    <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary px-5" >Ver</button></a>
                 </td>
 
             </tr>

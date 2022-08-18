@@ -13,7 +13,7 @@ const APP_ROUTES:Routes = [
   {path:'nuevaSolicitud',component: NuevaSolicitudComponent},
   {path:'misSolicitudes',component: MisSolicitudesComponent},
   {path:'lista',component: ListaComponent},
-  {path:'solicitud',component: VerSolicitudComponent},
+  {path:'solicitud/:id',component: VerSolicitudComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}
   // {path:'about',componet:HomeComponent},
  
