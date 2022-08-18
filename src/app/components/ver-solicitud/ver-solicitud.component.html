@@ -1,10 +1,10 @@
 <div class="container m-5">
     <div class="row">
         <div class="col-6">
-            Tarea: <b>Memoria Reajuste Historico</b>
+            Tarea: <b>{{solicitud.tarea.nombre_tarea}}</b>
         </div>
         <div class="col-3">
-            Frecuencia: <b>Mensual</b>
+            Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
         </div>
         <div class="col-3">
             Solicitud ID: <b>MMR-001</b>
@@ -20,19 +20,19 @@
             <div class="pl-3">
                 <div class="col-3 input-group mb-1">
                     <p style="width: 30%;">Gerencia</p>
-                    <p style="width: 70%;">Mantencion</p>
+                    <p style="width: 70%;">{{solicitud.gerencia.nombre_gerencia}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
                     <p style="width: 30%;" >ADC</p>
-                    <p style="width: 70%;" >LUIS ANDRES LAZO SANZANA</p>
+                    <p style="width: 70%;" >{{solicitud.bko.nombre}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
                     <p style="width: 30%;">Contrato</p>
-                    <p style="width: 70%;">454000807- KOMATSU</p>
+                    <p style="width: 70%;">{{solicitud.contrato.contradoid}} - {{solicitud.contrato.contrato}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
                     <p style="width: 30%;" >Fecha Solicitud</p>
-                    <p  style="width: 70%;">02/08/2022 13:20 Hrs</p>
+                    <p  style="width: 70%;">{{solicitud.fecha_solicitud}} <!--13:20 Hrs--></p>
                 </div>
             </div>
             <div class="form-check mt-3 pl-3">
@@ -107,7 +107,7 @@
                 <h4 class="mb-3">RESULTADO SOLICITUD</h4>
                 <div class="col-3 input-group mb-3 pl-3">
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
-                    <input   class="form-control input-color" type="text"  value="EN ESPERA" style=>
+                    <input   class="form-control input-color" type="text"  value="{{solicitud.estado_solicitud.nombre_estado}}" style=>
                   
                 </div>
                 <div class="form-check mt-5 pl-3">
@@ -144,15 +144,15 @@
 
             <div class="col-7 input-group mb-3 mx-5">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Estado</label>
-                <input  class="form-control input-color-proceso " type="text"  value="EN PROCESO"  >
+                <input  class="form-control input-color-proceso " type="text"  value="{{solicitud.estado_solicitud.nombre_estado}}"  >
             </div>
             <div class="col-7 input-group mb-3 mx-5 input-dp" >
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Inicio</label>
-                <input  class="form-control"  type="date"   >
+                <input  class="form-control"  type="text"  value="{{solicitud.fecha_inicio}}" disabled>
             </div>
             <div class="col-7 input-group mb-3 mx-5" style="width: 80%;">
                 <label for="basic-url" class="form-label" style="margin-top: 8px; ">GST</label>
-                <input  class="form-control" type="text"   value="Alessandro Cosio / Francisco Gutierrez">
+                <input  class="form-control" type="text"   value="{{solicitud.gst.nombre}}" disabled>
             </div>
             <div class="col-3 input-group mb-2 mx-5 input-dp">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Entrega</label>

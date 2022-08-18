@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
         if(data.usuarios.length==1){
           this.errorLogin=false;
           sessionStorage.setItem("usuario",JSON.stringify(data.usuarios[0]));
-          this.router.navigate(['nuevaSolicitud'], { });
+          this.router.navigate(['misSolicitudes'], { });
         }else{
           this.errorLogin=true;
         }

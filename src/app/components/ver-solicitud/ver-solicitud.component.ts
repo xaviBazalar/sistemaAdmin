@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GerenciasService } from '../../services/gerencias.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
-import { UsuariosService } from '../../services/usuarios.service';
-import { TareasService } from '../../services/tareas.service';
-import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -14,58 +10,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VerSolicitudComponent implements OnInit {
 
-  listaGerencias:any;
-  listaSolicitudes:any;
-  listaUsuarios:any;
-  listaUsuariosGST:any;
-  listaUsuariosBKO:any;
-  listatareas:any;
-  
-  
+  solicitud:any;
 
   constructor(
-    public gerenciaService:GerenciasService,
-    public estadosService:EstadosSolicitudService,
-    public usuariosService:UsuariosService,
-    public tareasServicio:TareasService,
+    public solicitudService:SolicitudesService,
     public _route:ActivatedRoute) {
-    this.listaUsuariosGST=[];
-    this.listaUsuariosBKO=[];
-    console.log(this._route.snapshot.paramMap.get("id"))
+    let idSolicitud:string|null=this._route.snapshot.paramMap.get("id");
+    this.solicitudService.getSolicitud(idSolicitud).subscribe((data:any)=>{
+      
+      this.solicitud=data.solicitudes[0];
+      //console.log(this.solicitud)
+    })
    }
 
   ngOnInit(): void {
 
-    this.gerenciaService.getGerencias().subscribe((data:any)=>{
-      console.log(data)
-      this.listaGerencias=data.gerencias;
-    })
-
-    this.estadosService.getSolicitudes().subscribe((data:any)=>{
-      console.log(data)
-      this.listaSolicitudes=data.estadoSolicitudes;
-    })
-
-
-    this.usuariosService.getUsuarios().subscribe((data:any)=>{
-      console.log(data)
-      this.listaUsuarios=data.usuarios;
-      for (const usuario of data.usuarios) {
-        if(usuario.perfil.sigla=="GST"){
-          this.listaUsuariosGST.push(usuario)
-        }
-
-        if(usuario.perfil.sigla=="BKO"){
-          this.listaUsuariosBKO.push(usuario)
-        }
-      }
-    })
-
-    this.tareasServicio.getTareas().subscribe((data:any)=>{
-      console.log(data)
-      this.listatareas=data.tareas;
-     
-    })
 
 
   }
