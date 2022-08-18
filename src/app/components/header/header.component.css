@@ -30,6 +30,10 @@
     flex-wrap: wrap;
 }
 
+.sidebar-open{
+    width: 160px;
+}
+
 .sidebar>div{
     width: 100%;
 }
@@ -37,15 +41,17 @@
 .sidebar div a{
     width:100%;
     padding: 10px;
+    text-decoration: none;
+    color: #00758e;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar div a img{
     width: 40px;
     margin-left: 2px;
     margin-bottom: 1px;
-    margin-bottom: -1px;
-    margin-top: 11px;
-    
+    margin-bottom: -1px;    
 }
 .div-menu{
 

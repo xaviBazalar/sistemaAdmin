@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 
 //  Rutas//
 
@@ -31,6 +32,8 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     APP_ROUTING
     // AppRoutingModule
   ],

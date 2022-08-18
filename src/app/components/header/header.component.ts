@@ -8,7 +8,13 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   showHeader=true;
+  usuario:any;
   constructor(private router: Router) {
+    let dataUser:any=sessionStorage.getItem("usuario")
+    if(dataUser!==undefined){
+      this.usuario=JSON.parse(dataUser)
+      this.showHeader=false
+    }
     this.router.events.subscribe((val:any) => {
       if (val instanceof NavigationEnd) {
         //console.log(val.url)
@@ -21,28 +27,24 @@ export class HeaderComponent implements OnInit {
     });
    }
 
-   mostrar= true;
+   mostrarMenu= false;
 
    itemMenu:any= [
-    {
-      titulo:"MisSolictudes",
-      url:"/misSolicitudes"
-    },
-    {
-      titulo:"VerSolicitudes",
-      url:"/verSolicitud"
-    },
     {
       titulo:"NuevaSolicitud",
       url:"/nuevaSolicitud"
     },
     {
-      titulo:"Lista",
+      titulo:"MisSolictudes",
+      url:"/misSolicitudes"
+    },
+    {
+      titulo:"Tareas",
       url:"/lista"
     },
     {
-      titulo:"VerSolicitud",
-      url:"/verSolicitud"
+      titulo:"Salir",
+      url:"/"
     },
   ];
 

@@ -76,3 +76,16 @@
     display: flex;
     border-bottom: solid 2px;
 }
+
+.logo{
+    width: 240px;
+    margin: auto;
+    display: block;
+}
+
+.box-login{
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 75%;
+}

@@ -1,175 +1,198 @@
 <div class="container">
-
-    <div class="py-3 mb-3">
-        <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
-    </div>
-    <div class="row">
-        <div class="col-3 input-group mb-3" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
-            <select class="form-select" >
-                <option value="{{gerencia._id}}" *ngFor="let gerencia of listaGerencias" value="1">
-                    {{gerencia.nombre_gerencia}}
-                </option>
-            </select>
+    <form [formGroup]="regForm" (submit)="addSolicitud()" >
+        <div class="py-3 mb-3">
+            <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
         </div>
-    </div>
-    <div class="row mb-5">
-        <div class="col-3 input-group mb-3" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
-            <select class="form-select" >
-                <option *ngFor="let gerencia of listaGerencias" value="1">One</option>
-            </select>
-
-        </div>
-        <div class="input-group mb-3 form-check box-check" style="width: 25%;">
-            <input type="checkbox" class="form-check-input"id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
-        </div>
-        <div  class="input-group mb-3 form-check " style="width: 40%;">
-            <button type="submit" class="btn btn-success  px-5">Buscar</button>
-        </div>
-    </div>
-    <hr>
-    <div class="py-3 mb-3">
-        <h2>TAREA SOLICITADA</h2>
-    </div>
-    <div class="row mb-3" >
-        <div class="col-3 input-group" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
-            <select class="form-select" >
-                <option  value="{{tarea._id}}" *ngFor="let tarea of listatareas">
-                    {{tarea.nombre_tarea}}
-                </option>
-               
-            </select>
-
-        </div>
-        <div class="input-groupform-check box-check" style="width: 35%;">
-            <input type="checkbox" class="form-check-input"id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
-        </div>
-        <div  class="input-group form-check" style="width: 30%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
-            <input  class="form-control" type="text"  value="MMR-001">
-            
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-3 input-group" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
-            <select class="form-select" >
-                <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST">{{usuario.nombre}}</option>
-
-            </select>
-
-        </div>
-        <div class="col-3 input-group" style="width: 35%;">
-            <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
-            <select class="form-select" >
-                <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
-            </select>
-
-        </div>
-       
-    </div>
-
-    <div class="row mb-5" >
-        <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs:</label>
-        <textarea class="form-control" name="" id="basic-url" cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
-    </div>
-    <hr>
-    <div class="py-3 mb-3">
-        <h2>INFORMACION REQUERIDA</h2>
-    </div>
-
-    <div class="row mb-5">
-        
-        <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
-
-            <div class="col-3 input-group mb-3" style="width: 70%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
-                <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
-                <input type="file" id="fileUpload" style="display: none;"/>
-                <img src="assets/icons/icon-upload.png" class="icon-upload" onclick=""/>
-            </div>
-            <div class="col-3  input-group mb-3" style="width: 70%;" >
-                <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
-                <textarea class="form-control " name="" id="basic-url" cols="10" rows="3"  placeholder="Observaciones"></textarea>
-                
-            </div>
-            <div class="col-3  input-group mb-3" style="width: 30%;" >
-                <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
-            </div>
-            
-        </div>
-        <div class="col-6" >
-            <h5 class="py-1">Lista Documentos Requeridos</h5>
-            <hr>
-            
-            <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  Dcto para la Tarea Uno /Word/Observacion
-                </label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Dcto para la Tarea Uno /Excel/Observacion
-                </label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Dcto para la Tarea Uno /Pdf/Observacion
-                </label>
-              </div>
-              
-        </div>
-    </div>
-                
-        
-
-    <hr>
-    <div class="py-3 mb-3">
-        <h2>ESTADO SOLICITUD</h2>
-    </div>
-    <div class="row">
-        
-                
-       
+        <div class="row">
             <div class="col-3 input-group mb-3" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
-                <input class="form-control" type="date" name="" id="">
-            </div>
-            <div class="col-3 input-group mb-3" style="width: 60%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
-                <select class="form-select" >
-                    <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
-                       {{estado.nombre_estado}}
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
+                <select class="form-select" id="iGerencia"  formControlName="iGerencia" >
+                    <option value="{{gerencia._id}}" *ngFor="let gerencia of listaGerencias">
+                        {{gerencia.nombre_gerencia}}
                     </option>
-
                 </select>
             </div>
-    </div>
-    <div class="row">
+        </div>
+        <div class="row mb-5">
             <div class="col-3 input-group mb-3" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
-                <input class="form-control" type="date" name="" id="">
-            </div>
-            <div class="col-3 input-group mb-3" style="width: 60%;">
-                <p>Tiempo estimado : 7 Dias</p>
-            </div>
-    </div>
- 
-    <hr>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                <select class="form-select" (change)="getTareasContrato($event)"  id="iContrato"  formControlName="iContrato" >
+                    <option value="">..Seleccionar Contrato</option>
+                    <option value="{{contrato._id}}" *ngFor="let contrato of listaContratos" >{{contrato.contrato}}</option>
+                </select>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-        <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>
-        <button type="button" class="btn btn-success" >Enviar Solicitud</button>
-    </div>
- 
+            </div>
+            <div class="input-group mb-3 form-check box-check" style="width: 25%;">
+                <input type="checkbox" class="form-check-input"id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
+            </div>
+            <div  class="input-group mb-3 form-check " style="width: 40%;">
+                <button type="submit" class="btn btn-success  px-5">Buscar</button>
+            </div>
+        </div>
+        <hr>
+        <div class="py-3 mb-3" *ngIf="mostrarTareas">
+            <h2>TAREA SOLICITADA</h2>
+        </div>
+        <div class="row mb-3" *ngIf="mostrarTareas" >
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                <select class="form-select" id="iTarea"  formControlName="iTarea" >
+                    <option  value="{{tareas.tarea._id}}" *ngFor="let tareas of listaTareasContrato">
+                        {{tareas.tarea.nombre_tarea}}
+                    </option>
+                
+                </select>
+
+            </div>
+            <div class="input-groupform-check box-check" style="width: 35%;">
+                <input type="checkbox" class="form-check-input">
+                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
+            </div>
+            <div  class="input-group form-check" style="width: 30%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
+                <input  class="form-control" type="text"  value="MMR-001">
+                
+            </div>
+        </div>
+        <div class="row mb-3" *ngIf="mostrarTareas">
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+                <select class="form-select" id="iGst"  formControlName="iGst" >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST">{{usuario.nombre}}</option>
+
+                </select>
+
+            </div>
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
+                <select class="form-select" id="iBko"  formControlName="iBko"  >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
+                </select>
+
+            </div>
+        
+        </div>
+
+        <div class="row mb-5" *ngIf="mostrarTareas">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs:</label>
+            <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
+        </div>
+        <hr *ngIf="mostrarTareas">
+        <div class="py-3 mb-3">
+            <h2>INFORMACION REQUERIDA</h2>
+        </div>
+
+        <div class="row mb-5">
+            
+            <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
+
+                <div class="col-3 input-group mb-3" style="width: 70%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
+                    <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
+                    <input type="file" id="fileUpload" style="display: none;"/>
+                    <img src="assets/icons/icon-upload.png" class="icon-upload" onclick=""/>
+                </div>
+                <div class="col-3  input-group mb-3" style="width: 70%;" >
+                    <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
+                    <textarea class="form-control " name="" id="basic-url" cols="10" rows="3"  placeholder="Observaciones"></textarea>
+                    
+                </div>
+                <div class="col-3  input-group mb-3" style="width: 30%;" >
+                    <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
+                </div>
+                
+            </div>
+            <div class="col-6" >
+                <h5 class="py-1">Lista Documentos Requeridos</h5>
+                <hr>
+                
+                <div class="form-check ">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Dcto para la Tarea Uno /Word/Observacion
+                    </label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Dcto para la Tarea Uno /Excel/Observacion
+                    </label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Dcto para la Tarea Uno /Pdf/Observacion
+                    </label>
+                </div>
+                
+            </div>
+        </div>
+                    
+            
+
+        <hr>
+        <div class="py-3 mb-3">
+            <h2>ESTADO SOLICITUD</h2>
+        </div>
+        <div class="row">
+            
+                    
+        
+                <div class="col-3 input-group mb-3" style="width: 35%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                    <input [min]="minDay" class="form-control" type="date" id="iFechaSolicitud"  formControlName="iFechaSolicitud"  value="{{minDay}}">
+                </div>
+                <div class="col-3 input-group mb-3" style="width: 60%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
+                    <select class="form-select" [disabled]="isReadonly" id="iEstadoSolicitud"  formControlName="iEstadoSolicitud" >
+                        <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
+                        {{estado.nombre_estado}}
+                        </option>
+
+                    </select>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-3 input-group mb-3" style="width: 35%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                    <input [min]="minDay" class="form-control" type="date" id="iFechaInicio"  formControlName="iFechaInicio"  value="{{minDay}}">
+                </div>
+                <div class="col-3 input-group mb-3" style="width: 60%;">
+                    <p>Tiempo estimado : 7 Dias</p>
+                </div>
+        </div>
+    
+        <hr>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
+            <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>
+            <button type="submit" class="btn btn-success" >Enviar Solicitud</button>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="msjSucess">
+            Solicitud Agregada
+        </div>
+    </form>
 </div>
+<div [ngClass]="(showModal) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notificación Sistema</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Solicitud Agregada</p>
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
             
 
                 

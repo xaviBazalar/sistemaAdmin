@@ -3,6 +3,7 @@ import { GerenciasService } from '../../services/gerencias.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { TareasService } from '../../services/tareas.service';
+import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class VerSolicitudComponent implements OnInit {
   
   
 
-  constructor(public gerenciaService:GerenciasService,public estadosService:SolicitudesService,public usuariosService:UsuariosService,public tareasServicio:TareasService) {
+  constructor(public gerenciaService:GerenciasService,public estadosService:EstadosSolicitudService,public usuariosService:UsuariosService,public tareasServicio:TareasService) {
     this.listaUsuariosGST=[];
     this.listaUsuariosBKO=[];
    }

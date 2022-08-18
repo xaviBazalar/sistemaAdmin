@@ -2,38 +2,26 @@
     <div class="container box-header">
         <img class="logo" src="assets/img/logo.png" />
         <div>
-            Javier Bazalar 
+            {{usuario.nombre}}
             <img src="assets/icons/icon-user.png" />
         </div>
     </div>
 </div>
 
-<div class="sidebar"  *ngIf="showHeader">
+<div class="sidebar" [ngClass]="(mostrarMenu) ? 'sidebar sidebar-open': 'sidebar  '" *ngIf="showHeader">
     
     
     <div class="div-menu" >
-        <i class="fa-solid fa-bars " (click)="mostrar = !mostrar"></i>
+        <i class="fa-solid fa-bars " (click)="mostrarMenu = !mostrarMenu"></i>
     </div>
         
 
-    
-    <div style="background: #f9f9f9;" *ngIf="mostrar">
-        <a  *ngFor="let item of itemMenu"   (click)="mostrar = !mostrar" routerLink="{{item.url}}">
+    <div style="background: #f9f9f9;height: 800px;" *ngIf="mostrarMenu">
+        <a  *ngFor="let item of itemMenu"   (click)="mostrarMenu = !mostrarMenu" routerLink="{{item.url}}">
             <img src="assets/icons/icon-board-x.png"/>
             <small class="link-menu">{{ item.titulo }}</small>
         </a>
-        <!-- <a routerLink="/misSolicitudes">
-            <img src="assets/icons/icon-board-x.png"/>
-        </a>
-        <a routerLink="/lista">
-            <img src="assets/icons/icon-board-x.png"/>
-        </a>
-        <a routerLink="/verSolicitud">
-            <img src="assets/icons/icon-board-x.png"/>
-        </a>
-        <a routerLink="/tablero">
-            <img src="assets/icons/icon-board-x.png"/>
-        </a> -->
+
     </div>
 </div>
 

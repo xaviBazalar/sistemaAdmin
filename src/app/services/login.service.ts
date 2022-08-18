@@ -5,22 +5,13 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SolicitudesService {
+export class LoginService {
 
   url:string=environment.baseUrl;
 
   constructor(private http:HttpClient) { }
 
-  getSolicitudes(){
-    return this.http.get(`${this.url}/solicitudes`)
+  validate(body:any){
+    return this.http.post(`${this.url}/login`,body)
   }
-
-  addSolicitud(body:any){
-    return this.http.post(`${this.url}/solicitudes`,body)
-  }
-  
-
-
-
- 
 }

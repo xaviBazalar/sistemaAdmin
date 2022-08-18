@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SolicitudesService } from '../../services/solicitudes.service';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MisSolicitudesComponent implements OnInit {
 
-  constructor() { }
-
+  listaSolicitudes:any;
+  constructor(public solicitudService:SolicitudesService) { }
+//getSolicitudes
   ngOnInit(): void {
+    this.solicitudService.getSolicitudes().subscribe((data:any)=>{
+      this.listaSolicitudes=data.solicitudes;
+    })
   }
 
 }

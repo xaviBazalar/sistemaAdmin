@@ -36,32 +36,31 @@
 
 
         <tbody>
-
-            <tr>
+            <tr *ngFor="let solicitud of listaSolicitudes">
                 <td>#MM-001</td>
                 <td>Enviada</td>
                 <td>
-                    <p>455222112 Explor-K</p>
-                    <p>Apertura Libro</p>
+                    <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                    <p>{{solicitud.tarea.nombre_tarea}}</p>
                 </td>
                 <td>
-                    <p>02 Ago 2022</p>
+                    <p>{{solicitud.fecha_solicitud}}</p>
                     <p>Solicitado</p>
                 </td>
                 <td>
                     <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Proceso</p>
+                    <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
 
                 </td>
                 <td>
-                    <p>MES</p>
+                    <p>{{solicitud.tarea.frecuencia}}</p>
                     <p>1 vez</p>
                 </td>
                 <td>
-                    <p>Acosio FGutierrez</p>
+                    <p>{{solicitud.gst.nombre}}</p>
                 </td>
                 <td>
-                    <p>03 Ago 2022</p>
+                    <p>{{solicitud.fecha_inicio}}</p>
                     <p>Iniciado</p>
                 </td>
                 <td>
@@ -69,11 +68,11 @@
                     <p>En Espera</p>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary px-5" disabled>Ver</button>
+                    <a routerLink="/solicitud/{{solicitud._id}}"><button type="submit" class="btn btn-primary px-5" >Ver</button></a>
                 </td>
 
             </tr>
-            <tr>
+            <!--<tr>
                 <td>#MM-001</td>
                 <td>Enviada</td>
                 <td>
@@ -144,7 +143,7 @@
                     <button type="submit" class="btn btn-primary px-5" disabled>Ver</button>
                 </td>
 
-            </tr>
+            </tr>-->
 
             
            
@@ -155,7 +154,7 @@
     </table>
 
     <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-primary btn-sml px-5 ">Nueva</button>
+        <a routerLink="/nuevaSolicitud"><button type="button" class="btn btn-primary btn-sml px-5 ">Nueva</button></a>
     </div>
 
 </div>

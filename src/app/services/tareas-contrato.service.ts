@@ -5,22 +5,12 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SolicitudesService {
+export class TareasContratoService {
 
   url:string=environment.baseUrl;
-
   constructor(private http:HttpClient) { }
 
-  getSolicitudes(){
-    return this.http.get(`${this.url}/solicitudes`)
+  getTareasContrato(idcontrato:string){
+    return this.http.get(`${this.url}/tareasContrato?contrato=${idcontrato}`) 
   }
-
-  addSolicitud(body:any){
-    return this.http.post(`${this.url}/solicitudes`,body)
-  }
-  
-
-
-
- 
 }
