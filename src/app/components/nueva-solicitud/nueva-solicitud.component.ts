@@ -7,6 +7,8 @@ import { ContratosService } from '../../services/contratos.service';
 import { TareasContratoService } from '../../services/tareas-contrato.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
+import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
+import { UploadFileService } from '../../services/upload-file.service';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -23,15 +25,20 @@ export class NuevaSolicitudComponent implements OnInit {
   listatareas:any;
   listaContratos:any;
   listaTareasContrato:any;
+  listaTareaDocumentos:any;
   mostrarTareas:boolean=false;
   isReadonly:boolean=true;
   msjSucess:boolean=false;
   showModal:boolean=false;
   minDay:string=new Date().toISOString().split("T")[0];
   regForm:any;
-
-  usuario:any;
-
+  regFormFile:any;
+  selectedUser:boolean=false;
+  isSubmitted = false;
+  isSubmittedFile = false;
+  usuarioLogin:any;
+  idTareDocumentoEntrada:string="";
+  tareaSelected:string="";
   constructor(public gerenciaService:GerenciasService,
     public estadosService:EstadosSolicitudService,
     public solicitudService:SolicitudesService,
@@ -39,27 +46,35 @@ export class NuevaSolicitudComponent implements OnInit {
     public tareasServicio:TareasService,
     public contratosServicio:ContratosService,
     public tareasContratoService:TareasContratoService,
+    public tareaDocumentosService:TareaDocumentosEntradaService,
+    public uploadFileService:UploadFileService,
     public formBuilder: FormBuilder) {
     this.listaUsuariosGST=[];
     this.listaUsuariosBKO=[];
     let dataUser:any=sessionStorage.getItem("usuario")
-    this.usuario=JSON.parse(dataUser)
+    this.usuarioLogin=JSON.parse(dataUser)
     
    }
 
   ngOnInit(): void {
+    this.regFormFile=this.formBuilder.group({
+      iFile:['', Validators.required],
+      //iTypeDocFile:['', Validators.required],
+    })
+
     this.regForm=this.formBuilder.group({
       iGerencia:['', Validators.required],
       iContrato:['', Validators.required],
       iTarea:['', Validators.required],
-      iGst:['', Validators.required],
+      iGst:['63005b09a608b63a870dfd59', Validators.required],
       iBko:['', Validators.required],
       iMensaje:['', Validators.required],
       iFechaSolicitud:['', Validators.required],
-      iEstadoSolicitud:['', Validators.required],
+      //iEstadoSolicitud:['', Validators.required],
       iFechaInicio:['', Validators.required],
      })
 
+     //this.regForm.controls['iGst'].setValue(this.default, {onlySelf: true});
     this.gerenciaService.getGerencias().subscribe((data:any)=>{
       this.listaGerencias=data.gerencias;
     })
@@ -93,6 +108,14 @@ export class NuevaSolicitudComponent implements OnInit {
     })
   }
 
+  seleccionarGST(usuario:any){
+    if(this.usuarioLogin.perfil.sigla==usuario){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   getTareasContrato({ target }:any) {
     let idContrato=target.value;
     this.tareasContratoService.getTareasContrato(idContrato).subscribe((data:any)=>{
@@ -102,28 +125,110 @@ export class NuevaSolicitudComponent implements OnInit {
       }else{
         this.mostrarTareas=false;
       }
-      
-     
     })
+  }
+
+  getTareaDocumentosEntrada({ target }:any) {
+    this.tareaSelected=target.value
+    let tarea=target.value;
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+      this.listaTareaDocumentos=data.tarea_documentos_entrada;
+    })
+  }
+
+  refreshTareaDocumentosEntrada(){
+    let tarea=this.tareaSelected;
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+      this.listaTareaDocumentos=data.tarea_documentos_entrada;
+    })
+  }
+
+  saveTypeDocFile(valor:string){
+    this.idTareDocumentoEntrada=valor;
+  }
+
+  validateFile(validado:any){
+    if(validado){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  addFileTarea(){
+    let previewFile:any=document.querySelector("#customFileLang")
+    var formData = new FormData();
+    const imagefile = document.querySelector('#file') as HTMLInputElement;
+    const imanProd=imagefile.files instanceof FileList
+    ? imagefile.files[0] : ''
+    formData.append("archivo", imanProd);
+
+    this.isSubmittedFile=true;
+    let observacion:any=document.querySelector("#iObsFile") 
+    if (this.regFormFile.dirty && this.regFormFile.valid && this.idTareDocumentoEntrada!="") {
+        this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+          
+          let dataUpdate={
+            _id:this.idTareDocumentoEntrada,
+            validado:true,
+            url_ref:"/api/upload?id="+data.urlFile,
+            observacion:observacion.value
+          } 
+
+          this.tareaDocumentosService.updateTareaDocumentosEntrada(dataUpdate,this.idTareDocumentoEntrada).subscribe((data:any)=>{
+              this.refreshTareaDocumentosEntrada()
+              this.isSubmittedFile=false
+              this.regFormFile.reset()
+              this.idTareDocumentoEntrada=""
+              previewFile.value=""
+              this.isSubmittedFile=false;
+          })
+        })
+    }
+  }
+
+  get errorControl() {
+    return this.regForm.controls;
+  }
+
+  get errorControlFile() {
+    return this.regFormFile.controls;
+  }
+
+  //document.getElementById("myBtn").addEventListener("click", displayDate);
+
+  openUploadFile(){
+    let file:any=document.querySelector("#file");
+    file.click();
+  }
+
+  changeUploadFile(){
+    let file:any=document.querySelector("#file");
+    let previewFile:any=document.querySelector("#customFileLang")
+    file=file.value.replace(/C:\\fakepath\\/i,'');
+    previewFile.value=file
   }
 
   addSolicitud() {
     let solicitud:any
+    this.isSubmitted=true;
     if (this.regForm.dirty && this.regForm.valid) {
+      
       solicitud={
         gerencia:this.regForm.value.iGerencia,
         contrato:this.regForm.value.iContrato,
         tarea:this.regForm.value.iTarea,
         gst:this.regForm.value.iGst,
         bko:this.regForm.value.iBko,
-        estado_solicitud:this.regForm.value.iEstadoSolicitud,
+        estado_solicitud:"62fad5ed48d35ca4acd1467d",
+        estado_resultado:"62fad65648d35ca4acd14682",
         observacion:this.regForm.value.iMensaje,
         fecha_solicitud:this.regForm.value.iFechaSolicitud,
-        fecha_inicio:this.regForm.value.iFechaInicio
+        fecha_inicio:this.regForm.value.iFechaInicio,
       }
 
       this.solicitudService.addSolicitud(solicitud).subscribe((data:any)=>{
-        console.log(data)
+        //console.log(data)
         this.regForm.reset();
         this.msjSucess=true;
         this.showModal=true;
@@ -133,27 +238,9 @@ export class NuevaSolicitudComponent implements OnInit {
       setTimeout(()=>{
         this.msjSucess=false;
         this.showModal=false;
-      },3000)
+      },2000)
 
-      
-      /*
-      gerencia: { type: Schema.ObjectId, ref: "gerencia" },
-      contrato: { type: Schema.ObjectId, ref: "contrato" },
-      tarea: { type: Schema.ObjectId, ref: "tarea" },
-      gst: { type: Schema.ObjectId, ref: "gst" },
-      bko: { type: Schema.ObjectId, ref: "bko" },
-      estado_solicitud : { type: Schema.ObjectId, ref: "bko" },
-      observacion: {
-          type: String
-      },
-      fecha_solicitud: {
-          type: String
-      },
-      fecha_inicio: {
-          type: String
-      }
-      */
-      //alert(`iGerencia: ${this.regForm.value.iGerencia}`);
+
 
     }
   }

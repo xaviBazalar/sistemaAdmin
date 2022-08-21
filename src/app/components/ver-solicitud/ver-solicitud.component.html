@@ -39,25 +39,12 @@
                 <h5>Lista Documentos Requeridos</h5>
                 <hr>
 
-                <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="flexCheckDefault">
+                <div class="form-check" *ngFor="let item of listaTareaDocumentos">
+                    <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                    <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                     <label class="form-check-label" for="flexCheckDefault">
-                        Dcto para la Tarea Uno /Word/Observacion
-                    </label>
-                </div>
-                <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Dcto para la Tarea Uno /Excel/Observacion
-                    </label>
-                </div>
-                <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Dcto para la Tarea Uno /Pdf/Observacion
+                        {{item.documento_entrada.descripcion}}
+                        <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
                     </label>
                 </div>
             </div>
@@ -107,34 +94,21 @@
                 <h4 class="mb-3">RESULTADO SOLICITUD</h4>
                 <div class="col-3 input-group mb-3 pl-3">
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
-                    <input   class="form-control input-color" type="text"  value="{{solicitud.estado_solicitud.nombre_estado}}" style=>
+                    <input   class="form-control input-color" type="text"  value="{{solicitud.estado_resultado.nombre_resultado}}" style=>
                   
                 </div>
                 <div class="form-check mt-5 pl-3">
-                    <h5>Lista Documentos Requeridos</h5>
+                    <h5>Lista Documentos Resultados</h5>
                     <hr>
     
-                    <div class="form-check ">
+                    <div class="form-check" >
                         <input class="form-check-input" type="checkbox" value=""
                             id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
-                            Dcto para la Tarea Uno /Word/Observacion
+                        XXXXX
                         </label>
                     </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Dcto para la Tarea Uno /Excel/Observacion
-                        </label>
-                    </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Dcto para la Tarea Uno /Pdf/Observacion
-                        </label>
-                    </div>
+
                 </div>
 
             </div>
@@ -156,7 +130,7 @@
             </div>
             <div class="col-3 input-group mb-2 mx-5 input-dp">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Entrega</label>
-                <input  class="form-control" type="date"style="width: 40%;"  value="EN PROCESO">
+                <input  class="form-control" type="date"style="width: 40%;"  value="{{solicitud.fecha_entrega}}" readonly>
             </div>
 
             <div class="col-7 input-group mb-3 mx-5 tiempo-estimado">
@@ -199,7 +173,7 @@
 
         <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
             <label for="basic-url" class="form-label" style="margin-right: 25px;margin-top: 8px;">Mensaje/Obs</label>
-            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" placeholder="Se adjunta el resultado de la revísíon de Kpi solicitados.Estamos a atento a sus observaciones." style="width: 70%;" ></textarea>
+            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
         </div>
 
         <div class="col-7 input-group mb-3 mx-5  align-items-center">
@@ -208,7 +182,7 @@
         </div>
        
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
-            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" disabled>Interactuar</button>
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" >Interactuar</button>
         </div>
 
 
@@ -224,67 +198,43 @@
 
             <thead class="bg-#F53621">
                 <tr>
-                    <th scope="col">N°<i class="titulo-i fa-solid fa-angle-down"></i> </th>
-                    <th scope="col">Resultado<i class="titulo-i  fa-solid fa-angle-down"></i></th>
-                    <th scope="col">Fecha<i class="titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">N° </th><!--<i class="titulo-i fa-solid fa-angle-down"></i>-->
+                    <th scope="col">Resultado</th>
+                    <th scope="col">Fecha</th>
                     <th scope="col">Enviado por</th>
-                    <th scope="col">Mensaje<i class="titulo-i  fa-solid fa-angle-down"></i></th>
-                    <th scope="col">Fecha<i class="titulo-i  fa-solid fa-angle-down"></i></th>
-                    <th scope="col">Feedback<i class=" titulo-i  fa-solid fa-angle-down"></i></th>
+                    <th scope="col">Mensaje</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Feedback</th>
                     <th scope="col">...</th>
                 </tr>
     
             </thead>
-    
-    
-    
-    
-    
-    
             <tbody>
-    
-                <tr>
-                    <td>#MM-001 </td>
+                <tr class="row-historial" *ngFor="let historial of listaHistorialResultadoSolicitud">
+                    <td class="">#MM-{{historial.solicitud.idsecuencia}} </td>
                     <td>
                         <div class="items-proceso"> 
-                            <i class="fa-solid fa-circle "></i>
-                            <p>En Espera</p>
+                            <p>{{historial.estado_resultado.nombre_resultado}}</p>
                         </div>
                     </td>
                     <td>
-                        02 Ago 2022<br>
-                        Enviado
+                        {{historial.fecha_registro}}<br>
+                        
                     </td>
                         ACosio<br>
-                        FGutierrez
-                    
-                        
-                    
-                    
+                        FGutierrez 
                     <td>
-                        
-                        
-    
                     </td>
                     <td>
-                        <p>MES</p>
-                        <p>1 vez</p>
+                        {{historial.fecha_registro}}
                     </td>
-                    
-                    
                     <td>
-                        <a href=""><i>o</i></a>
-                        <p>En Espera</p>
                     </td>
                     <td>
                         <a href="#" class="btn btn-primary btn-lg active"
                             role="button" aria-pressed="true">Ver</a>
                     </td>
-    
                 </tr>
-    
-              
-    
             </tbody>
     
         </table>

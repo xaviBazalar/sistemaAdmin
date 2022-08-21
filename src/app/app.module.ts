@@ -17,6 +17,7 @@ import { MisSolicitudesComponent } from './components/mis-solicitudes/mis-solici
 import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
 import { HeaderComponent } from './components/header/header.component';
+import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HeaderComponent } from './components/header/header.component';
     MisSolicitudesComponent,
     ListaComponent,
     VerSolicitudComponent,
-    HeaderComponent
+    HeaderComponent,
+    VerSolicitudGstComponent
   ],
   imports: [
     BrowserModule,

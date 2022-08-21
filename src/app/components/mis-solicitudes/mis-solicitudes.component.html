@@ -25,19 +25,13 @@
                 <th scope="col">Asignada</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Resultado</th>
-                <th scope="col-3">......</th>
+                <th scope="col-3"></th>
             </tr>
 
         </thead>
-
-
-
-
-
-
         <tbody>
             <tr *ngFor="let solicitud of listaSolicitudes">
-                <td>#MM-001</td>
+                <td>#MM-{{solicitud.idsecuencia}}</td>
                 <td>Enviada</td>
                 <td>
                     <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
@@ -65,92 +59,14 @@
                 </td>
                 <td>
                     <a href=""><i class="fa-solid fa-o "></i></a>
-                    <p>En Espera</p>
+                    <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                 </td>
                 <td>
                     <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary px-5" >Ver</button></a>
                 </td>
 
             </tr>
-            <!--<tr>
-                <td>#MM-001</td>
-                <td>Enviada</td>
-                <td>
-                    <p>455222112 Explor-K</p>
-                    <p>Apertura Libro</p>
-                </td>
-                <td>
-                    <p>02 Ago 2022</p>
-                    <p>Solicitado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Proceso</p>
-
-                </td>
-                <td>
-                    <p>MES</p>
-                    <p>1 vez</p>
-                </td>
-                <td>
-                    <p>Acosio FGutierrez</p>
-                </td>
-                <td>
-                    <p>03 Ago 2022</p>
-                    <p>Iniciado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Espera</p>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary px-5" disabled>Ver</button>
-                </td>
-
-            </tr>
-            <tr>
-                <td>#MM-001</td>
-                <td>Enviada</td>
-                <td>
-                    <p>455222112 Explor-K</p>
-                    <p>Apertura Libro</p>
-                </td>
-                <td>
-                    <p>02 Ago 2022</p>
-                    <p>Solicitado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Proceso</p>
-
-                </td>
-                <td>
-                    <p>MES</p>
-                    <p>1 vez</p>
-                </td>
-                <td>
-                    <p>Acosio FGutierrez</p>
-                </td>
-                <td>
-                    <p>03 Ago 2022</p>
-                    <p>Iniciado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>En Espera</p>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary px-5" disabled>Ver</button>
-                </td>
-
-            </tr>-->
-
-            
-           
-
-           
         </tbody>
-
     </table>
 
     <div class="d-flex flex-row-reverse">

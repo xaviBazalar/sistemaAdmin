@@ -110,4 +110,17 @@ h4{
     color: #ff8352;
 }
 
+.row-historial td{
+    width: 12.5%;
+}
+
+.img-checked{
+    width: 16px;
+    margin-right: 6px;
+    margin-bottom: 3px;
+}
+
+.iconFile{
+    width: 24px;
+}
 

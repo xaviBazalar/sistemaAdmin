@@ -7,24 +7,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  showHeader=true;
+  showHeader=false;
   usuario:any;
   constructor(private router: Router) {
-    let dataUser:any=sessionStorage.getItem("usuario")
-    if(dataUser!==undefined){
-      this.usuario=JSON.parse(dataUser)
-      this.showHeader=false
-    }
-    this.router.events.subscribe((val:any) => {
-      if (val instanceof NavigationEnd) {
-        //console.log(val.url)
-        if(val.url=="/home"){
-          this.showHeader=false;
-        }else{
-          this.showHeader=true;
-        }
-      }
-    });
+    this.usuario=sessionStorage.getItem("usuario");
    }
 
    mostrarMenu= false;
@@ -42,14 +28,37 @@ export class HeaderComponent implements OnInit {
       titulo:"Tareas",
       url:"/lista"
     },
-    {
-      titulo:"Salir",
-      url:"/"
-    },
   ];
 
   ngOnInit(): void {
+    let dataUser:any=sessionStorage.getItem("usuario")
+    
+    
+    if(dataUser!==undefined &&  dataUser!=""){
+      this.usuario=JSON.parse(dataUser)
+      this.showHeader=false
+    }
+    this.router.events.subscribe((val:any) => {
+      if (val instanceof NavigationEnd) {
+        
+        if(val.url=="/home"){
+          this.showHeader=false;
+        }else{
+          //console.log(sessionStorage.getItem("usuario"))
+          this.showHeader=true;
+        }
+      }
+      
+    });
 
+    
+  }
+
+  logout(){
+    sessionStorage.setItem("usuario","")
+    setTimeout(()=>{
+      this.router.navigate(['home'], { });
+    },500)
   }
 
 }
