@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HistorialResultadoSolicitudService } from '../../services/historial-resultado-solicitud.service';
 import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
 import { TareaDocumentosSalidaService } from '../../services/tarea-documentos-salida.service';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { TareaDocumentosSalidaService } from '../../services/tarea-documentos-sa
   styleUrls: ['./ver-solicitud.component.css']
 })
 export class VerSolicitudComponent implements OnInit {
-
+  baseUrl:string=environment.baseUrlGet;
   solicitud:any;
   listaHistorialResultadoSolicitud:any;
   listaTareaDocumentos:any;
