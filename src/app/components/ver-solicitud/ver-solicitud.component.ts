@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HistorialResultadoSolicitudService } from '../../services/historial-resultado-solicitud.service';
 import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
 import { TareaDocumentosSalidaService } from '../../services/tarea-documentos-salida.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 
 @Component({
