@@ -25,24 +25,27 @@ export class HomeComponent implements OnInit {
      })
   }
 
-  validatelogin(){
+  async validatelogin(){
     let login:any
     if (this.loginForm.dirty && this.loginForm.valid) {
       login={
         login:this.loginForm.value.login,
         password:this.loginForm.value.password,
       }
-      this.loginService.validate(login).subscribe((data:any)=>{
-        if(data.usuarios.length==1){
-          this.errorLogin=false;
-          sessionStorage.setItem("usuario",JSON.stringify(data.usuarios[0]));
-          setTimeout(()=>{
-            this.router.navigate(['misSolicitudes'], { });
-          },1000)
-        }else{
-          this.errorLogin=true;
-        }
-      })
+
+      const dataLogin:any= await this.loginService.validate(login).toPromise();
+      if(dataLogin.usuarios.length==1){
+        this.errorLogin=false;
+        sessionStorage.setItem("usuario",JSON.stringify(dataLogin.usuarios[0]));
+        setTimeout(()=>{
+          this.router.navigate(['misSolicitudes'], { });
+        },1000)
+      }else{
+        this.errorLogin=true;
+      }
+      /*this.loginService.validate(login).subscribe((data:any)=>{
+        
+      })*/
     }
   }
 

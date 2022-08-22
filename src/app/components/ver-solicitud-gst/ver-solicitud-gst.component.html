@@ -1,1 +1,215 @@
-<p>ver-solicitud-gst works!</p>
+<div class="container m-5" *ngIf="loaded">
+    <div class="row">
+        <div class="col-6" >
+            Tarea: <b>{{solicitud.tarea.nombre_tarea}}</b>
+        </div>
+        <div class="col-3">
+            Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
+        </div>
+        <div class="col-3">
+            Solicitud ID: <b>MMR-001</b>
+        </div> 
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-5">
+            <div class="mb-5 mt-3">
+                <h4>SOLICITUD DE REQUERIMIENTO</h4>
+            </div>
+
+            <div class="pl-3">
+                <div class="col-3 input-group mb-1">
+                    <p style="width: 30%;">Gerencia</p>
+                    <p style="width: 70%;">{{solicitud.gerencia.nombre_gerencia}}</p>
+                </div>
+                <div class="col-3 input-group mb-1 ">
+                    <p style="width: 30%;" >ADC</p>
+                    <p style="width: 70%;" >{{solicitud.bko.nombre}}</p>
+                </div>
+                <div class="col-3 input-group mb-1 ">
+                    <p style="width: 30%;">Contrato</p>
+                    <p style="width: 70%;">{{solicitud.contrato.contradoid}} - {{solicitud.contrato.contrato}}</p>
+                </div>
+                <div class="col-3 input-group mb-1 ">
+                    <p style="width: 30%;" >Fecha Solicitud</p>
+                    <p  style="width: 70%;">{{solicitud.fecha_solicitud}} <!--13:20 Hrs--></p>
+                </div>
+            </div>
+            <div class="form-check mt-3 pl-3">
+                <h5>Lista Documentos Requeridos</h5>
+                <hr>
+
+                <div class="form-check" *ngFor="let item of listaTareaDocumentos">
+                    <a class="link-download" href="http://localhost:8080{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                    <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                    
+                    <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{item.documento_entrada.descripcion}}
+                        <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
+                    </label>
+                </div>
+            </div>
+
+            
+        </div>
+        
+        <div class="col-7 mt-proceso box-proceso" >
+
+            <div class="col-7 input-group mb-4  mx-5 ">
+                <label for="basic-url" class="form-label" style="margin-top: 8px;">Mensaje/Obs</label>
+                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="Agradecemos tu ayuda para la revision y validacion de montos.Importante:Tenemos mantención mayor de planta y se requiere asistencia del servicio" style="width: 70%;" ></textarea>
+
+            </div>
+
+            <div class="col-7 box-bitacora" style="width: 70%;">
+                <h5 class="mx-5">Bitacora</h5>
+                <hr class="linea-bitacora">
+                <p class="mx-5 box-bitacora" >
+                    02/08 Solicitud ingresada // Inicio solicitud en Proceso<br>
+                    03/08 Lista de verificacion actualizada <br>
+                    03/08 Prioridad establecida a ALTA
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+    <hr>
+        <div class="py-3 mb-3" >
+            <h4>ESTADO SOLICITUD</h4>
+        </div>
+        <div class="row mb-3" >
+            <div class="col-3 input-group" style="width: 45%;">
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
+                <select class="form-select" id="iEstadoSolicitud">
+                    <option value={{estado._id}} *ngFor="let estado of listaSolicitudes" [selected]="validarEstado(estado.nombre_estado,solicitud.estado_solicitud.nombre_estado)">
+                    {{estado.nombre_estado}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-3 input-group" style="width: 45%;">
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                <input class="form-control" type="date" id="iFechaInicio" value="{{solicitud.fecha_solicitud}}" />
+                
+            </div>
+        </div>
+        <div class="row mb-3" >
+            <div class="col-3 input-group" style="width: 45%;">
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+                <select class="form-select" id="iGst"  >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
+
+                </select>
+                
+            </div>
+            <div class="col-3 input-group" style="width: 45%;">
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
+                <select class="form-select" id="iBko"    >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
+                </select>
+                
+            </div>
+        </div>
+        <div class="row mb-3" >
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega</label>
+                <input class="form-control" type="date" id="iFechaInicio" value="{{solicitud.fecha_entrega}}" />
+                
+            </div>
+            <div class="col-3 input-group" style="width: 45%;">
+                <div class="col-7 input-group ">
+                    <label for="basic-url" class="form-label" style="margin-top: 8px;">
+                        Tiempo estimado : {{solicitud.tarea.SLA}}
+                    </label> 
+                </div>
+            </div>
+            
+        </div>
+        <div class="row mb-3" >
+            <div class="col-3 input-group" style="width: 45%;">
+
+            </div>
+            <div class="col-3 input-group" style="width: 45%;">
+                <button class="btn btn-primary me-md-2 px-5 btn-interactuar btn-save-estado" type="button" >Guardar Estado</button>
+            </div>
+            
+        </div>
+    <hr>
+
+    <div class="row my-3">
+        <h4>ITERACCIONES</h4>
+
+        <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
+            <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
+            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
+        </div>
+
+        <div class="col-7 input-group mb-3 mx-5  align-items-center">
+            <label for="basic-url" class="form-label lbl-interaccion" >Feedback ADC</label>
+            <textarea class=" form-control" name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
+        </div>
+       
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  type="button" >Interactuar</button>
+        </div>
+
+
+    </div>
+    <hr>
+
+    <div class="row my-4">
+
+        <h4>HISTORIAL RESULTADO SOLICITUD</h4>
+        
+        <table class="table form-control" >
+
+
+            <thead class="bg-#F53621">
+                <tr>
+                    <th scope="col">N° </th><!--<i class="titulo-i fa-solid fa-angle-down"></i>-->
+                    <th scope="col">Resultado</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Enviado por</th>
+                    <th scope="col">Mensaje</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Feedback</th>
+                    <th scope="col">...</th>
+                </tr>
+    
+            </thead>
+            <tbody>
+                <tr class="row-historial" *ngFor="let historial of listaHistorialResultadoSolicitud">
+                    <td class="">#MM-{{historial.solicitud.idsecuencia}} </td>
+                    <td>
+                        <div class="items-proceso"> 
+                            <p>{{historial.estado_resultado.nombre_resultado}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        {{historial.fecha_registro}}<br>
+                        
+                    </td>
+                        ACosio<br>
+                        FGutierrez 
+                    <td>
+                    </td>
+                    <td>
+                        {{historial.fecha_registro}}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-lg active"
+                            role="button" aria-pressed="true">Ver</a>
+                    </td>
+                </tr>
+            </tbody>
+    
+        </table>
+
+
+
+    </div>
+
+</div>

@@ -13,5 +13,9 @@ export class HistorialResultadoSolicitudService {
   getHistorialResultadoSolicitud(idsolicitud:string|null){
     return this.http.get(`${this.url}/historialResultadoSolicitud?id=${idsolicitud}`) 
   }
+
+  addHistorialResultadoSolicitud(infoResultado:any){
+    return this.http.post(`${this.url}/historialResultadoSolicitud`,infoResultado)
+  }
 }
 //historialResultadoSolicitud

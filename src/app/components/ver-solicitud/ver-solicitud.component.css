@@ -124,3 +124,22 @@ h4{
     width: 24px;
 }
 
+.link-download{
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+}
+
+.form-check{
+    position: relative;
+}
+
+.box-bitacora{
+    font-size: 10px;
+}
+
+.lbl-interaccion{
+    margin-right: 14px;
+    margin-top: 8px;
+    width: 110px;
+}

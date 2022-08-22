@@ -5,6 +5,7 @@ import { NuevaSolicitudComponent } from './components/nueva-solicitud/nueva-soli
 import { MisSolicitudesComponent } from './components/mis-solicitudes/mis-solicitudes.component';
 import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
+import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
 
 const APP_ROUTES:Routes = [
 
@@ -14,6 +15,7 @@ const APP_ROUTES:Routes = [
   {path:'misSolicitudes',component: MisSolicitudesComponent},
   {path:'lista',component: ListaComponent},
   {path:'solicitud/:id',component: VerSolicitudComponent},
+  {path:'solicitudB/:id',component: VerSolicitudGstComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}
   // {path:'about',componet:HomeComponent},
  

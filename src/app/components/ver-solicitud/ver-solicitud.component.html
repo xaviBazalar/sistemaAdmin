@@ -1,6 +1,6 @@
-<div class="container m-5">
+<div class="container m-5" *ngIf="loaded">
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" >
             Tarea: <b>{{solicitud.tarea.nombre_tarea}}</b>
         </div>
         <div class="col-3">
@@ -40,7 +40,9 @@
                 <hr>
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentos">
+                    <a class="link-download" href="http://localhost:8080{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                    
                     <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                     <label class="form-check-label" for="flexCheckDefault">
                         {{item.documento_entrada.descripcion}}
@@ -61,28 +63,28 @@
                     </div>
                     <div class="form-check ">
                         <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
+                            id="flexCheckChecked" >
                         <label class="form-check-label" for="flexCheckChecked">
                             Lista de chequeo de tarea para realizar la tarea
                         </label>
                     </div>
                     <div class="form-check ">
                         <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
+                            id="flexCheckChecked" >
                         <label class="form-check-label" for="flexCheckChecked">
                             Lista de chequeo de tarea para realizar la tarea
                         </label>
                     </div>
                     <div class="form-check ">
                         <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
+                            id="flexCheckChecked" >
                         <label class="form-check-label" for="flexCheckChecked">
                             Lista de chequeo de tarea para realizar la tarea
                         </label>
                     </div>
                     <div class="form-check ">
                         <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" checked>
+                            id="flexCheckChecked" >
                         <label class="form-check-label" for="flexCheckChecked">
                             Lista de chequeo de tarea para realizar la tarea
                         </label>
@@ -101,14 +103,16 @@
                     <h5>Lista Documentos Resultados</h5>
                     <hr>
     
-                    <div class="form-check" >
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckDefault">
+                    <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
+                        <a class="link-download" href="http://localhost:8080{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                        <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                        
+                        <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                         <label class="form-check-label" for="flexCheckDefault">
-                        XXXXX
+                            {{item.documento_salida.descripcion}}
+                            <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
                         </label>
                     </div>
-
                 </div>
 
             </div>
@@ -141,48 +145,39 @@
             </div>
             <div class="col-7 input-group mb-4  mx-5 ">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Mensaje/Obs</label>
-                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="Agradecemos tu ayuda para la revision y validacion de montos.Importante:Tenemos mantención mayor de planta y se requiere asistencia del servicio" style="width: 70%;" ></textarea>
+                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
 
             </div>
 
             <div class="col-7 box-bitacora" style="width: 70%;">
                 <h5 class="mx-5">Bitacora</h5>
                 <hr class="linea-bitacora">
-                <textarea class=" form-control"  name="" id="" cols="20" rows="22" style="width: 100%;" class="tamaño-estable" placeholder="02/ 08 Solicitud ingresada // Inicio solicitud en Proceso // 03/08 Lista de verificacion actualizada// 03/08 Prioridad establecida a ALTA "></textarea>
-
+                <p class="mx-5 box-bitacora" >
+                    02/08 Solicitud ingresada // Inicio solicitud en Proceso<br>
+                    03/08 Lista de verificacion actualizada <br>
+                    03/08 Prioridad establecida a ALTA
+                </p>
             </div>
         </div>
-
-            
-
-                
-
-        
-        
-        
-        
-        
-        
-        
 
     </div>
     <hr>
 
     <div class="row my-3">
-        <h4>ITERACCIONES</h4>
+        <h4>INTERACCIONES</h4>
 
         <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
-            <label for="basic-url" class="form-label" style="margin-right: 25px;margin-top: 8px;">Mensaje/Obs</label>
-            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
+            <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
+            <textarea class=" form-control"  name="" id="msjInteradcion" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
         </div>
 
         <div class="col-7 input-group mb-3 mx-5  align-items-center">
-            <label for="basic-url" class="form-label" style="margin-right: 16px;margin-top: 8px;">Feedback ADC</label>
+            <label for="basic-url" class="form-label lbl-interaccion" >Feedback ADC</label>
             <textarea class=" form-control" name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
         </div>
        
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
-            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" >Interactuar</button>
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" (click)="addHistorialSolicitud()" >Interactuar</button>
         </div>
 
 
@@ -221,58 +216,27 @@
                         {{historial.fecha_registro}}<br>
                         
                     </td>
-                        ACosio<br>
-                        FGutierrez 
+                        
+                    <td>
+                        {{historial.usuario.nombre}}
+                    </td>
+                    <td>
+                        {{historial.mensaje}}
+                    </td>
+                    <td>
+                        
+                    </td>
                     <td>
                     </td>
                     <td>
-                        {{historial.fecha_registro}}
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-lg active"
-                            role="button" aria-pressed="true">Ver</a>
+                        <button type="button" class="btn btn-primary btn-lg active"
+                            role="button" aria-pressed="true">Ver</button>
                     </td>
                 </tr>
             </tbody>
     
         </table>
 
-
-
     </div>
-
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </div>

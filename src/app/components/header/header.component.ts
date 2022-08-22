@@ -33,19 +33,20 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     let dataUser:any=sessionStorage.getItem("usuario")
     
-    
     if(dataUser!==undefined &&  dataUser!=""){
       this.usuario=JSON.parse(dataUser)
       this.showHeader=false
     }
+
     this.router.events.subscribe((val:any) => {
       if (val instanceof NavigationEnd) {
-        
         if(val.url=="/home"){
           this.showHeader=false;
         }else{
-          //console.log(sessionStorage.getItem("usuario"))
+          let dataUser:any=sessionStorage.getItem("usuario")
+          this.usuario=JSON.parse(dataUser)
           this.showHeader=true;
+          this.mostrarMenu=false;
         }
       }
       
