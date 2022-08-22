@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment.prod';
   styleUrls: ['./ver-solicitud.component.css']
 })
 export class VerSolicitudComponent implements OnInit {
-  baseUrl:string=environment.baseUrlGet;
+  baseUrlGet:string=environment.baseUrlGet;
   solicitud:any;
   listaHistorialResultadoSolicitud:any;
   listaTareaDocumentos:any;

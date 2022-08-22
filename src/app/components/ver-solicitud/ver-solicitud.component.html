@@ -104,7 +104,7 @@
                     <hr>
     
                     <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
-                        <a class="link-download" href="{{baseUrl}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                        <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                         <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                         
                         <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
