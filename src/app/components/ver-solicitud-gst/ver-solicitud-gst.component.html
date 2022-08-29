@@ -39,14 +39,14 @@
                 <h5>Lista Documentos Requeridos</h5>
                 <hr>
 
-                <div class="form-check" *ngFor="let item of listaTareaDocumentos">
-                    <a class="link-download" href="http://localhost:8080{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
+                    <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                     <label class="form-check-label" for="flexCheckDefault">
-                        {{item.documento_entrada.descripcion}}
-                        <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
+                        {{getDescripcionDocumentoEntrada(item.tarea_documento._id)}}
+                        <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoEntrada(item.tarea_documento._id)}}.png"  />
                     </label>
                 </div>
             </div>
@@ -58,7 +58,7 @@
 
             <div class="col-7 input-group mb-4  mx-5 ">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Mensaje/Obs</label>
-                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="Agradecemos tu ayuda para la revision y validacion de montos.Importante:Tenemos mantención mayor de planta y se requiere asistencia del servicio" style="width: 70%;" ></textarea>
+                <textarea class="form-control text-obs" name="" id="" cols="10" rows="4" placeholder="" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
 
             </div>
 
@@ -66,9 +66,11 @@
                 <h5 class="mx-5">Bitacora</h5>
                 <hr class="linea-bitacora">
                 <p class="mx-5 box-bitacora" >
-                    02/08 Solicitud ingresada // Inicio solicitud en Proceso<br>
-                    03/08 Lista de verificacion actualizada <br>
-                    03/08 Prioridad establecida a ALTA
+                    <span *ngFor="let bitacora of listaBitacoraSolicitud">
+                        {{bitacora.fecha_registro}} {{bitacora.evento}}
+                        <br>
+                    </span>
+
                 </p>
 
             </div>
@@ -98,7 +100,7 @@
             <div class="col-3 input-group" style="width: 45%;">
                 <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">GTS</label>
                 <select class="form-select" id="iGst"  >
-                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" [selected]="validarGst(usuario._id)">{{usuario.nombre}}</option>
 
                 </select>
                 
@@ -106,7 +108,7 @@
             <div class="col-3 input-group" style="width: 45%;">
                 <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
                 <select class="form-select" id="iBko"    >
-                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO" [selected]="validarBko(usuario._id)">{{usuario.nombre}}</option>
                 </select>
                 
             </div>
@@ -114,7 +116,7 @@
         <div class="row mb-3" >
             <div class="col-3 input-group" style="width: 35%;">
                 <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega</label>
-                <input class="form-control" type="date" id="iFechaInicio" value="{{solicitud.fecha_entrega}}" />
+                <input class="form-control" type="date" id="iFechaSolicitud" value="{{solicitud.fecha_entrega}}" />
                 
             </div>
             <div class="col-3 input-group" style="width: 45%;">
@@ -130,11 +132,139 @@
             <div class="col-3 input-group" style="width: 45%;">
 
             </div>
-            <div class="col-3 input-group" style="width: 45%;">
-                <button class="btn btn-primary me-md-2 px-5 btn-interactuar btn-save-estado" type="button" >Guardar Estado</button>
+            <div class="col-3 input-group" style="width: 55%;">
+                <button class="btn btn-primary me-md-2 px-5 btn-interactuar btn-save-estado" type="button" (click)="updateSolicitud('estado_solicitud')">Guardar Estado</button>
             </div>
             
         </div>
+        <hr>
+        <div class="" *ngIf="listaGestionSolicitud.length==0">
+            <div class="py-3 mb-3" >
+                <h4>GESTION SOLICITUD</h4>
+            </div>
+
+            <div  class="row mb-3" *ngFor="let documentacion of listaDocumentacionSolicitud">
+                <div class="form-check col-4" >
+                    <input class="form-check-input" type="checkbox" value=""
+                        id="check-{{documentacion._id}}" >
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{documentacion.nombre_documento}}
+                    </label>
+
+                </div>
+                <div class="row mb-3 col-4" style="position: relative;">
+                    <select class="form-select" id="estado-{{documentacion._id}}" (change)="validarImg(documentacion._id)">
+                        <option value="">..seleccionar estado</option>
+                        <option >No Aplica</option>
+                        <option >No Cumple</option>
+                        <option >Cumple</option>
+                    </select>
+                    <img class="icon-gs" id="amarillo-{{documentacion._id}}" src="assets/icons/icon-advertencia.png" style="display: none;" />
+                    <img class="icon-gs" id="rojo-{{documentacion._id}}" src="assets/icons/icon-cancel.png" style="display: none;" />
+                    <img class="icon-gs" id="verde-{{documentacion._id}}" src="assets/icons/icon-check-gs.png" style="display: none;" />
+                </div>
+                <div class="row mb-3 col-4" style="margin-left:20px" >
+                    <input type="text" id="obs-{{documentacion._id}}" placeholder="Observación" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 " ></div>
+                <div class="col-4 " ></div>
+                <div class="col-4 " style="text-align: right;">
+                    <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="saveGestionSolicitud()">Guardar Gestión</button>
+                </div>
+            </div>
+        </div>
+        <div class="" *ngIf="listaGestionSolicitud.length>0">
+            <div class="py-3 mb-3" >
+                <h4>GESTION SOLICITUD</h4>
+            </div>
+
+            <div  class="row mb-3" *ngFor="let documentacion of listaGestionSolicitud">
+                <div class="form-check col-4" >
+                    <input class="form-check-input" type="checkbox" value=""
+                        id="check-{{documentacion.documentacion_solicitud._id}}" [checked]="validarDocumento(documentacion.validado)" ><!--[disabled]="validarDocumento(documentacion.estado)"-->
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{documentacion.documentacion_solicitud.nombre_documento}}
+                    </label>
+
+                </div>
+                <div class="row mb-3 col-4" style="position: relative;">
+                    <select class="form-select" id="estado-{{documentacion.documentacion_solicitud._id}}" (change)="validarImg(documentacion.documentacion_solicitud._id)">
+                        <option value="">..seleccionar estado</option>
+                        <option [selected]="selectedGS('No Aplica',documentacion.estado)">No Aplica</option>
+                        <option [selected]="selectedGS('No Cumple',documentacion.estado)">No Cumple</option>
+                        <option [selected]="selectedGS('Cumple',documentacion.estado)">Cumple</option>
+                    </select>
+                    <img class="icon-gs" id="amarillo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-advertencia.png" style="display: none;" />
+                    <img class="icon-gs" id="rojo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-cancel.png" style="display: none;" />
+                    <img class="icon-gs" id="verde-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-check-gs.png" style="display: none;" />
+                </div>
+                <div class="row mb-3 col-4" style="margin-left:20px" >
+                    <input type="text" id="obs-{{documentacion.documentacion_solicitud._id}}" placeholder="Observación" value="{{documentacion.observacion}}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 " ></div>
+                <div class="col-4 " ></div>
+                <div class="col-4 " style="text-align: right;">
+                    <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="saveGestionSolicitud()">Guardar Gestión</button>
+                </div>
+            </div>
+        </div>
+    <hr>
+    <div class="py-3 mb-3" >
+        <h4>RESULTADO SOLICITUD</h4>
+    </div>
+    <form [formGroup]="regFormFile" (submit)="addFileTarea()"  >
+        <div class="row mb-5">
+            
+                <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
+
+                    <div class="col-3 input-group mb-3" style="width: 70%;">
+                        <div class="col-12 input-group mb-3" style="width: 100%;">
+                            <label for="basic-url" class="form-label lbl-box-solicitud-r" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                            <select class="form-select" id="iEstadoResultado" (change)="updateSolicitud('estado_resultado')">
+                                <option value={{estado._id}} *ngFor="let estado of listEstadosResultado" [selected]="validarEstadoResultado(estado._id)"><!--[selected]="validarEstadoResultado(estado.nombre_resultado,solicitud.estado_resultado.nombre_estado)"-->
+                                {{estado.nombre_resultado}}
+                                </option>
+                            </select>
+                        </div>
+                        <label for="basic-url" class="form-label lbl-box-solicitud-r" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
+                        <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
+                        <input type="file" formControlName="iFile" id="file" style="display:none;" accept=".doc,.docx,.xls,.xlsx,.pdf" (change)="changeUploadFile()"/>
+                        <img src="assets/icons/icon-upload.png" class="icon-upload" (click)="openUploadFile()" />
+                        <span class="error" *ngIf="isSubmittedFile && errorControlFile.iFile.errors?.required">*Seleccion un archivo a cargar</span>
+                    
+                    </div>
+                    <div class="col-3  input-group mb-3" style="width: 70%;" >
+                        <label for="basic-url" class="form-label lbl-box-solicitud-r" style="margin-right: 8px;margin-top: 8px;">Obs</label>
+                        <textarea class="form-control " id="iObsFile" cols="10" rows="3"  placeholder="Observaciones"></textarea>
+                        
+                    </div>
+                    <div class="col-3  input-group mb-3" style="width: 30%;" >
+                        <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
+                    </div>
+                    
+                </div>
+                <div class="col-6" >
+                    <h5 class="py-1">Lista Documentos Resultados</h5>
+                    <hr>
+                    
+                    <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
+                        <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="validateTareDocumentoSolicitud(item._id)"/>
+                        <input class="form-check-input" type="radio" name="iTypeDocFile" (click)="saveTypeDocFile(item._id,item.documento_salida.tipo_documento)" value="{{item._id}}" id="iTypeDocFile" [disabled]="validateTareDocumentoSolicitud(item._id)" ><!--checked-->
+                        <label class="form-check-label" for="flexCheckDefault">
+                        {{item.documento_salida.descripcion}} - 
+                        <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
+                        </label>
+                        
+                    </div>
+                    
+                </div>
+            
+        </div>
+    </form>   
     <hr>
 
     <div class="row my-3">
@@ -142,23 +272,18 @@
 
         <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
             <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
-            <textarea class=" form-control"  name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" disabled>{{solicitud.observacion}}</textarea>
-        </div>
-
-        <div class="col-7 input-group mb-3 mx-5  align-items-center">
-            <label for="basic-url" class="form-label lbl-interaccion" >Feedback ADC</label>
-            <textarea class=" form-control" name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
-        </div>
+            <textarea class=" form-control"  name="" id="msjInteradcion" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
+        </div>       
        
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
-            <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  type="button" >Interactuar</button>
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  (click)="addHistorialSolicitud()"type="button" >Interactuar</button>
         </div>
 
 
     </div>
     <hr>
 
-    <div class="row my-4">
+    <div class="row my-4" id="historial-solicitud">
 
         <h4>HISTORIAL RESULTADO SOLICITUD</h4>
         
@@ -173,8 +298,11 @@
                     <th scope="col">Enviado por</th>
                     <th scope="col">Mensaje</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Respondido por</th>
                     <th scope="col">Feedback</th>
-                    <th scope="col">...</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
     
             </thead>
@@ -190,26 +318,72 @@
                         {{historial.fecha_registro}}<br>
                         
                     </td>
-                        ACosio<br>
-                        FGutierrez 
+                        
                     <td>
+                        {{historial.usuario.nombre}}
                     </td>
                     <td>
-                        {{historial.fecha_registro}}
+                        {{historial.mensaje}}
                     </td>
                     <td>
+                        {{historial.fecha_respuesta}}
                     </td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-lg active"
-                            role="button" aria-pressed="true">Ver</a>
+                        {{(historial.usuario_respuesta)?historial.usuario_respuesta.nombre:''}}
+                    </td>
+                    <td>
+                        {{historial.respuesta}}
+                    </td>
+                    <td *ngIf="!historial.usuario_respuesta">
+                        <button *ngIf="usuario._id!=historial.usuario._id" type="button" style="margin-right: 4px;" class="btn btn-primary btn-sm  "
+                            role="button" aria-pressed="true" (click)=openModalFeedback(historial._id)>Responder</button>
+                    </td>
+                    <td *ngIf="historial.usuario_respuesta">
+                        
+                    </td>
+                    <td >
+                        <!--<button type="button" class="btn btn-primary btn-sm "
+                            role="button" aria-pressed="true">Ver</button>-->
+                    </td>
+                    <td >
+                        <a class="" href="{{baseUrlGet}}{{historial.url_file}}" target="blank">
+                            <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file!=''"/>
+                        </a>
                     </td>
                 </tr>
             </tbody>
     
         </table>
 
-
-
     </div>
 
 </div>
+
+<div [ngClass]="(showModal) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">INTERACCION</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row my-3">
+                <div class="col-7 input-group mb-3 align-items-center">
+                    <textarea class=" form-control" name="" id="feedback" cols="7" rows="3" style="width: 70%;" ></textarea>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-7 input-group mb-3 align-items-center">
+                    <input type="file" name="fileRespuesta" id="fileRespuesta" (change)="addFileHistorial()" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="updateHistorialSolicitud()" >Enviar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>

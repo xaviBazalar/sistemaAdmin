@@ -39,14 +39,14 @@
                 <h5>Lista Documentos Requeridos</h5>
                 <hr>
 
-                <div class="form-check" *ngFor="let item of listaTareaDocumentos">
+                <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
                     <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                     <label class="form-check-label" for="flexCheckDefault">
-                        {{item.documento_entrada.descripcion}}
-                        <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
+                        {{getDescripcionDocumentoEntrada(item.tarea_documento._id)}}
+                        <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoEntrada(item.tarea_documento._id)}}.png"  />
                     </label>
                 </div>
             </div>
@@ -54,41 +54,15 @@
             <div class="my-4 mt-5 ">
                 <h4 class="mb-3">GESTION SOLICITUD</h4>
                 <div class="mt-3 pl-3">
-                    <div class="form-check ">
+                    <div class="form-check " *ngFor="let documentacion of listaGestionSolicitud">
                         <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckDefault">
+                            id="flexCheckDefault" [checked]="validarDocumento(documentacion.validado)" [disabled]="true">
                         <label class="form-check-label" for="flexCheckDefault">
-                            Lista de chequeo de tarea para realizar la tarea
+                            {{documentacion.documentacion_solicitud.nombre_documento}}
                         </label>
+
                     </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Lista de chequeo de tarea para realizar la tarea
-                        </label>
-                    </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Lista de chequeo de tarea para realizar la tarea
-                        </label>
-                    </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Lista de chequeo de tarea para realizar la tarea
-                        </label>
-                    </div>
-                    <div class="form-check ">
-                        <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Lista de chequeo de tarea para realizar la tarea
-                        </label>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -103,14 +77,14 @@
                     <h5>Lista Documentos Resultados</h5>
                     <hr>
     
-                    <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
+                    <div class="form-check" *ngFor="let item of listaTareaDocumentosSalidaSolicitud">
                         <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                         <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                         
                         <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                         <label class="form-check-label" for="flexCheckDefault">
-                            {{item.documento_salida.descripcion}}
-                            <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
+                            {{getDescripcionDocumentoSalida(item.tarea_documento._id)}}
+                            <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoSalida(item.tarea_documento._id)}}.png"  />
                         </label>
                     </div>
                 </div>
@@ -153,9 +127,10 @@
                 <h5 class="mx-5">Bitacora</h5>
                 <hr class="linea-bitacora">
                 <p class="mx-5 box-bitacora" >
-                    02/08 Solicitud ingresada // Inicio solicitud en Proceso<br>
-                    03/08 Lista de verificacion actualizada <br>
-                    03/08 Prioridad establecida a ALTA
+                    <span *ngFor="let bitacora of listaBitacoraSolicitud">
+                        {{bitacora.fecha_registro}} {{bitacora.evento}}
+                        <br>
+                    </span>
                 </p>
             </div>
         </div>
@@ -164,27 +139,21 @@
     <hr>
 
     <div class="row my-3">
-        <h4>INTERACCIONES</h4>
+        <h4>ITERACCIONES</h4>
 
         <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
             <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
             <textarea class=" form-control"  name="" id="msjInteradcion" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
-        </div>
-
-        <div class="col-7 input-group mb-3 mx-5  align-items-center">
-            <label for="basic-url" class="form-label lbl-interaccion" >Feedback ADC</label>
-            <textarea class=" form-control" name="" id="" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
-        </div>
-       
+        </div>       
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
-            <button class="btn btn-primary me-md-2 px-5 btn-interactuar " type="button" (click)="addHistorialSolicitud()" >Interactuar</button>
+            <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  type="button" (click)="addHistorialSolicitud()" >Interactuar</button>
         </div>
 
 
     </div>
     <hr>
 
-    <div class="row my-4">
+    <div class="row my-4" id="historial-solicitud">
 
         <h4>HISTORIAL RESULTADO SOLICITUD</h4>
         
@@ -199,8 +168,11 @@
                     <th scope="col">Enviado por</th>
                     <th scope="col">Mensaje</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Respondido por</th>
                     <th scope="col">Feedback</th>
-                    <th scope="col">...</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
     
             </thead>
@@ -224,13 +196,29 @@
                         {{historial.mensaje}}
                     </td>
                     <td>
+                        {{historial.fecha_respuesta}}
+                    </td>
+                    <td>
+                        {{(historial.usuario_respuesta)?historial.usuario_respuesta.nombre:''}}
+                    </td>
+                    <td>
+                        {{historial.respuesta}}
+                    </td>
+                    <td *ngIf="!historial.usuario_respuesta">
+                        <button *ngIf="usuario._id!=historial.usuario._id" type="button" style="margin-right: 4px;" class="btn btn-primary btn-sm  "
+                            role="button" aria-pressed="true" (click)=openModalFeedback(historial._id)>Responder</button>
+                    </td>
+                    <td *ngIf="historial.usuario_respuesta">
                         
                     </td>
-                    <td>
+                    <td >
+                        <!--<button type="button" class="btn btn-primary btn-sm "
+                            role="button" aria-pressed="true">Ver</button>-->
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-lg active"
-                            role="button" aria-pressed="true">Ver</button>
+                    <td >
+                        <a class="" href="{{baseUrlGet}}{{historial.url_file}}" target="blank">
+                            <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file!=''"/>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -240,3 +228,31 @@
     </div>
 
 </div>
+<div [ngClass]="(showModal) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">INTERACCION</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row my-3">
+                <div class="col-7 input-group mb-3 align-items-center">
+                    <textarea class=" form-control" name="" id="feedback" cols="7" rows="3" style="width: 70%;" ></textarea>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-7 input-group mb-3 align-items-center">
+                    <input type="file" name="fileRespuesta" id="fileRespuesta" (change)="addFileHistorial()" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="updateHistorialSolicitud()" >Enviar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>

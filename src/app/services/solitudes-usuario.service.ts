@@ -5,30 +5,23 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SolicitudesService {
+export class SolitudesUsuarioService {
 
   url:string=environment.baseUrl;
 
   constructor(private http:HttpClient) { }
 
-  getSolicitudes(){
-    return this.http.get(`${this.url}/solicitudes`)
+  getSolicitudesUsuario(id:string|null){
+    return this.http.get(`${this.url}/solicitudesUsuario?gst=${id}`)
   }
 
-  getSolicitud(id:string|null){
+  /*getSolicitud(id:string|null){
     return this.http.get(`${this.url}/solicitudes?id=${id}`)
-  }
-
-  updateSolicitud(id:string|null,data:any){
-    return this.http.put(`${this.url}/solicitudes/${id}`,data)
   }
 
   addSolicitud(body:any){
     return this.http.post(`${this.url}/solicitudes`,body)
-  }
+  }*/
   
 
-
-
- 
 }

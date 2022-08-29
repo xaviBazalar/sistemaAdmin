@@ -1,0 +1,51 @@
+
+<div class="container">
+    <div class="row my-5 justify-content-md-end">
+        <div class="col-10">
+            <h2>Notificaciones</h2>
+        </div>
+
+        <div class="col-2">
+            
+        </div>
+    </div>
+
+
+    <table class="table table-light table-striped border border-1">
+
+
+        <thead class="bg-#F53621">
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Notificacion</th>
+                <th scope="col">Link</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr style="font-size: 12px;" *ngFor="let notificacion of listaNotificaciones">
+                <td>{{notificacion.fecha_registro}}</td>
+                <td>{{notificacion.tipo}}</td>
+                <td>
+                    <button (click)="updateNotificacion(notificacion._id,notificacion.link)"  type="submit" class="btn btn-secondary btn-sm px-5" >Ver</button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+   
+       
+    
+
+
+
+
+   
+
+   
+

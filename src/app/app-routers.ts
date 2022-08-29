@@ -6,14 +6,16 @@ import { MisSolicitudesComponent } from './components/mis-solicitudes/mis-solici
 import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
 import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 
 const APP_ROUTES:Routes = [
 
   {path:'home',component: HomeComponent},
-  {path:'tablero',component: TableroComponent},
+  {path:'tablero',component: ListaComponent},
+  {path:'notificaciones',component: NotificacionesComponent},
   {path:'nuevaSolicitud',component: NuevaSolicitudComponent},
   {path:'misSolicitudes',component: MisSolicitudesComponent},
-  {path:'lista',component: ListaComponent},
+  {path:'tareas',component: TableroComponent},
   {path:'solicitud/:id',component: VerSolicitudComponent},
   {path:'solicitudB/:id',component: VerSolicitudGstComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}

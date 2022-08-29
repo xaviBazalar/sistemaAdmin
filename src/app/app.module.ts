@@ -18,6 +18,7 @@ import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
 import { HeaderComponent } from './components/header/header.component';
 import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
+import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-sol
     ListaComponent,
     VerSolicitudComponent,
     HeaderComponent,
-    VerSolicitudGstComponent
+    VerSolicitudGstComponent,
+    NotificacionesComponent
   ],
   imports: [
     BrowserModule,

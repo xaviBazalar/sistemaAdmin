@@ -24,108 +24,13 @@
                 <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">*El campo contrato es requerido</span>
             </div>
             <div class="input-group mb-3 form-check box-check" style="width: 25%;">
-                <input type="checkbox" class="form-check-input"id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
+                <!--<input type="checkbox" class="form-check-input"id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>-->
             </div>
             <div  class="input-group mb-3 form-check " style="width: 40%;">
                 <button type="submit" class="btn btn-success  px-5">Buscar</button>
             </div>
         </div>
-        <hr>
-        <div class="py-3 mb-3" *ngIf="mostrarTareas">
-            <h2>TAREA SOLICITADA</h2>
-        </div>
-        <div class="row mb-3" *ngIf="mostrarTareas" >
-            <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
-                <select class="form-select" id="iTarea"  formControlName="iTarea" (change)="getTareaDocumentosEntrada($event)" >
-                    <option  value="{{tareas.tarea._id}}" *ngFor="let tareas of listaTareasContrato">
-                        {{tareas.tarea.nombre_tarea}}
-                    </option>
-                
-                </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iTarea.errors?.required">*El campo tarea es requerido</span>
-            </div>
-            <div class="input-groupform-check box-check" style="width: 35%;">
-                <input type="checkbox" class="form-check-input">
-                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>
-            </div>
-            <div  class="input-group form-check" style="width: 30%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
-                <input  class="form-control" type="text"  value="MMR" disabled>
-                
-            </div>
-        </div>
-        <div class="row mb-3" *ngIf="mostrarTareas">
-            <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
-                <select class="form-select" id="iGst"  formControlName="iGst" >
-                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
-
-                </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iGst.errors?.required">*El campo GST es requerido</span>
-            </div>
-            <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
-                <select class="form-select" id="iBko"  formControlName="iBko"  >
-                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
-                </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iBko.errors?.required">*El campo BKO es requerido</span>
-            </div>
-        
-        </div>
-
-        <div class="row mb-5" *ngIf="mostrarTareas">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs:</label>
-            <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
-            <span class="error" *ngIf="isSubmitted && errorControl.iMensaje.errors?.required">*El campo mensaje es requerido</span>
-        </div>
-        <hr *ngIf="mostrarTareas">
-        <div class="py-3 mb-3">
-            <h2>INFORMACION REQUERIDA</h2>
-        </div>
-        <form [formGroup]="regFormFile" (submit)="addFileTarea()" >
-            <div class="row mb-5">
-                
-                    <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
-
-                        <div class="col-3 input-group mb-3" style="width: 70%;">
-                            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
-                            <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
-                            <input type="file" formControlName="iFile" id="file" style="display:none;" accept=".doc,.docx,.xls,.xlsx,.pdf" (change)="changeUploadFile()"/>
-                            <img src="assets/icons/icon-upload.png" class="icon-upload" (click)="openUploadFile()" />
-                            <span class="error" *ngIf="isSubmittedFile && errorControlFile.iFile.errors?.required">*Seleccion un archivo a cargar</span>
-                        </div>
-                        <div class="col-3  input-group mb-3" style="width: 70%;" >
-                            <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
-                            <textarea class="form-control " id="iObsFile" cols="10" rows="3"  placeholder="Observaciones"></textarea>
-                            
-                        </div>
-                        <div class="col-3  input-group mb-3" style="width: 30%;" >
-                            <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
-                        </div>
-                        
-                    </div>
-                    <div class="col-6" >
-                        <h5 class="py-1">Lista Documentos Requeridos</h5>
-                        <hr>
-                        
-                        <div class="form-check" *ngFor="let item of listaTareaDocumentos">
-                            <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="validateFile(item.validado)"/>
-                            <input class="form-check-input" type="radio" (click)="saveTypeDocFile(item._id)" value="{{item._id}}" id="iTypeDocFile" [disabled]="validateFile(item.validado)" ><!--checked-->
-                            <label class="form-check-label" for="flexCheckDefault">
-                            {{item.documento_entrada.descripcion}} - 
-                            <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
-                            </label>
-                            
-                        </div>
-                        
-                    </div>
-                
-            </div>
-        </form>        
-            
-
         <hr>
         <div class="py-3 mb-3">
             <h2>ESTADO SOLICITUD</h2>
@@ -161,9 +66,105 @@
         </div>
     
         <hr>
+        <div class="py-3 mb-3" *ngIf="mostrarTareas">
+            <h2>TAREA SOLICITADA</h2>
+        </div>
+        <div class="row mb-3" *ngIf="mostrarTareas" >
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                <select class="form-select" id="iTarea"  formControlName="iTarea" (change)="getTareaDocumentosEntrada($event)" >
+                    <option  value="{{tareas.tarea._id}}" *ngFor="let tareas of listaTareasContrato">
+                        {{tareas.tarea.nombre_tarea}}
+                    </option>
+                
+                </select>
+                <span class="error" *ngIf="isSubmitted && errorControl.iTarea.errors?.required">*El campo tarea es requerido</span>
+            </div>
+            <div class="input-groupform-check box-check" style="width: 35%;">
+                <!--<input type="checkbox" class="form-check-input">
+                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>-->
+            </div>
+            <div  class="input-group form-check" style="width: 30%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
+                <input  class="form-control" type="text"  value="MMR" disabled>
+                
+            </div>
+        </div>
+        <div class="row mb-3" *ngIf="mostrarTareas">
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+                <select class="form-select" id="iGst"  formControlName="iGst" >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
+
+                </select>
+                <span class="error" *ngIf="isSubmitted && errorControl.iGst.errors?.required">*El campo GST es requerido</span>
+            </div>
+            <div class="col-3 input-group" style="width: 35%;">
+                <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
+                <select class="form-select" id="iBko"  formControlName="iBko"  >
+                    <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
+                </select>
+                <span class="error" *ngIf="isSubmitted && errorControl.iBko.errors?.required">*El campo BKO es requerido</span>
+            </div>
+        
+        </div>
+
+        <div class="row mb-5" *ngIf="mostrarTareas">
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs:</label>
+            <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
+            <span class="error" *ngIf="isSubmitted && errorControl.iMensaje.errors?.required">*El campo mensaje es requerido</span>
+        </div>
+        <hr *ngIf="mostrarTareas">
+        <div class="py-3 mb-3" *ngIf="mostrarTareas">
+            <h2>INFORMACION REQUERIDA</h2>
+        </div>
+        <form [formGroup]="regFormFile" (submit)="addFileTarea()"  *ngIf="mostrarTareas">
+            <div class="row mb-5">
+                
+                    <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
+
+                        <div class="col-3 input-group mb-3" style="width: 70%;">
+                            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
+                            <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
+                            <input type="file" formControlName="iFile" id="file" style="display:none;" accept=".doc,.docx,.xls,.xlsx,.pdf" (change)="changeUploadFile()"/>
+                            <img src="assets/icons/icon-upload.png" class="icon-upload" (click)="openUploadFile()" />
+                            <span class="error" *ngIf="isSubmittedFile && errorControlFile.iFile.errors?.required">*Seleccion un archivo a cargar</span>
+                        </div>
+                        <div class="col-3  input-group mb-3" style="width: 70%;" >
+                            <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
+                            <textarea class="form-control " id="iObsFile" cols="10" rows="3"  placeholder="Observaciones"></textarea>
+                            
+                        </div>
+                        <div class="col-3  input-group mb-3" style="width: 30%;" >
+                            <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
+                        </div>
+                        
+                    </div>
+                    <div class="col-6" >
+                        <h5 class="py-1">Lista Documentos Requeridos</h5>
+                        <hr>
+                        
+                        <div class="form-check" *ngFor="let item of listaTareaDocumentos">
+                            <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="validateTareDocumentoSolicitud(item._id)"/>
+                            <input class="form-check-input" type="radio" name="iTypeDocFile" (click)="saveTypeDocFile(item._id,item.documento_entrada.tipo_documento)" value="{{item._id}}" id="iTypeDocFile" [disabled]="validateTareDocumentoSolicitud(item._id)" ><!--checked-->
+                            <label class="form-check-label" for="flexCheckDefault">
+                            {{item.documento_entrada.descripcion}} - 
+                            <img class="iconFile" src="assets/icons/icon-{{item.documento_entrada.tipo_documento}}.png"  />
+                            </label>
+                            
+                        </div>
+                        
+                    </div>
+                
+            </div>
+        </form>        
+            
+
+        <hr *ngIf="mostrarTareas">
+        
         <input type="hidden" value="62fad65648d35ca4acd14682" id="iEstadoResultado"  />
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-            <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>
+           <!-- <button type="button" class="btn btn-success" disabled>Guardar Solicitud</button>-->
             <button type="submit" class="btn btn-success" >Enviar Solicitud</button>
         </div>
         <div class="alert alert-success" role="alert" *ngIf="msjSucess">

@@ -1,10 +1,14 @@
 <div class="header" *ngIf="showHeader">
     <div class="container box-header">
         <img class="logo" src="assets/img/logo.png" />
-        <div>
-            {{usuario.nombre}}
+        <div style="position:relative;">
+            {{usuario.nombre}}-{{usuario.perfil.sigla}}
             <img src="assets/icons/icon-user.png" />
+            <span class="notificaciones">
+                <a [routerLink]="['/notificaciones']">{{totalNotificaciones}}</a>
+            </span>
         </div>
+        
     </div>
 </div>
 

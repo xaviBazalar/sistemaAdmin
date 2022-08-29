@@ -83,8 +83,24 @@ h4{
 
 
 
+.notificaciones{
+    border: 1px solid red;
+    border-radius: 100%;
+    background: red;
+    color: #fff;
+    font-size: 10px;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    cursor: pointer;
+}
 
-
+.notificaciones a{
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 3px 7px;
+}
 
 
 

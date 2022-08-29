@@ -9,6 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
 import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
 import { UploadFileService } from '../../services/upload-file.service';
+import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -26,6 +27,7 @@ export class NuevaSolicitudComponent implements OnInit {
   listaContratos:any;
   listaTareasContrato:any;
   listaTareaDocumentos:any;
+  listaTareaDocumentosEntradaSolicitud:any;
   mostrarTareas:boolean=false;
   isReadonly:boolean=true;
   msjSucess:boolean=false;
@@ -39,6 +41,9 @@ export class NuevaSolicitudComponent implements OnInit {
   usuarioLogin:any;
   idTareDocumentoEntrada:string="";
   tareaSelected:string="";
+  tipoTareaSelected:string="";
+  tokenTemp:number|string="";
+
   constructor(public gerenciaService:GerenciasService,
     public estadosService:EstadosSolicitudService,
     public solicitudService:SolicitudesService,
@@ -47,6 +52,7 @@ export class NuevaSolicitudComponent implements OnInit {
     public contratosServicio:ContratosService,
     public tareasContratoService:TareasContratoService,
     public tareaDocumentosService:TareaDocumentosEntradaService,
+    public tareaDocumentoEntradaSolicitud:TareaDocumentosEntradaSolicitudService,
     public uploadFileService:UploadFileService,
     public formBuilder: FormBuilder) {
     this.listaUsuariosGST=[];
@@ -62,6 +68,8 @@ export class NuevaSolicitudComponent implements OnInit {
       //iTypeDocFile:['', Validators.required],
     })
 
+    this.tokenTemp=new Date().getTime();
+
     this.regForm=this.formBuilder.group({
       iGerencia:['', Validators.required],
       iContrato:['', Validators.required],
@@ -69,9 +77,9 @@ export class NuevaSolicitudComponent implements OnInit {
       iGst:['63005b09a608b63a870dfd59', Validators.required],
       iBko:['', Validators.required],
       iMensaje:['', Validators.required],
-      iFechaSolicitud:['', Validators.required],
+      iFechaSolicitud:[this.getFecActual(), Validators.required],
       //iEstadoSolicitud:['', Validators.required],
-      iFechaInicio:['', Validators.required],
+      iFechaInicio:[this.getFecEntrega(), Validators.required],
      })
 
      //this.regForm.controls['iGst'].setValue(this.default, {onlySelf: true});
@@ -106,6 +114,41 @@ export class NuevaSolicitudComponent implements OnInit {
       this.listaContratos=data.contratos;
      
     })
+
+
+    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud("").subscribe((data:any)=>{
+      
+      this.listaTareaDocumentosEntradaSolicitud=data.tarea_documentos_entrada_solicitud;
+    })
+
+    
+  }
+
+  getFecActual(){
+    let hoy = new Date();
+    let i=0;
+    let fecha = hoy.getDate()+ '/' + ((hoy.getMonth())+1) + '/' + hoy.getFullYear();
+    let mes:any=((hoy.getMonth())+1);
+    mes=(mes.toString().length==1)?"0"+mes:mes;
+    let dia:any=hoy.getDate();
+    dia=(dia.toString().length==1)?"0"+dia:dia;
+    return hoy.getFullYear()+"-"+mes+"-"+dia
+  }
+
+  getFecEntrega(){
+    let hoy = new Date();
+    let i=0;
+    while (i<1) { // 1 días habile siguiente
+        hoy.setTime(hoy.getTime()+24*60*60*1000); // añadimos 1 día
+        if (hoy.getDay() != 6 && hoy.getDay() != 0)
+            i++;  
+    }
+    let fecha = hoy.getDate()+ '/' + ((hoy.getMonth())+1) + '/' + hoy.getFullYear();
+    let mes:any=((hoy.getMonth())+1);
+    mes=(mes.toString().length==1)?"0"+mes:mes;
+    let dia:any=hoy.getDate();
+    dia=(dia.toString().length==1)?"0"+dia:dia;
+    return hoy.getFullYear()+"-"+mes+"-"+dia
   }
 
   seleccionarGST(usuario:any){
@@ -136,6 +179,12 @@ export class NuevaSolicitudComponent implements OnInit {
     })
   }
 
+  refreshTareaDocumentosEntradaSolicitud() {
+    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud("").subscribe((data:any)=>{
+      this.listaTareaDocumentosEntradaSolicitud=data.tarea_documentos_entrada_solicitud;
+    })
+  }
+
   refreshTareaDocumentosEntrada(){
     let tarea=this.tareaSelected;
     this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
@@ -143,8 +192,34 @@ export class NuevaSolicitudComponent implements OnInit {
     })
   }
 
-  saveTypeDocFile(valor:string){
+  validateTareDocumentoSolicitud(id:string){
+    let validacion=false
+    for(let tareDocumentoSolicitud of this.listaTareaDocumentosEntradaSolicitud){
+      if(tareDocumentoSolicitud.tarea_documento._id==id && tareDocumentoSolicitud.randomId==this.tokenTemp){
+        validacion=true
+        break
+      }
+    }
+
+    return validacion
+  }
+
+  saveTypeDocFile(valor:string,tipoArchivo:string){
     this.idTareDocumentoEntrada=valor;
+    this.tipoTareaSelected=tipoArchivo
+    let inputF=document.querySelector('#file')
+    if(this.tipoTareaSelected=="word"){
+      inputF?.setAttribute("accept",".doc,.docx")
+    }
+
+    if(this.tipoTareaSelected=="excel"){
+      inputF?.setAttribute("accept",".xls,.xlsx")
+    }
+
+    if(this.tipoTareaSelected=="pdf"){
+      inputF?.setAttribute("accept",".pdf")
+    }
+
   }
 
   validateFile(validado:any){
@@ -156,6 +231,7 @@ export class NuevaSolicitudComponent implements OnInit {
   }
 
   addFileTarea(){
+
     let previewFile:any=document.querySelector("#customFileLang")
     var formData = new FormData();
     const imagefile = document.querySelector('#file') as HTMLInputElement;
@@ -168,21 +244,41 @@ export class NuevaSolicitudComponent implements OnInit {
     if (this.regFormFile.dirty && this.regFormFile.valid && this.idTareDocumentoEntrada!="") {
         this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
           
-          let dataUpdate={
+          /*let dataUpdate={
             _id:this.idTareDocumentoEntrada,
             validado:true,
             url_ref:"/api/upload?id="+data.urlFile,
-            observacion:observacion.value
+            observacion:observacion.value,
+            randomId:this.tokenTemp
+          } */
+
+          let dataAdd={
+            tarea_documento:this.idTareDocumentoEntrada,
+            validado:true,
+            url_ref:"/api/upload?id="+data.urlFile,
+            observacion:observacion.value,
+            randomId:this.tokenTemp
           } 
 
-          this.tareaDocumentosService.updateTareaDocumentosEntrada(dataUpdate,this.idTareDocumentoEntrada).subscribe((data:any)=>{
+          this.tareaDocumentoEntradaSolicitud.addTareaDocumentosEntradaSolicitud(dataAdd).subscribe((data:any)=>{
+            //this.refreshTareaDocumentosEntrada()
+            this.refreshTareaDocumentosEntradaSolicitud()
+            this.isSubmittedFile=false
+            this.regFormFile.reset()
+            this.idTareDocumentoEntrada=""
+            previewFile.value=""
+            this.isSubmittedFile=false;
+         })
+
+          /*this.tareaDocumentosService.updateTareaDocumentosEntrada(dataUpdate,this.idTareDocumentoEntrada).subscribe((data:any)=>{
               this.refreshTareaDocumentosEntrada()
               this.isSubmittedFile=false
               this.regFormFile.reset()
               this.idTareDocumentoEntrada=""
               previewFile.value=""
               this.isSubmittedFile=false;
-          })
+          })*/
+
         })
     }
   }
@@ -225,6 +321,7 @@ export class NuevaSolicitudComponent implements OnInit {
         observacion:this.regForm.value.iMensaje,
         fecha_solicitud:this.regForm.value.iFechaSolicitud,
         fecha_inicio:this.regForm.value.iFechaInicio,
+        randomId:this.tokenTemp
       }
 
       this.solicitudService.addSolicitud(solicitud).subscribe((data:any)=>{

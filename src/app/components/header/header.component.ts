@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NotificacionesService } from 'src/app/services/notificaciones.service';
+import { SolitudesUsuarioService } from '../../services/solitudes-usuario.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,12 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   showHeader=false;
   usuario:any;
-  constructor(private router: Router) {
+  totalNotificaciones:number=0
+  constructor(
+    private router: Router,
+    public solicitudesUsuarioService:SolitudesUsuarioService,
+    public notificacionesUsuarioService:NotificacionesService,
+  ) {
     this.usuario=sessionStorage.getItem("usuario");
    }
 
@@ -26,8 +33,12 @@ export class HeaderComponent implements OnInit {
     },
     {
       titulo:"Tareas",
-      url:"/lista"
+      url:"/tareas"
     },
+    /*{
+      titulo:"Tablero",
+      url:"/tablero"
+    }*/
   ];
 
   ngOnInit(): void {
@@ -47,12 +58,26 @@ export class HeaderComponent implements OnInit {
           this.usuario=JSON.parse(dataUser)
           this.showHeader=true;
           this.mostrarMenu=false;
+          this.refreshNotificaciones()
         }
       }
       
     });
 
+    /*this.solicitudesUsuarioService.getSolicitudesUsuario(this.usuario._id).subscribe((data:any)=>{
+      this.totalNotificaciones=data.total
+    });*/
+
+    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id).subscribe((data:any)=>{
+      this.totalNotificaciones=data.total
+    });
     
+  }
+
+  refreshNotificaciones(){
+    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id).subscribe((data:any)=>{
+      this.totalNotificaciones=data.total
+    });
   }
 
   logout(){

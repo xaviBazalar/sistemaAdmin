@@ -138,6 +138,11 @@ h4{
     font-size: 10px;
 }
 
+.box-bitacora p{
+    height: 180px;
+    overflow-y: auto;
+}
+
 .lbl-interaccion{
     margin-right: 14px;
     margin-top: 8px;
@@ -148,9 +153,54 @@ h4{
     width: 122px;
 }
 
+.lbl-box-solicitud-r{
+    width: 54px;
+}
+
 .btn-save-estado{
     float: right;
     position: absolute;
     top: -54px;
     left: 250px;
+}
+
+.modalApp{
+    background: #0000008a;
+    z-index: 99999;
+    display: block;
+}
+
+
+.iconFile{
+    width: 24px;
+}
+
+.icon-gs{
+    width:42px;
+    position: absolute;
+    right: -24px;
+    top: 10px;
+}
+
+.img-checked{
+    width: 16px;
+    margin-right: 6px;
+    margin-bottom: 3px;
+}
+
+.icon-upload{
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: -40px;
+    top: 62px;
+    cursor: pointer;
+}
+
+.error{
+    display: block;
+    width: 100%;
+    font-size: 10px;
+    color: red;
+    text-align: right;
 }
