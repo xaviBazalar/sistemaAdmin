@@ -68,14 +68,14 @@ export class HeaderComponent implements OnInit {
       this.totalNotificaciones=data.total
     });*/
 
-    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id).subscribe((data:any)=>{
+    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id,false).subscribe((data:any)=>{
       this.totalNotificaciones=data.total
     });
     
   }
 
   refreshNotificaciones(){
-    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id).subscribe((data:any)=>{
+    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id,false).subscribe((data:any)=>{
       this.totalNotificaciones=data.total
     });
   }

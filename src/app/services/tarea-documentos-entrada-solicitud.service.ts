@@ -10,7 +10,7 @@ export class TareaDocumentosEntradaSolicitudService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getTareaDocumentosEntradaSolicitud(randomId:string|null){
+  getTareaDocumentosEntradaSolicitud(randomId:string|number|null){
     return this.http.get(`${this.url}/tareaDocumentosEntradaSolicitud?randomId=${randomId}`) 
   }
 

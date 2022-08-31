@@ -15,6 +15,12 @@ export class SolicitudesService {
     return this.http.get(`${this.url}/solicitudes`)
   }
 
+  getSolicitudesFilter(dataSend:any){
+   // var queryString = Object.keys(dataSend).map(key => key + '=' + dataSend[key]).join('&');
+
+    return this.http.get(`${this.url}/solicitudes`,{params: dataSend})
+  }
+
   getSolicitud(id:string|null){
     return this.http.get(`${this.url}/solicitudes?id=${id}`)
   }

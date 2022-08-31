@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SolicitudesService } from '../../services/solicitudes.service';
 
 @Component({
   selector: 'app-lista',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lista.component.css']
 })
 export class ListaComponent implements OnInit {
-
-  constructor() { }
+  listaSolicitudes:any=[];
+  constructor(
+    public solicitudService:SolicitudesService,
+  ) { }
 
   ngOnInit(): void {
+    this.solicitudService.getSolicitudes().subscribe((data:any)=>{
+      this.listaSolicitudes=data.solicitudes;
+    })
   }
 
 }

@@ -15,8 +15,8 @@ export class NotificacionesService {
     return this.http.get(`${this.url}/notificacionesUsuario`)
   }
 
-  getNotificacionesUsuario(usuario:string|null){
-    return this.http.get(`${this.url}/notificacionesUsuario?usuario=${usuario}`)
+  getNotificacionesUsuario(usuario:string|null,visto:boolean){
+    return this.http.get(`${this.url}/notificacionesUsuario?usuario=${usuario}&visto=${visto}`)
   }
 
   updateNotificacionesUsuario(id:string|null,data:any){

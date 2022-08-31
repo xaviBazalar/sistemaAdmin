@@ -18,7 +18,7 @@ export class NotificacionesComponent implements OnInit {
   ngOnInit(): void {
     let dataUser:any=sessionStorage.getItem("usuario")
     this.usuario=JSON.parse(dataUser)
-    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id).subscribe((data:any)=>{
+    this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id,true).subscribe((data:any)=>{
       this.listaNotificaciones=data.notificaciones_usuario
     });
   }

@@ -180,7 +180,7 @@ export class NuevaSolicitudComponent implements OnInit {
   }
 
   refreshTareaDocumentosEntradaSolicitud() {
-    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud("").subscribe((data:any)=>{
+    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud(this.tokenTemp).subscribe((data:any)=>{
       this.listaTareaDocumentosEntradaSolicitud=data.tarea_documentos_entrada_solicitud;
     })
   }
@@ -191,6 +191,7 @@ export class NuevaSolicitudComponent implements OnInit {
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
+
 
   validateTareDocumentoSolicitud(id:string){
     let validacion=false
