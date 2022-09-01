@@ -62,9 +62,21 @@ export class MisSolicitudesComponent implements OnInit {
         this.listaSolicitudesPendiente=data.solicitudes;
       })
 
-      let dataFilterAsignado:any={
-        ingresado:true,
-        gst:this.usuario._id
+ 
+      let perfil=this.usuario.perfil.sigla
+      let dataFilterAsignado:any;
+      if(perfil=="GST"){
+        dataFilterAsignado={
+          ingresado:true,
+          gst:this.usuario._id
+        }
+      }
+
+      if(perfil=="BKO"){
+        dataFilterAsignado={
+          ingresado:true,
+          bko:this.usuario._id
+        }
       }
       this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
         this.listaSolicitudesAsignadas=data.solicitudes;
