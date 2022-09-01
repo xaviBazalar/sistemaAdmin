@@ -7,7 +7,7 @@
             Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
         </div>
         <div class="col-3">
-            Solicitud ID: <b>MMR-001</b>
+            Solicitud ID: <b>MMR-{{solicitud.idsecuencia}}</b>
         </div> 
     </div>
     <hr>
@@ -23,8 +23,8 @@
                     <p style="width: 70%;">{{solicitud.gerencia.nombre_gerencia}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
-                    <p style="width: 30%;" >ADC</p>
-                    <p style="width: 70%;" >{{solicitud.bko.nombre}}</p>
+                    <p style="width: 30%;" >Solicitante</p>
+                    <p style="width: 70%;" >{{solicitud.solicitante.nombre}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
                     <p style="width: 30%;">Contrato</p>
@@ -98,7 +98,7 @@
         </div>
         <div class="row mb-3" >
             <div class="col-3 input-group" style="width: 45%;">
-                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+                <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">GST</label>
                 <select class="form-select" id="iGst"  >
                     <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" [selected]="validarGst(usuario._id)">{{usuario.nombre}}</option>
 
@@ -196,9 +196,9 @@
                         <option [selected]="selectedGS('No Cumple',documentacion.estado)">No Cumple</option>
                         <option [selected]="selectedGS('Cumple',documentacion.estado)">Cumple</option>
                     </select>
-                    <img class="icon-gs" id="amarillo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-advertencia.png" style="display: none;" />
-                    <img class="icon-gs" id="rojo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-cancel.png" style="display: none;" />
-                    <img class="icon-gs" id="verde-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-check-gs.png" style="display: none;" />
+                    <img [ngStyle]="{'display':documentacion.estado=='No Aplica' ? 'block' : 'none' }" class="icon-gs" id="amarillo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-advertencia.png"  />
+                    <img [ngStyle]="{'display':documentacion.estado=='No Cumple' ? 'block' : 'none' }" class="icon-gs" id="rojo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-cancel.png"  />
+                    <img [ngStyle]="{'display':documentacion.estado=='Cumple' ? 'block' : 'none' }" class="icon-gs" id="verde-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-check-gs.png"  />
                 </div>
                 <div class="row mb-3 col-4" style="margin-left:20px" >
                     <input type="text" id="obs-{{documentacion.documentacion_solicitud._id}}" placeholder="Observación" value="{{documentacion.observacion}}"/>
@@ -224,7 +224,7 @@
                     <div class="col-3 input-group mb-3" style="width: 70%;">
                         <div class="col-12 input-group mb-3" style="width: 100%;">
                             <label for="basic-url" class="form-label lbl-box-solicitud-r" style="margin-right: 10px;margin-top: 8px;">Estado</label>
-                            <select class="form-select" id="iEstadoResultado" (change)="updateSolicitud('estado_resultado')">
+                            <select class="form-select" id="iEstadoResultado" >
                                 <option value={{estado._id}} *ngFor="let estado of listEstadosResultado" [selected]="validarEstadoResultado(estado._id)"><!--[selected]="validarEstadoResultado(estado.nombre_resultado,solicitud.estado_resultado.nombre_estado)"-->
                                 {{estado.nombre_resultado}}
                                 </option>
@@ -261,6 +261,9 @@
                         
                     </div>
                     
+                </div>
+                <div class="col-12 " style="text-align: right;">
+                    <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="updateSolicitud('estado_resultado')">Guardar Resultado</button>
                 </div>
             
         </div>

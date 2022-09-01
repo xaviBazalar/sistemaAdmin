@@ -120,8 +120,25 @@ h4{
     margin-bottom: 3px;
 }
 
+.img-checked-val{
+    width: 16px;
+    margin-right: 6px;
+    position: relative;
+    top: -26px;
+}
+
+.obs-list{
+    font-weight: 600;
+    font-size: 12px;
+    color: #c54242;
+}
+
 .iconFile{
-    width: 24px;
+    /*width: 24px;*/
+    width: 20px;
+    position: absolute;
+    left: -28px;
+    top: 1px;
 }
 
 .link-download{
@@ -153,4 +170,11 @@ h4{
     background: #0000008a;
     z-index: 99999;
     display: block;
+}
+
+.icon-gs{
+    width: 20px;
+    position: absolute;
+    left: -24px;
+    top: 2px;
 }

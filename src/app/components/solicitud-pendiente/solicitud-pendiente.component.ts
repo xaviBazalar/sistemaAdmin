@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GerenciasService } from '../../services/gerencias.service';
+import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { TareasService } from '../../services/tareas.service';
 import { ContratosService } from '../../services/contratos.service';
 import { TareasContratoService } from '../../services/tareas-contrato.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EstadosSolicitudService } from '../../services/estados-solicitud.service';
 import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
-import { UploadFileService } from '../../services/upload-file.service';
 import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
-import { Router } from '@angular/router';
+import { UploadFileService } from '../../services/upload-file.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-nueva-solicitud',
-  templateUrl: './nueva-solicitud.component.html',
-  styleUrls: ['./nueva-solicitud.component.css']
+  selector: 'app-solicitud-pendiente',
+  templateUrl: './solicitud-pendiente.component.html',
+  styleUrls: ['./solicitud-pendiente.component.css']
 })
-export class NuevaSolicitudComponent implements OnInit {
-  
+export class SolicitudPendienteComponent implements OnInit {
+
   listaGerencias:any;
   listaSolicitudes:any;
   listaUsuarios:any;
@@ -28,7 +28,7 @@ export class NuevaSolicitudComponent implements OnInit {
   listaContratos:any;
   listaTareasContrato:any;
   listaTareaDocumentos:any;
-  listaTareaDocumentosEntradaSolicitud:any;
+  listaTareaDocumentosEntradaSolicitud:any=[];
   mostrarTareas:boolean=false;
   isReadonly:boolean=true;
   msjSucess:boolean=false;
@@ -46,7 +46,10 @@ export class NuevaSolicitudComponent implements OnInit {
   tipoTareaSelected:string="";
   tokenTemp:number|string="";
   msjNoSucess:boolean=false
+  dataSolicitud:any;
+  id_solicitud:string | null="";
   constructor(
+    public _route:ActivatedRoute,
     public gerenciaService:GerenciasService,
     public estadosService:EstadosSolicitudService,
     public solicitudService:SolicitudesService,
@@ -59,32 +62,54 @@ export class NuevaSolicitudComponent implements OnInit {
     public uploadFileService:UploadFileService,
     private router: Router,
     public formBuilder: FormBuilder) {
-    this.listaUsuariosGST=[];
-    this.listaUsuariosBKO=[];
-    let dataUser:any=sessionStorage.getItem("usuario")
-    this.usuarioLogin=JSON.parse(dataUser)
-    
-   }
+      this.listaUsuariosGST=[];
+      this.listaUsuariosBKO=[];
+      let dataUser:any=sessionStorage.getItem("usuario")
+      this.usuarioLogin=JSON.parse(dataUser)
+      this.regForm=this.formBuilder.group({
+        iGerencia:['', Validators.required],
+        iContrato:['', Validators.required],
+        iTarea:['', Validators.required],
+        iGst:['63005b09a608b63a870dfd59', Validators.required],
+        iBko:['', Validators.required],
+        iMensaje:['', Validators.required],
+        iFechaSolicitud:[this.getFecActual(), Validators.required],
+        //iEstadoSolicitud:['', Validators.required],
+        iFechaInicio:[this.getFecEntrega(), Validators.required],
+       })
+    }
 
-  ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+    let idSolicitud=this._route.snapshot.paramMap.get("id");
+    this.id_solicitud=this._route.snapshot.paramMap.get("id");
+ 
+
+    const dataSolicitud :any = await this.solicitudService.getSolicitud(idSolicitud).toPromise();
+    this.dataSolicitud=dataSolicitud.solicitudes[0];
+    this.tokenTemp=this.dataSolicitud.randomId
+    
+    this.regForm=this.formBuilder.group({
+      iGerencia:[this.dataSolicitud.gerencia._id, Validators.required],
+      iContrato:[this.dataSolicitud.contrato.contrato, Validators.required],
+      iTarea:[this.dataSolicitud.tarea._id, Validators.required],
+      iGst:['63005b09a608b63a870dfd59', Validators.required],
+      iBko:[this.dataSolicitud.bko._id, Validators.required],
+      iMensaje:[this.dataSolicitud.observacion, Validators.required],
+      iFechaSolicitud:[this.dataSolicitud.fecha_solicitud, Validators.required],
+      //iEstadoSolicitud:['', Validators.required],
+      iFechaInicio:[this.dataSolicitud.fecha_inicio, Validators.required],
+     })
+
+     this.getTareasContratoTemp(this.dataSolicitud.contrato._id)
+
     this.regFormFile=this.formBuilder.group({
       iFile:['', Validators.required],
       //iTypeDocFile:['', Validators.required],
     })
 
-    this.tokenTemp=new Date().getTime();
+    //this.tokenTemp=new Date().getTime();
 
-    this.regForm=this.formBuilder.group({
-      iGerencia:['', Validators.required],
-      iContrato:['', Validators.required],
-      iTarea:['', Validators.required],
-      iGst:['63005b09a608b63a870dfd59', Validators.required],
-      iBko:['', Validators.required],
-      iMensaje:['', Validators.required],
-      iFechaSolicitud:[this.getFecActual(), Validators.required],
-      //iEstadoSolicitud:['', Validators.required],
-      iFechaInicio:[this.getFecEntrega(), Validators.required],
-     })
+    
 
      //this.regForm.controls['iGst'].setValue(this.default, {onlySelf: true});
     this.gerenciaService.getGerencias().subscribe((data:any)=>{
@@ -100,9 +125,7 @@ export class NuevaSolicitudComponent implements OnInit {
       this.listaUsuarios=data.usuarios;
       for (const usuario of data.usuarios) {
         if(usuario.perfil.sigla=="GST"){
-          //if(this.usuarioLogin._id!=usuario._id){
-            this.listaUsuariosGST.push(usuario)
-          //}
+          this.listaUsuariosGST.push(usuario)
         }
 
         if(usuario.perfil.sigla=="BKO"){
@@ -122,12 +145,11 @@ export class NuevaSolicitudComponent implements OnInit {
     })
 
 
-    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud("").subscribe((data:any)=>{
-      
+    this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud(this.tokenTemp).subscribe((data:any)=>{
       this.listaTareaDocumentosEntradaSolicitud=data.tarea_documentos_entrada_solicitud;
     })
 
-   
+    this.getTareaDocumentosEntradaTemp(this.dataSolicitud.tarea._id)
   }
 
   getFecActual(){
@@ -185,9 +207,26 @@ export class NuevaSolicitudComponent implements OnInit {
     })
   }
 
+  getTareasContratoTemp(idcontrato:string){
+    this.tareasContratoService.getTareasContrato(idcontrato).subscribe((data:any)=>{
+      if(data.tareas.length>0){
+        this.listaTareasContrato=data.tareas;
+        this.mostrarTareas=true;
+      }else{
+        this.mostrarTareas=false;
+      }
+    })
+  }
+
   getTareaDocumentosEntrada({ target }:any) {
     this.tareaSelected=target.value
     let tarea=target.value;
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+      this.listaTareaDocumentos=data.tarea_documentos_entrada;
+    })
+  }
+
+  getTareaDocumentosEntradaTemp(tarea:string) {
     this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
@@ -349,7 +388,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
     this.msjNoSucess=false;
 
-    if (this.regForm.dirty && this.regForm.valid) {
+    if (this.regForm.valid) {
       
       solicitud={
         gerencia:this.regForm.value.iGerencia,
@@ -363,13 +402,10 @@ export class NuevaSolicitudComponent implements OnInit {
         fecha_solicitud:this.regForm.value.iFechaSolicitud,
         fecha_inicio:this.regForm.value.iFechaInicio,
         randomId:this.tokenTemp,
-        ingresado:true,
-        solicitante:this.usuarioLogin._id
+        ingresado:true
       }
 
-      
-
-      this.solicitudService.addSolicitud(solicitud).subscribe((data:any)=>{
+      this.solicitudService.updateSolicitud(this.id_solicitud,solicitud).subscribe((data:any)=>{
         this.isSubmitted=false;
         this.regForm.reset();
         this.msjSucess=true;
@@ -417,8 +453,7 @@ export class NuevaSolicitudComponent implements OnInit {
         fecha_solicitud:this.regForm.value.iFechaSolicitud,
         fecha_inicio:this.regForm.value.iFechaInicio,
         randomId:this.tokenTemp,
-        ingresado:false,
-        solicitante:this.usuarioLogin._id
+        ingresado:false
       }
       this.showModalTemp=true;
       
@@ -445,8 +480,7 @@ export class NuevaSolicitudComponent implements OnInit {
       fecha_solicitud:this.regForm.value.iFechaSolicitud,
       fecha_inicio:this.regForm.value.iFechaInicio,
       randomId:this.tokenTemp,
-      ingresado:false,
-      solicitante:this.usuarioLogin._id
+      ingresado:false
     }
     this.solicitudService.addSolicitud(solicitud).subscribe((data:any)=>{
       this.isSubmitted=false;

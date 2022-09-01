@@ -7,7 +7,7 @@
             Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
         </div>
         <div class="col-3">
-            Solicitud ID: <b>MMR-001</b>
+            Solicitud ID: <b>MMR-{{solicitud.idsecuencia}}</b>
         </div> 
     </div>
     <hr>
@@ -23,8 +23,8 @@
                     <p style="width: 70%;">{{solicitud.gerencia.nombre_gerencia}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
-                    <p style="width: 30%;" >ADC</p>
-                    <p style="width: 70%;" >{{solicitud.bko.nombre}}</p>
+                    <p style="width: 30%;" >Solicitante</p>
+                    <p style="width: 70%;" >{{solicitud.solicitante.nombre}}</p>
                 </div>
                 <div class="col-3 input-group mb-1 ">
                     <p style="width: 30%;">Contrato</p>
@@ -41,11 +41,12 @@
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
                     <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
-                    <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                    <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
-                    <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
+                    <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                     <label class="form-check-label" for="flexCheckDefault">
-                        {{getDescripcionDocumentoEntrada(item.tarea_documento._id)}}
+                        {{getDescripcionDocumentoEntrada(item.tarea_documento._id)}}<br>
+                        <span class="obs-list">Obs:{{item.observacion}}</span>
                         <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoEntrada(item.tarea_documento._id)}}.png"  />
                     </label>
                 </div>
@@ -58,9 +59,12 @@
                         <input class="form-check-input" type="checkbox" value=""
                             id="flexCheckDefault" [checked]="validarDocumento(documentacion.validado)" [disabled]="true">
                         <label class="form-check-label" for="flexCheckDefault">
-                            {{documentacion.documentacion_solicitud.nombre_documento}}
+                            {{documentacion.documentacion_solicitud.nombre_documento}} - {{documentacion.observacion}}
+                            <img [ngStyle]="{'display':documentacion.estado=='No Aplica' ? 'block' : 'none' }" class="icon-gs" id="amarillo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-advertencia.png"  />
+                        <img [ngStyle]="{'display':documentacion.estado=='No Cumple' ? 'block' : 'none' }" class="icon-gs" id="rojo-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-cancel.png"  />
+                        <img [ngStyle]="{'display':documentacion.estado=='Cumple' ? 'block' : 'none' }" class="icon-gs" id="verde-{{documentacion.documentacion_solicitud._id}}" src="assets/icons/icon-check-gs.png"  />
                         </label>
-
+                        
                     </div>
                     
                 </div>

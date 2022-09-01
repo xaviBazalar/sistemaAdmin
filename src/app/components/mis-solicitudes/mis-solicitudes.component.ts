@@ -10,6 +10,8 @@ import { SolitudesUsuarioService } from '../../services/solitudes-usuario.servic
 export class MisSolicitudesComponent implements OnInit {
 
   listaSolicitudes:any;
+  listaSolicitudesPendiente:any;
+  listaSolicitudesAsignadas:any;
   usuario:{
     _id:string|null,
     perfil:any
@@ -21,12 +23,52 @@ export class MisSolicitudesComponent implements OnInit {
 //getSolicitudes
   ngOnInit(): void {
     if(this.usuario.perfil.sigla=="ADC"){
-      this.solicitudService.getSolicitudes().subscribe((data:any)=>{
+      let dataFilterIngresadas:any={
+        ingresado:true,
+        solicitante:this.usuario._id
+      }
+      this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
         this.listaSolicitudes=data.solicitudes;
       })
+
+      let dataFilter:any={
+        ingresado:false,
+        solicitante:this.usuario._id
+      }
+      this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+        this.listaSolicitudesPendiente=data.solicitudes;
+      })
+
+      
+
     }else{
-      this.solicitudUsuarioService.getSolicitudesUsuario(this.usuario._id).subscribe((data:any)=>{
+      /*this.solicitudUsuarioService.getSolicitudesUsuario(this.usuario._id).subscribe((data:any)=>{
         this.listaSolicitudes=data.solicitudes;
+      })*/
+
+      let dataFilterIngresadas:any={
+        ingresado:true,
+        solicitante:this.usuario._id
+      }
+      this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
+        this.listaSolicitudes=data.solicitudes;
+      })
+
+      let dataFilter:any={
+        ingresado:false,
+        solicitante:this.usuario._id
+      }
+      this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+        this.listaSolicitudesPendiente=data.solicitudes;
+      })
+
+      let dataFilterAsignado:any={
+        ingresado:true,
+        gst:this.usuario._id
+      }
+      this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
+        this.listaSolicitudesAsignadas=data.solicitudes;
+        console.log(data.solicitudes)
       })
     }
     

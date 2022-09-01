@@ -32,8 +32,8 @@ export class HeaderComponent implements OnInit {
       url:"/misSolicitudes"
     },
     {
-      titulo:"Tareas",
-      url:"/tareas"
+      titulo:"Tablero Estado Solicitudes",
+      url:"/tableroEstadoSolicitudes"
     },
     /*{
       titulo:"Tablero",

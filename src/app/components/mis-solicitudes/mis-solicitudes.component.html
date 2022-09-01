@@ -6,72 +6,206 @@
         </div>
 
         <div class="col-2">
-            <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>
+           <!-- <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>-->
         </div>
     </div>
 
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">Asignadas</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Ingresadas</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Guardadas</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
+            <table class="table table-light table-striped border border-1">
 
-    <table class="table table-light table-striped border border-1">
+
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">Sol.N°</th>
+                        <th scope="col">Situacion</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col">Asignada</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Resultado</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitud of listaSolicitudesAsignadas">
+                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>Enviada</td>
+                        <td>
+                            <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                            <p>{{solicitud.tarea.nombre_tarea}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_solicitud}}</p>
+                            <p>Solicitado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
+        
+                        </td>
+                        <td>
+                            <p>{{solicitud.tarea.frecuencia}}</p>
+                            <p>1 vez</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.gst.nombre}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_inicio}}</p>
+                            <p>Iniciado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-light table-striped border border-1">
 
 
-        <thead class="bg-#F53621">
-            <tr>
-                <th scope="col">Sol.N°</th>
-                <th scope="col">Situacion</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Frecuencia</th>
-                <th scope="col">Asignada</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Resultado</th>
-                <th scope="col-3"></th>
-            </tr>
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">Sol.N°</th>
+                        <th scope="col">Situacion</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col">Asignada</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Resultado</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitud of listaSolicitudes">
+                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>Enviada</td>
+                        <td>
+                            <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                            <p>{{solicitud.tarea.nombre_tarea}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_solicitud}}</p>
+                            <p>Solicitado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
+        
+                        </td>
+                        <td>
+                            <p>{{solicitud.tarea.frecuencia}}</p>
+                            <p>1 vez</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.gst.nombre}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_inicio}}</p>
+                            <p>Iniciado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <a routerLink="/nuevaSolicitud"><button type="button" class="btn btn-primary btn-sml px-5 ">Nueva</button></a>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table table-light table-striped border border-1">
 
-        </thead>
-        <tbody>
-            <tr *ngFor="let solicitud of listaSolicitudes">
-                <td>#MM-{{solicitud.idsecuencia}}</td>
-                <td>Enviada</td>
-                <td>
-                    <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
-                    <p>{{solicitud.tarea.nombre_tarea}}</p>
-                </td>
-                <td>
-                    <p>{{solicitud.fecha_solicitud}}</p>
-                    <p>Solicitado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o"></i></a>
-                    <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
 
-                </td>
-                <td>
-                    <p>{{solicitud.tarea.frecuencia}}</p>
-                    <p>1 vez</p>
-                </td>
-                <td>
-                    <p>{{solicitud.gst.nombre}}</p>
-                </td>
-                <td>
-                    <p>{{solicitud.fecha_inicio}}</p>
-                    <p>Iniciado</p>
-                </td>
-                <td>
-                    <a href=""><i class="fa-solid fa-o "></i></a>
-                    <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
-                </td>
-                <td>
-                    <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary px-5" >Ver</button></a>
-                </td>
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">Sol.N°</th>
+                        <th scope="col">Situacion</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col">Asignada</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Resultado</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitud of listaSolicitudesPendiente">
+                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>Enviada</td>
+                        <td>
+                            <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                            <p>{{solicitud.tarea.nombre_tarea}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_solicitud}}</p>
+                            <p>Solicitado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
+        
+                        </td>
+                        <td>
+                            <p>{{solicitud.tarea.frecuencia}}</p>
+                            <p>1 vez</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.gst.nombre}}</p>
+                        </td>
+                        <td>
+                            <p>{{solicitud.fecha_inicio}}</p>
+                            <p>Iniciado</p>
+                        </td>
+                        <td>
+                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/solicitudPendiente/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Finalizar Solicitud</button></a>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    
 
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="d-flex flex-row-reverse">
-        <a routerLink="/nuevaSolicitud"><button type="button" class="btn btn-primary btn-sml px-5 ">Nueva</button></a>
-    </div>
+    
 
 </div>
 

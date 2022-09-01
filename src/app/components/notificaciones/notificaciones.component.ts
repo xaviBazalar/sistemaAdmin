@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NotificacionesComponent implements OnInit {
   listaNotificaciones:any=[]
+  listaNotificacionesLeidas:any=[]
+  listaNotificacionesNoLeidas:any=[]
   usuario:any
   constructor(
     public notificacionesUsuarioService:NotificacionesService,
@@ -20,6 +22,8 @@ export class NotificacionesComponent implements OnInit {
     this.usuario=JSON.parse(dataUser)
     this.notificacionesUsuarioService.getNotificacionesUsuario(this.usuario._id,true).subscribe((data:any)=>{
       this.listaNotificaciones=data.notificaciones_usuario
+      this.listaNotificacionesLeidas=this.listaNotificaciones.filter((data:any)=>data.visto==true)
+      this.listaNotificacionesNoLeidas=this.listaNotificaciones.filter((data:any)=> data.visto==false)
     });
   }
 

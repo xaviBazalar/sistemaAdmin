@@ -1,0 +1,47 @@
+.box-check{
+    display: flex;
+    align-items: self-end;
+}
+
+.box-check input{
+    margin-right: 8px;
+    bottom: 4px;
+    position: relative;
+}
+
+.input-group label{
+    width: 128px;
+}
+
+.icon-upload{
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: -40px;
+    top: 4px;
+    cursor: pointer;
+}
+
+.modalApp{
+    background: #0000008a;
+    z-index: 99999;
+    display: block;
+}
+
+.error{
+    display: block;
+    width: 100%;
+    font-size: 10px;
+    color: red;
+    text-align: right;
+}
+
+.iconFile{
+    width: 24px;
+}
+
+.img-checked{
+    width: 16px;
+    margin-right: 6px;
+    margin-bottom: 3px;
+}

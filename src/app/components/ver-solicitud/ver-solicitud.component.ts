@@ -22,11 +22,11 @@ export class VerSolicitudComponent implements OnInit {
   baseUrlGet:string=environment.baseUrlGet;
   solicitud:any;
   listaHistorialResultadoSolicitud:any;
-  listaTareaDocumentos:any;
-  listaTareaDocumentosEntradaSolicitud:any;
+  listaTareaDocumentos:any=[];
+  listaTareaDocumentosEntradaSolicitud:any=[];
   listaTareaDocumentosSalidaSolicitud:any=[];
-  listaTareaDocumentosSalida:any;
-  listaDocumentacionSolicitud:any;
+  listaTareaDocumentosSalida:any=[];
+  listaDocumentacionSolicitud:any=[];
   listaGestionSolicitud:any=[]
   listaBitacoraSolicitud:any;
   tarea:any;
@@ -53,9 +53,9 @@ export class VerSolicitudComponent implements OnInit {
     public gestionSolicitudService:GestionSolicitudService,
     public _route:ActivatedRoute,
     private router: Router) {
-      if(this.usuario.perfil.sigla!="ADC"){
+      /*if(this.usuario.perfil.sigla!="ADC"){
         this.router.navigate(['solicitudB/'+this._route.snapshot.paramMap.get("id"), { }]);
-      }
+      }*/
 
    }
 
@@ -186,7 +186,8 @@ export class VerSolicitudComponent implements OnInit {
       "estado_resultado":this.solicitud.estado_resultado._id,
       "usuario": usuario._id,
       "mensaje": mensaje.value,
-      "usuario_asignado":this.solicitud.gst._id
+      "usuario_asignado":this.solicitud.gst._id,
+      "solicitante":this.usuario._id
     }
 
     this.historialSolicitudService.addHistorialResultadoSolicitud(dataHistorial).subscribe((data:any)=>{
@@ -233,7 +234,8 @@ export class VerSolicitudComponent implements OnInit {
       respuesta:msg.value,
       fecha_respuesta:this.getFecRegistro(),
       usuario_respuesta:this.usuario._id,
-      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:""
+      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:"",
+      solicitante:this.usuario._id
     }
     this.historialSolicitudService.updateHistorialResultadoSolicitud(dataHistorial,id).subscribe((data:any)=>{
 

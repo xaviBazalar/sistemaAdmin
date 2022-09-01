@@ -1,7 +1,7 @@
 <div class="container">
     <form [formGroup]="regForm" (submit)="addSolicitud()" >
         <div class="py-3 mb-3">
-            <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
+            <h2>SOLICITUD DE REQUERIMIENTO - POR FINALIZAR</h2>
         </div>
         <div class="row">
             <div class="col-3 input-group mb-3" style="width: 35%;">
@@ -164,7 +164,7 @@
         
         <input type="hidden" value="62fad65648d35ca4acd14682" id="iEstadoResultado"  />
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-            <button type="button" class="btn btn-success" (click)="addSolicitudTemp()">Guardar Solicitud</button>
+            <!--<button type="button" class="btn btn-success" (click)="addSolicitudTemp()">Guardar Solicitud</button>-->
             <button type="submit" class="btn btn-success" >Enviar Solicitud</button>
         </div>
         <div class="alert alert-success" role="alert" *ngIf="msjSucess">

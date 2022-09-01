@@ -7,15 +7,17 @@ import { ListaComponent } from './components/lista/lista.component';
 import { VerSolicitudComponent } from './components/ver-solicitud/ver-solicitud.component';
 import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
+import { SolicitudPendienteComponent } from './components/solicitud-pendiente/solicitud-pendiente.component';
 
 const APP_ROUTES:Routes = [
 
   {path:'home',component: HomeComponent},
-  {path:'tablero',component: ListaComponent},
+  {path:'tareas',component: ListaComponent},
   {path:'notificaciones',component: NotificacionesComponent},
   {path:'nuevaSolicitud',component: NuevaSolicitudComponent},
+  {path:'solicitudPendiente/:id',component: SolicitudPendienteComponent},
   {path:'misSolicitudes',component: MisSolicitudesComponent},
-  {path:'tareas',component: TableroComponent},
+  {path:'tableroEstadoSolicitudes',component: TableroComponent},
   {path:'solicitud/:id',component: VerSolicitudComponent},
   {path:'solicitudB/:id',component: VerSolicitudGstComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}

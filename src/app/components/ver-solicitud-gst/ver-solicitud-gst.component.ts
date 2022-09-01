@@ -221,7 +221,8 @@ export class VerSolicitudGstComponent implements OnInit {
           documentacion_solicitud:item._id,
           validado:iCheck.checked,
           estado:iEstado.value,
-          observacion:iObs.value
+          observacion:iObs.value,
+          solicitante:this.usuario._id
         }
         this.gestionSolicitudService.addGestionSolicitud(dataGS).subscribe((data:any)=>{
           //console.log(data)
@@ -241,7 +242,8 @@ export class VerSolicitudGstComponent implements OnInit {
           documentacion_solicitud:item.documentacion_solicitud._id,
           validado:iCheck.checked,
           estado:iEstado.value,
-          observacion:iObs.value
+          observacion:iObs.value,
+          solicitante:this.usuario._id
         }
         this.gestionSolicitudService.updateGestionSolicitud(id,dataGS).subscribe((data:any)=>{
           //console.log(data)
@@ -351,7 +353,8 @@ export class VerSolicitudGstComponent implements OnInit {
       "solicitud": this.id_solicitud,
       "estado_resultado":this.solicitud.estado_resultado._id,
       "usuario": usuario._id,
-      "mensaje": mensaje.value
+      "mensaje": mensaje.value,
+      solicitante:this.usuario._id
     }
 
     this.historialSolicitudService.addHistorialResultadoSolicitud(dataHistorial).subscribe((data:any)=>{
@@ -400,7 +403,8 @@ export class VerSolicitudGstComponent implements OnInit {
       respuesta:msg.value,
       fecha_respuesta:this.getFecRegistro(),
       usuario_respuesta:this.usuario._id,
-      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:""
+      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:"",
+      solicitante:this.usuario._id
     }
     this.historialSolicitudService.updateHistorialResultadoSolicitud(dataHistorial,id).subscribe((data:any)=>{
 
@@ -428,7 +432,8 @@ export class VerSolicitudGstComponent implements OnInit {
         fecha_inicio:fecha_inicio.value,
         fecha_solicitud:fecha_solicitud.value,
         gst:gst.value,
-        bko:bko.value
+        bko:bko.value,
+        solicitante:this.usuario._id
       }
       this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
         //console.log(data)
