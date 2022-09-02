@@ -93,11 +93,13 @@ export class VerSolicitudGstComponent implements OnInit {
    }
 
   async ngOnInit(): Promise<void> {
-    this.tokenTemp=this._route.snapshot.paramMap.get("id");
+    
     let idSolicitud:string|null=this._route.snapshot.paramMap.get("id");
     this.id_solicitud=this._route.snapshot.paramMap.get("id");
+    
     const dataSolicitud :any = await this.solicitudService.getSolicitud(idSolicitud).toPromise();
     this.solicitud=dataSolicitud.solicitudes[0];
+    this.tokenTemp=this.solicitud.randomId
     this.tarea=dataSolicitud.solicitudes[0]?.tarea._id;
     this.getTareaDocumentosEntrada(this.tarea)
     this.getTareaDocumentosSalida(this.tarea)
