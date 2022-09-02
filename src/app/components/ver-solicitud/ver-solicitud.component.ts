@@ -166,7 +166,7 @@ export class VerSolicitudComponent implements OnInit {
   }
 
   getTareaDocumentosSalidaSolicitud(tarea:string) {
-    this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud(tarea).subscribe((data:any)=>{
+    this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud(this.solicitud.randomId).subscribe((data:any)=>{
       this.listaTareaDocumentosSalidaSolicitud=data.tarea_documentos_salida_solicitud;
       
     })

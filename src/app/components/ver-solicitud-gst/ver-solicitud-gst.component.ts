@@ -114,7 +114,7 @@ export class VerSolicitudGstComponent implements OnInit {
     const dataBitacora:any = await this.bitacoraSolicitudService.getBitacoraSolicitud(idSolicitud).toPromise();
     this.listaBitacoraSolicitud=dataBitacora.bitacora_solicitud
 
-    const dataDocumentoSalidaSolicitud:any = await this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud("").toPromise();
+    const dataDocumentoSalidaSolicitud:any = await this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud(this.solicitud.randomId).toPromise();
     this.listaTareaDocumentosSalidaSolicitud=dataDocumentoSalidaSolicitud.tarea_documentos_salida_solicitud;
 
     const dataGestionSolicitud:any = await this.gestionSolicitudService.getGestionSolicitud(this.id_solicitud).toPromise();
@@ -516,7 +516,7 @@ export class VerSolicitudGstComponent implements OnInit {
   }
 
   refreshTareaDocumentosSalidaSolicitud() {
-    this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud("").subscribe((data:any)=>{
+    this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud(this.solicitud.randomId).subscribe((data:any)=>{
       this.listaTareaDocumentosSalidaSolicitud=data.tarea_documentos_salida_solicitud;
     })
   }
