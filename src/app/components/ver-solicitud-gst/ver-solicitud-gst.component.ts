@@ -39,6 +39,8 @@ export class VerSolicitudGstComponent implements OnInit {
   listaDocumentacionSolicitud:any=[]
   listaTareaDocumentosSalida:any
   listaGestionSolicitud:any=[];
+  controlGS:boolean=false
+  controlDR:boolean=false
   usuario:{
     _id:string|null,
     perfil:any
@@ -208,8 +210,7 @@ export class VerSolicitudGstComponent implements OnInit {
   }
 
   saveGestionSolicitud(){
-
-    if(this.listaGestionSolicitud.length==0){
+    if(this.listaGestionSolicitud.length==0 && this.controlGS==false){
       for(let item of this.listaDocumentacionSolicitud){
         var id=item._id
         var iCheck:any=document.querySelector("#check-"+item._id)
@@ -226,28 +227,32 @@ export class VerSolicitudGstComponent implements OnInit {
         }
         this.gestionSolicitudService.addGestionSolicitud(dataGS).subscribe((data:any)=>{
           //console.log(data)
+          this.controlGS=true;
         })
         
       }
       
     }else{
       for(let item of this.listaGestionSolicitud){
-        var id=item._id
-        var iCheck:any=document.querySelector("#check-"+item.documentacion_solicitud._id)
-        var iEstado:any=document.querySelector("#estado-"+item.documentacion_solicitud._id)
-        var iObs:any=document.querySelector("#obs-"+item.documentacion_solicitud._id)
-        var dataGS={
-          _id:id,
-          solicitud:this.id_solicitud,
-          documentacion_solicitud:item.documentacion_solicitud._id,
-          validado:iCheck.checked,
-          estado:iEstado.value,
-          observacion:iObs.value,
-          solicitante:this.usuario._id
+        if(this.controlGS==false){
+          var id=item._id
+          var iCheck:any=document.querySelector("#check-"+item.documentacion_solicitud._id)
+          var iEstado:any=document.querySelector("#estado-"+item.documentacion_solicitud._id)
+          var iObs:any=document.querySelector("#obs-"+item.documentacion_solicitud._id)
+          var dataGS={
+            _id:id,
+            solicitud:this.id_solicitud,
+            documentacion_solicitud:item.documentacion_solicitud._id,
+            validado:iCheck.checked,
+            estado:iEstado.value,
+            observacion:iObs.value,
+            solicitante:this.usuario._id
+          }
+          this.gestionSolicitudService.updateGestionSolicitud(id,dataGS).subscribe((data:any)=>{
+            //console.log(data)
+            this.controlGS=true;
+          })
         }
-        this.gestionSolicitudService.updateGestionSolicitud(id,dataGS).subscribe((data:any)=>{
-          //console.log(data)
-        })
         
       }
       
@@ -440,14 +445,17 @@ export class VerSolicitudGstComponent implements OnInit {
         this.refreshBitacoraSolicitud()
       });
     }else{
-      let dataSolicitud:any={
-        _id:this.id_solicitud,
-        estado_resultado:estado_resultado.value,
+      if(this.controlDR==false){
+        let dataSolicitud:any={
+          _id:this.id_solicitud,
+          estado_resultado:estado_resultado.value,
+        }
+        this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
+          //console.log(data)
+          this.controlDR=true
+          this.refreshBitacoraSolicitud()
+        });
       }
-      this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
-        //console.log(data)
-        this.refreshBitacoraSolicitud()
-      });
     }
   }
 
