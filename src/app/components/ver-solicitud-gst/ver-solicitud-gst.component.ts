@@ -449,6 +449,7 @@ export class VerSolicitudGstComponent implements OnInit {
         let dataSolicitud:any={
           _id:this.id_solicitud,
           estado_resultado:estado_resultado.value,
+          solicitante:this.usuario._id
         }
         this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
           //console.log(data)
