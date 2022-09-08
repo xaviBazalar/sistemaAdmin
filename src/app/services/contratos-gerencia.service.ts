@@ -5,13 +5,12 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DocumentacionSolicitudedService {
+export class ContratosGerenciaService {
 
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getDocumentacionSolicitud(tarea:string|null,contrato:string|null){
-    return this.http.get(`${this.url}/documentacionSolicitudes?tarea=${tarea}&contrato=${contrato}`) 
+  getContratosGerencia(gerencia:string){
+    return this.http.get(`${this.url}/contratosGerencia?gerencia=${gerencia}`) 
   }
-
 }

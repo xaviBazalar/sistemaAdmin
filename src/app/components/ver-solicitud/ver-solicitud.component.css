@@ -124,13 +124,14 @@ h4{
     width: 16px;
     margin-right: 6px;
     position: relative;
-    top: -26px;
+    top: -20px;
 }
 
 .obs-list{
     font-weight: 600;
     font-size: 12px;
     color: #c54242;
+    display: block;
 }
 
 .iconFile{

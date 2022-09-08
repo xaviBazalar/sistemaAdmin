@@ -54,7 +54,7 @@
 
             <div class="my-4 mt-5 ">
                 <h4 class="mb-3">GESTION SOLICITUD</h4>
-                <div class="mt-3 pl-3">
+                <div class="mt-3 pl-3" *ngIf="listaGestionSolicitud.length>0">
                     <div class="form-check " *ngFor="let documentacion of listaGestionSolicitud">
                         <input class="form-check-input" type="checkbox" value=""
                             id="flexCheckDefault" [checked]="validarDocumento(documentacion.validado)" [disabled]="true">
@@ -68,14 +68,28 @@
                     </div>
                     
                 </div>
+
+                <div class="mt-3 pl-3" *ngIf="listaGestionSolicitud.length==0">
+                    <div class="form-check " *ngFor="let documentacion of listaDocumentacionSolicitud">
+                        <input class="form-check-input" type="checkbox" value=""
+                            id="flexCheckDefault" [checked]="validarDocumento(documentacion.validado)" [disabled]="true">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{documentacion.nombre_documento}} - {{documentacion.observacion}}
+                            <img [ngStyle]="{'display':documentacion.estado=='No Aplica' ? 'block' : 'none' }" class="icon-gs" id="amarillo-{{documentacion._id}}" src="assets/icons/icon-advertencia.png"  />
+                        <img [ngStyle]="{'display':documentacion.estado=='No Cumple' ? 'block' : 'none' }" class="icon-gs" id="rojo-{{documentacion._id}}" src="assets/icons/icon-cancel.png"  />
+                        <img [ngStyle]="{'display':documentacion.estado=='Cumple' ? 'block' : 'none' }" class="icon-gs" id="verde-{{documentacion._id}}" src="assets/icons/icon-check-gs.png"  />
+                        </label>
+                        
+                    </div>
+                    
+                </div>
             </div>
 
             <div class="my-4 mt-5">
                 <h4 class="mb-3">RESULTADO SOLICITUD</h4>
                 <div class="col-3 input-group mb-3 pl-3">
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
-                    <input   class="form-control input-color" type="text"  value="{{solicitud.estado_resultado.nombre_resultado}}" style=>
-                  
+                    <input readonly="true" [ngStyle]="{'background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" class="form-control input-color" type="text"  value="{{solicitud.estado_resultado.nombre_resultado}}" >
                 </div>
                 <div class="form-check mt-5 pl-3">
                     <h5>Lista Documentos Resultados</h5>
@@ -83,11 +97,12 @@
     
                     <div class="form-check" *ngFor="let item of listaTareaDocumentosSalidaSolicitud">
                         <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
-                        <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                        <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                         
-                        <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
+                        <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
                         <label class="form-check-label" for="flexCheckDefault">
                             {{getDescripcionDocumentoSalida(item.tarea_documento._id)}}
+                            <span class="obs-list">Obs:{{item.observacion}}</span>
                             <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoSalida(item.tarea_documento._id)}}.png"  />
                         </label>
                     </div>
@@ -100,7 +115,10 @@
 
             <div class="col-7 input-group mb-3 mx-5">
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Estado</label>
-                <input  class="form-control input-color-proceso " type="text"  value="{{solicitud.estado_solicitud.nombre_estado}}"  >
+                <input [ngStyle]="{
+                    'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                    '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                    '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" class="form-control input-color-proceso " type="text"  value="{{solicitud.estado_solicitud.nombre_estado}}"  >
             </div>
             <div class="col-7 input-group mb-3 mx-5 input-dp" >
                 <label for="basic-url" class="form-label" style="margin-top: 8px;">Fecha Inicio</label>
@@ -152,7 +170,9 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
             <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  type="button" (click)="addHistorialSolicitud()" >Interactuar</button>
         </div>
-
+        <div *ngIf="eIteraccion" class="alert alert-success" role="alert">
+            Iteracción Enviada
+        </div>
 
     </div>
     <hr>

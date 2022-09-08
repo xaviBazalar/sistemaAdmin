@@ -135,7 +135,9 @@
             <div class="col-3 input-group" style="width: 55%;">
                 <button class="btn btn-primary me-md-2 px-5 btn-interactuar btn-save-estado" type="button" (click)="updateSolicitud('estado_solicitud')">Guardar Estado</button>
             </div>
-            
+            <div *ngIf="eEstadoSolicitud" class="alert alert-success" role="alert">
+                Estado Solicitudo Guardado
+            </div>
         </div>
         <hr>
         <div class="" *ngIf="listaGestionSolicitud.length==0">
@@ -174,6 +176,9 @@
                     <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="saveGestionSolicitud()">Guardar Gestión</button>
                 </div>
             </div>
+            <div *ngIf="eGestionSolicitud" class="alert alert-success" role="alert" style="margin-top:20px;">
+                Gestión Solicitud Guardada
+            </div>
         </div>
         <div class="" *ngIf="listaGestionSolicitud.length>0">
             <div class="py-3 mb-3" >
@@ -210,6 +215,9 @@
                 <div class="col-4 " style="text-align: right;">
                     <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="saveGestionSolicitud()">Guardar Gestión</button>
                 </div>
+            </div>
+            <div *ngIf="eGestionSolicitud" class="alert alert-success" role="alert" style="margin-top:20px;">
+                Gestión Solicitud Guardada
             </div>
         </div>
     <hr>
@@ -265,7 +273,9 @@
                 <div class="col-12 " style="text-align: right;">
                     <button class="btn btn-primary me-md-2 px-5 btn-interactuar" type="button" (click)="updateSolicitud('estado_resultado')">Guardar Resultado</button>
                 </div>
-            
+                <div *ngIf="eResultadoSolicitud" class="alert alert-success" role="alert" style="margin-top:20px;">
+                    Estado Resultado Guardado
+                </div>
         </div>
     </form>   
     <hr>
@@ -281,7 +291,9 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
             <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  (click)="addHistorialSolicitud()"type="button" >Interactuar</button>
         </div>
-
+        <div *ngIf="eIteraccion" class="alert alert-success" role="alert">
+            Iteracción Enviada
+        </div>
 
     </div>
     <hr>

@@ -40,6 +40,7 @@ export class VerSolicitudComponent implements OnInit {
   }  =JSON.parse(sessionStorage.getItem("usuario") || '{}');
   showModal:boolean=false;
   minDay:string=new Date().toISOString().split("T")[0];
+  eIteraccion:boolean=false
   constructor(
     public solicitudService:SolicitudesService,
     public historialSolicitudService:HistorialResultadoSolicitudService,
@@ -73,7 +74,7 @@ export class VerSolicitudComponent implements OnInit {
     const dataHistoria:any = await this.historialSolicitudService.getHistorialResultadoSolicitud(idSolicitud).toPromise();
     this.listaHistorialResultadoSolicitud=dataHistoria.historial_resultado_solicitud;
 
-    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(idSolicitud).toPromise();
+    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id).toPromise();
     this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes;
     this.loaded=true;
 
@@ -85,6 +86,11 @@ export class VerSolicitudComponent implements OnInit {
     console.log(this.listaTareaDocumentosSalidaSolicitud)*/
     const dataGestionSolicitud:any = await this.gestionSolicitudService.getGestionSolicitud(this.id_solicitud).toPromise();
     this.listaGestionSolicitud=dataGestionSolicitud.gestion_solicitud
+
+    
+
+    console.log(this.listaDocumentacionSolicitud)
+    
   }
 
   refreshBitacoraSolicitud(){
@@ -153,7 +159,7 @@ export class VerSolicitudComponent implements OnInit {
 
 
   getTareaDocumentosEntrada(tarea:string) {
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.solicitud.contrato).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -173,7 +179,7 @@ export class VerSolicitudComponent implements OnInit {
   }
 
   getTareaDocumentosSalida(tarea:string) {
-    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea,this.solicitud.contrato).subscribe((data:any)=>{
       this.listaTareaDocumentosSalida=data.tarea_documentos_salida;
     })
   }
@@ -193,6 +199,7 @@ export class VerSolicitudComponent implements OnInit {
     this.historialSolicitudService.addHistorialResultadoSolicitud(dataHistorial).subscribe((data:any)=>{
       this.refreshHistorialSolicitud()
       mensaje.value=""
+      this.eIteraccion=true
     })
 
     this.refreshBitacoraSolicitud()

@@ -80,7 +80,7 @@ export class MisSolicitudesComponent implements OnInit {
       }
       this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
         this.listaSolicitudesAsignadas=data.solicitudes;
-        console.log(data.solicitudes)
+
       })
     }
     

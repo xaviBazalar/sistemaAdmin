@@ -11,6 +11,7 @@ import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-e
 import { UploadFileService } from '../../services/upload-file.service';
 import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
 import { Router } from '@angular/router';
+import { ContratosGerenciaService } from '../../services/contratos-gerencia.service';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -46,6 +47,7 @@ export class NuevaSolicitudComponent implements OnInit {
   tipoTareaSelected:string="";
   tokenTemp:number|string="";
   msjNoSucess:boolean=false
+  contratoTemp:string|null=""
   constructor(
     public gerenciaService:GerenciasService,
     public estadosService:EstadosSolicitudService,
@@ -57,6 +59,7 @@ export class NuevaSolicitudComponent implements OnInit {
     public tareaDocumentosService:TareaDocumentosEntradaService,
     public tareaDocumentoEntradaSolicitud:TareaDocumentosEntradaSolicitudService,
     public uploadFileService:UploadFileService,
+    public contratosGerenciaService:ContratosGerenciaService,
     private router: Router,
     public formBuilder: FormBuilder) {
     this.listaUsuariosGST=[];
@@ -116,10 +119,10 @@ export class NuevaSolicitudComponent implements OnInit {
      
     })
 
-    this.contratosServicio.getContratos().subscribe((data:any)=>{
+   /* this.contratosServicio.getContratos().subscribe((data:any)=>{
       this.listaContratos=data.contratos;
      
-    })
+    })*/
 
 
     this.tareaDocumentoEntradaSolicitud.getTareaDocumentosEntradaSolicitud("").subscribe((data:any)=>{
@@ -170,8 +173,11 @@ export class NuevaSolicitudComponent implements OnInit {
     
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-      if(contrato.contrato==contratoTxt){
-        idContrato=contrato._id
+      console.log((contrato.contrato.contrato+"-"+contrato.contrato.contradoid))
+      console.log(contratoTxt)
+      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid)==contratoTxt){
+        idContrato=contrato.contrato._id
+        this.contratoTemp=contrato.contrato._id
       }
     } 
 
@@ -185,10 +191,18 @@ export class NuevaSolicitudComponent implements OnInit {
     })
   }
 
+  
+  getContratosGerencia({ target }:any){
+    let gerencia=target.value;
+    this.contratosGerenciaService.getContratosGerencia(gerencia).subscribe((data:any)=>{
+      this.listaContratos=data.contratos_gerencia
+    });
+  }
+
   getTareaDocumentosEntrada({ target }:any) {
     this.tareaSelected=target.value
     let tarea=target.value;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -201,7 +215,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
   refreshTareaDocumentosEntrada(){
     let tarea=this.tareaSelected;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -286,14 +300,6 @@ export class NuevaSolicitudComponent implements OnInit {
             observacion.value=""
          })
 
-          /*this.tareaDocumentosService.updateTareaDocumentosEntrada(dataUpdate,this.idTareDocumentoEntrada).subscribe((data:any)=>{
-              this.refreshTareaDocumentosEntrada()
-              this.isSubmittedFile=false
-              this.regFormFile.reset()
-              this.idTareDocumentoEntrada=""
-              previewFile.value=""
-              this.isSubmittedFile=false;
-          })*/
 
         })
     }
@@ -342,8 +348,9 @@ export class NuevaSolicitudComponent implements OnInit {
 
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-      if(contrato.contrato==this.regForm.value.iContrato){
-        idContrato=contrato._id
+      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid)==this.regForm.value.iContrato){
+      //if(contrato.contrato==this.regForm.value.iContrato){
+        idContrato=contrato.contrato._id
       }
     } 
 
@@ -366,6 +373,7 @@ export class NuevaSolicitudComponent implements OnInit {
         ingresado:true,
         solicitante:this.usuarioLogin._id
       }
+
 
       
 

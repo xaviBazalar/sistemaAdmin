@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-3 input-group mb-3" style="width: 35%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
-                <select class="form-select" id="iGerencia"  formControlName="iGerencia" >
+                <select (change)="getContratosGerencia($event)" class="form-select" id="iGerencia"  formControlName="iGerencia" >
                     <option value="{{gerencia._id}}" *ngFor="let gerencia of listaGerencias">
                         {{gerencia.nombre_gerencia}}
                     </option>
@@ -19,7 +19,7 @@
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
                 <input (change)="getTareasContrato($event)" class="form-select" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
-                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato}}</option>
+                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}</option>
                   </datalist>
                 <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">*El campo contrato es requerido</span>
             </div>
@@ -85,14 +85,14 @@
                 <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>-->
             </div>
             <div  class="input-group form-check" style="width: 30%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
-                <input  class="form-control" type="text"  value="MMR" disabled>
+                <!--<label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Solicitud ID</label>
+                <input  class="form-control" type="text"  value="MMR" disabled>-->
                 
             </div>
         </div>
         <div class="row mb-3" *ngIf="mostrarTareas">
             <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GTS</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GST</label>
                 <select class="form-select" id="iGst"  formControlName="iGst" >
                     <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
 

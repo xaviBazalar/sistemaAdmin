@@ -65,14 +65,17 @@
     <hr>
     
     <div class="row">
-        <div class="col-3 py-2 mr-2" *ngFor="let solicitud of listaSolicitudes">
+        <div style="cursor: pointer;" class="col-3 py-2 mr-2" *ngFor="let solicitud of listaSolicitudes" (click)="goToSolicitud(solicitud._id)">
             <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-light">
-                  <h4 class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
+                <div [ngStyle]="{
+                    'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                    '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                    '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" class="card-body">
+                  <h4 style="font-weight:300;" class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
+                  <h5 style="font-weight:200;" class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
                 </div>
                 <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}</h5>
+                    <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}-{{solicitud.contrato.contradoid}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{solicitud.gerencia.nombre_gerencia}}</h6><!--Contrato Mina-->
                 </div>
                 <div class="card-body" >
@@ -83,143 +86,12 @@
                 </div>
                 <div class="card-tablero card-body card-resultado">
                     <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
+                    <button [ngStyle]="{'color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
                 </div>
             </div>
         </div>
         
 
-        <!--<div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-primary">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-success">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-danger">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-light">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-light">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 py-2">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-bg-light">
-                  <h4 class="card-title">POR HACER</h4>
-                  <h5 class="card-subtitle mb-2 text-muted">Tareas/Actividades Nuevas</h5>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">CTO NVAS VIAS</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Contrato Mina</h6>
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">31-12-2021 @ 03-01-2022</p>
-                    <p class="card-text text-muted">Sin Observaciones</p>
-                    <p class="card-text text-muted">Sin Asignar</p>
-                </div>
-                <div class="card-tablero card-body">
-                    <p>RESULTADO</p>
-                    <button type="button" class="btn btn-warning mx-auto">EN PROCESO</button>
-                </div>
-            </div>
-        </div>-->
 
     </div>
 </div>

@@ -6,6 +6,7 @@ import { EstadosSolicitudService } from '../../services/estados-solicitud.servic
 import { EstadoResultadoService } from '../../services/estado-resultado.service';
 import { PerfilesService } from '../../services/perfiles.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tablero',
@@ -29,7 +30,8 @@ export class TableroComponent implements OnInit {
     public estadoSolicitudService:EstadosSolicitudService,
     public estadoResultadoService:EstadoResultadoService,
     public perfilesService:PerfilesService,
-    public usuariosService:UsuariosService
+    public usuariosService:UsuariosService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -90,6 +92,10 @@ export class TableroComponent implements OnInit {
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
     })
+  }
+
+  goToSolicitud(solicitud:string){
+    this.router.navigate(['solicitud/'+solicitud], { });
   }
 
 }

@@ -54,7 +54,12 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <a class="circle-estado" [ngStyle]="{
+                                'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                <!--<i class="fa-solid fa-o"></i>-->
+                            </a>
                             <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
         
                         </td>
@@ -70,7 +75,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
+                                <!--<i class="fa-solid fa-o "></i>-->
+                            </a>
                             <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>
@@ -113,7 +120,12 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <a class="circle-estado" [ngStyle]="{
+                                'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                <!--<i class="fa-solid fa-o"></i>-->
+                            </a>
                             <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
         
                         </td>
@@ -129,7 +141,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
+                                <!--<i class="fa-solid fa-o "></i>-->
+                            </a>
                             <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>
@@ -175,7 +189,12 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o"></i></a>
+                            <a class="circle-estado" [ngStyle]="{
+                                'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                <!--<i class="fa-solid fa-o"></i>-->
+                            </a>
                             <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
         
                         </td>
@@ -191,7 +210,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-o "></i></a>
+                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
+                                <!--<i class="fa-solid fa-o "></i>-->
+                            </a>
                             <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>

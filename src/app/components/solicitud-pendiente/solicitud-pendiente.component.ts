@@ -221,13 +221,13 @@ export class SolicitudPendienteComponent implements OnInit {
   getTareaDocumentosEntrada({ target }:any) {
     this.tareaSelected=target.value
     let tarea=target.value;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
 
   getTareaDocumentosEntradaTemp(tarea:string) {
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -240,7 +240,7 @@ export class SolicitudPendienteComponent implements OnInit {
 
   refreshTareaDocumentosEntrada(){
     let tarea=this.tareaSelected;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }

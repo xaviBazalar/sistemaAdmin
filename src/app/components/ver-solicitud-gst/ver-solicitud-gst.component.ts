@@ -15,6 +15,7 @@ import { EstadoResultadoService } from '../../services/estado-resultado.service'
 import { TareaDocumentosSalidaSolicitudService } from '../../services/tarea-documentos-salida-solicitud.service';
 import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
 import { GestionSolicitudService } from '../../services/gestion-solicitud.service';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-ver-solicitud-gst',
@@ -54,6 +55,10 @@ export class VerSolicitudGstComponent implements OnInit {
   idTareDocumentoRespuesta:string|null  ="";
   tokenTemp:any="";
   tipoTareaSelected:number|string="";
+  eGestionSolicitud:boolean=false
+  eResultadoSolicitud:boolean=false
+  eEstadoSolicitud:boolean=false
+  eIteraccion:boolean=false
   constructor(
     public solicitudService:SolicitudesService,
     public historialSolicitudService:HistorialResultadoSolicitudService,
@@ -110,9 +115,9 @@ export class VerSolicitudGstComponent implements OnInit {
 
     const dataEstadoResultado:any = await this.estadoResultadoService.getSolicitudes().toPromise();
     this.listEstadosResultado=dataEstadoResultado.estadoResultados
-    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea).toPromise();
+    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id).toPromise();
     this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes;
-
+    console.log(this.solicitud.contrato)
     const dataBitacora:any = await this.bitacoraSolicitudService.getBitacoraSolicitud(idSolicitud).toPromise();
     this.listaBitacoraSolicitud=dataBitacora.bitacora_solicitud
 
@@ -230,6 +235,7 @@ export class VerSolicitudGstComponent implements OnInit {
         this.gestionSolicitudService.addGestionSolicitud(dataGS).subscribe((data:any)=>{
           //console.log(data)
           this.controlGS=true;
+          this.eGestionSolicitud=true
         })
         
       }
@@ -253,6 +259,7 @@ export class VerSolicitudGstComponent implements OnInit {
           this.gestionSolicitudService.updateGestionSolicitud(id,dataGS).subscribe((data:any)=>{
             //console.log(data)
             this.controlGS=true;
+            this.eGestionSolicitud=true
           })
         }
         
@@ -343,7 +350,7 @@ export class VerSolicitudGstComponent implements OnInit {
 
 
   getTareaDocumentosEntrada(tarea:string) {
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.solicitud.contrato._id).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -368,6 +375,7 @@ export class VerSolicitudGstComponent implements OnInit {
       this.refreshHistorialSolicitud()
       this.refreshBitacoraSolicitud()
       mensaje.value=""
+      this.eIteraccion=true
     })
     
   }
@@ -429,6 +437,7 @@ export class VerSolicitudGstComponent implements OnInit {
     let estado_resultado:any=document.querySelector("#iEstadoResultado")
     let fecha_inicio:any=document.querySelector("#iFechaInicio")
     let fecha_solicitud:any=document.querySelector("#iFechaSolicitud")
+    let obs:any=document.querySelector("#iObsFile")
     let gst:any=document.querySelector("#iGst")
     let bko:any=document.querySelector("#iBko")
 
@@ -445,9 +454,11 @@ export class VerSolicitudGstComponent implements OnInit {
       this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
         //console.log(data)
         this.refreshBitacoraSolicitud()
+        this.eEstadoSolicitud=true
       });
     }else{
       if(this.controlDR==false){
+        this.controlDR=true
         let dataSolicitud:any={
           _id:this.id_solicitud,
           estado_resultado:estado_resultado.value,
@@ -455,8 +466,9 @@ export class VerSolicitudGstComponent implements OnInit {
         }
         this.solicitudService.updateSolicitud(this.id_solicitud,dataSolicitud).subscribe((data:any)=>{
           //console.log(data)
-          this.controlDR=true
+          this.controlDR=false
           this.refreshBitacoraSolicitud()
+          this.eResultadoSolicitud=true
         });
       }
     }
@@ -511,6 +523,7 @@ export class VerSolicitudGstComponent implements OnInit {
             this.idTareDocumentoRespuesta=""
             previewFile.value=""
             this.isSubmittedFile=false;
+            observacion.value=""
          })
 
         })
@@ -567,7 +580,7 @@ export class VerSolicitudGstComponent implements OnInit {
   }
 
   getTareaDocumentosSalida(tarea:string) {
-    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea).subscribe((data:any)=>{
+    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea,this.solicitud.contrato._id).subscribe((data:any)=>{
       this.listaTareaDocumentosSalida=data.tarea_documentos_salida;
     })
   }

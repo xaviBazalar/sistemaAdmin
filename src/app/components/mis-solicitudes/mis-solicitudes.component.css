@@ -2,3 +2,12 @@
 
 .fa-o:before {
     margin: 21px;}
+
+.circle-estado{
+    width: 20px;
+    height: 20px;
+    display: block;
+    border-radius: 20px;
+    margin: auto;
+    border: 1px solid #c7c7c7;
+}
