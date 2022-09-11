@@ -5,6 +5,6 @@ export const environment = {
 };
 
 /*
-baseUrl:"http://34.172.89.68:8080/api",
+  baseUrl:"http://34.172.89.68:8080/api",
   baseUrlGet:"http://34.172.89.68:8080"
   */

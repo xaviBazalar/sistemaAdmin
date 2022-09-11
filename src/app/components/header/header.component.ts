@@ -35,6 +35,30 @@ export class HeaderComponent implements OnInit {
       titulo:"Tablero Estado Solicitudes",
       url:"/tableroEstadoSolicitudes"
     },
+    {
+      titulo:"Admin Tarea Contrato",
+      url:"/tareasContrato"
+    },
+    {
+      titulo:"Admin Doc Entrada",
+      url:"/documentosEntradaCT"
+    },
+    {
+      titulo:"Admin Doc Salida",
+      url:"/documentosSalidaCT"
+    },
+    {
+      titulo:"Admin Gestion Contrato",
+      url:"/documentosGestionCT"
+    },
+    {
+      titulo:"Admin Usuario",
+      url:"/usuarios"
+    },
+    {
+      titulo:"Admin Contratos Gerencia",
+      url:"/contratosGerencia"
+    },
     /*{
       titulo:"Tablero",
       url:"/tablero"
