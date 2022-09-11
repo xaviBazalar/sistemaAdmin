@@ -64,7 +64,7 @@ export class SolicitudPendienteComponent implements OnInit {
     public formBuilder: FormBuilder) {
       this.listaUsuariosGST=[];
       this.listaUsuariosBKO=[];
-      let dataUser:any=sessionStorage.getItem("usuario")
+      let dataUser:any=localStorage.getItem("usuario")
       this.usuarioLogin=JSON.parse(dataUser)
       this.regForm=this.formBuilder.group({
         iGerencia:['', Validators.required],

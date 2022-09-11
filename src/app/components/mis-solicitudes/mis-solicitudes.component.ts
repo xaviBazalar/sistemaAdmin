@@ -15,7 +15,7 @@ export class MisSolicitudesComponent implements OnInit {
   usuario:{
     _id:string|null,
     perfil:any
-  }  =JSON.parse(sessionStorage.getItem("usuario") || '{}');
+  }  =JSON.parse(localStorage.getItem("usuario") || '{}');
   constructor(
     public solicitudService:SolicitudesService,
     public solicitudUsuarioService:SolitudesUsuarioService

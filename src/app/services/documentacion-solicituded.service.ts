@@ -14,4 +14,8 @@ export class DocumentacionSolicitudedService {
     return this.http.get(`${this.url}/documentacionSolicitudes?tarea=${tarea}&contrato=${contrato}`) 
   }
 
+  addDocumentacionSolicitud(data:any){
+    return this.http.post(`${this.url}/documentacionSolicitudes`,data)
+  }
+
 }

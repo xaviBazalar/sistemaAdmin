@@ -1,0 +1,222 @@
+
+<div class="container">
+    <div class="row my-5 justify-content-md-end">
+        <div class="col-10">
+            <h2>TAREAS CONTRATO</h2>
+        </div>
+
+        <div class="col-2">
+           <!-- <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>-->
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">
+                Lista
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                Tareas
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                Contratos
+            </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
+            <table class="table table-light table-striped border border-1">
+
+
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Contrato</th>
+                        <th scope="col">Tarea</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tareaContrato of listaTareasContrato">
+                        <td>#</td>
+                        <td>{{tareaContrato.contrato.contrato}}-{{tareaContrato.contrato.contradoid}}</td>
+                        <td>{{tareaContrato.tarea.nombre_tarea}}</td>
+                        <td>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTareaContrato()">Nueva</button>
+            </div>
+        </div>
+        <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-light table-striped border border-1">
+
+
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Tarea</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col">SLA</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tarea of listaTareas">
+                        <td>#</td>
+                        <td>{{tarea.nombre_tarea}}</td>
+                        <td>{{tarea.frecuencia}}</td>
+                        <td>{{tarea.SLA}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTarea()">Nueva</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table table-light table-striped border border-1">
+
+
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Contrato</th>
+                        <th scope="col">Nro Contrato</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contrato of listaContrato">
+                        <td>#</td>
+                        <td>{{contrato.contrato}}</td>
+                        <td>{{contrato.contradoid}}</td>
+                        <td>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalContrato()">Nueva</button>
+            </div>
+        </div>
+      </div>
+</div>
+<div [ngClass]="(showModalTareaContrato) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registro Tarea Contrato</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                    <select class="form-select" id="contratoC" >
+                        <option value="">..seleccionar contrato</option>
+                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContrato">
+                            {{contrato.contrato}}-{{contrato.contradoid}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                    <select class="form-select" id="tareaC" >
+                        <option value="">..seleccionar tarea</option>
+                        <option value="{{tarea._id}}" *ngFor="let tarea of listaTareas">
+                            {{tarea.nombre_tarea}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addTareaContrato()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTareaContrato()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div [ngClass]="(showModalTarea) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registro Tarea</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre Tarea</label>
+                    <input class="form-control" id="nombre_tarea" placeholder="Escribir Nombre Tarea" />
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Frecuencia</label>
+                    <select class="form-select" id="frecuencia_tarea" >
+                        <option value="">..seleccionar frecuencia</option>
+                        <option value="Mensual" >Mensual</option>
+                        <option value="Anual" >Anual</option>
+                    </select>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">SLA</label>
+                    <input class="form-control" id="sla_tarea" placeholder="Escribir SLA" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addTarea()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTarea()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div [ngClass]="(showModalContrato) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registro Contrato</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre Contrato</label>
+                    <input class="form-control" id="nombre_contrato" placeholder="Escribir Nombre Contrato" />
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nro Contrato</label>
+                    <input class="form-control" id="nro_contrato" placeholder="Escribir Nro Contrato" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContrato()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

@@ -91,7 +91,7 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
                     <input readonly="true" [ngStyle]="{'background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" class="form-control input-color" type="text"  value="{{solicitud.estado_resultado.nombre_resultado}}" >
                 </div>
-                <div class="form-check mt-5 pl-3">
+                <div class="form-check mt-5 pl-3" *ngIf="listaTareaDocumentosSalidaSolicitud.length>0">
                     <h5>Lista Documentos Resultados</h5>
                     <hr>
     
@@ -104,6 +104,24 @@
                             {{getDescripcionDocumentoSalida(item.tarea_documento._id)}}
                             <span class="obs-list">Obs:{{item.observacion}}</span>
                             <img class="iconFile" src="assets/icons/icon-{{getTypeDocumentoSalida(item.tarea_documento._id)}}.png"  />
+                        </label>
+                    </div>
+                    
+                </div>
+
+                <div class="form-check mt-5 pl-3" *ngIf="listaTareaDocumentosSalidaSolicitud.length==0">
+                    <h5>Lista Documentos Resultados</h5>
+                    <hr>
+
+                    <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
+                        <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                        <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
+                        
+                        <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{item.documento_salida.descripcion}}
+                            <span class="obs-list">Obs:</span>
+                            <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
                         </label>
                     </div>
                 </div>

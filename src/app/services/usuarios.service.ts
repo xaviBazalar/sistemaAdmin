@@ -16,7 +16,8 @@ export class UsuariosService {
     return this.http.get(`${this.url}/usuarios`)
   }
   
+  addUsuario(data:any){
+    return this.http.post(`${this.url}/usuarios`,data)
+  }
 
-
- 
 }

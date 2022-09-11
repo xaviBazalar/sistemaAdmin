@@ -1,0 +1,99 @@
+
+<div class="container">
+    <div class="row my-5 justify-content-md-end">
+        <div class="col-10">
+            <h2>GESTION  - CONTRATO TAREA</h2>
+        </div>
+
+        <div class="col-2">
+           <!-- <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>-->
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">
+                Lista
+            </button>
+        </li>
+        
+
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
+            <table class="table table-light table-striped border border-1">
+
+
+                <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Contrato</th>
+                        <th scope="col">Tarea</th>
+                        <th scope="col">Seguimiento Gestion</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tareaG of listaGestionCT">
+                        <td>#</td>
+                        <td>{{tareaG.contrato.contrato}}-{{tareaG.contrato.contradoid}}</td>
+                        <td>{{tareaG.tarea.nombre_tarea}}</td>
+                        <td>{{tareaG.nombre_documento}}</td>
+                        <td>
+                        </td>
+        
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoGestionCT()">Nueva</button>
+            </div>
+        </div>
+        
+      </div>
+</div>
+<div [ngClass]="(showModalDocumentoGestionTC) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registro  Gestion - Contrato Tarea</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                    <select class="form-select" id="contratoC" >
+                        <option value="">..seleccionar contrato</option>
+                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContrato">
+                            {{contrato.contrato}}-{{contrato.contradoid}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                    <select class="form-select" id="tareaC" >
+                        <option value="">..seleccionar tarea</option>
+                        <option value="{{tarea._id}}" *ngFor="let tarea of listaTareas">
+                            {{tarea.nombre_tarea}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gestion</label>
+                    <input class="form-control" id="gestionC" placeholder="Escribir Nombre Gestion" />
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addDocumentoGestionTC()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDocumentoGestionCT()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

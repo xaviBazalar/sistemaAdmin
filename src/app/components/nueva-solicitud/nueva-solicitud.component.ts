@@ -64,7 +64,7 @@ export class NuevaSolicitudComponent implements OnInit {
     public formBuilder: FormBuilder) {
     this.listaUsuariosGST=[];
     this.listaUsuariosBKO=[];
-    let dataUser:any=sessionStorage.getItem("usuario")
+    let dataUser:any=localStorage.getItem("usuario")
     this.usuarioLogin=JSON.parse(dataUser)
     
    }
@@ -173,8 +173,7 @@ export class NuevaSolicitudComponent implements OnInit {
     
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-      console.log((contrato.contrato.contrato+"-"+contrato.contrato.contradoid))
-      console.log(contratoTxt)
+
       if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid)==contratoTxt){
         idContrato=contrato.contrato._id
         this.contratoTemp=contrato.contrato._id
@@ -182,8 +181,8 @@ export class NuevaSolicitudComponent implements OnInit {
     } 
 
     this.tareasContratoService.getTareasContrato(idContrato).subscribe((data:any)=>{
-      if(data.tareas.length>0){
-        this.listaTareasContrato=data.tareas;
+      if(data.contratos.length>0){
+        this.listaTareasContrato=data.contratos;
         this.mostrarTareas=true;
       }else{
         this.mostrarTareas=false;
@@ -194,8 +193,10 @@ export class NuevaSolicitudComponent implements OnInit {
   
   getContratosGerencia({ target }:any){
     let gerencia=target.value;
+    let contrato:any=document.querySelector("#iContrato")
     this.contratosGerenciaService.getContratosGerencia(gerencia).subscribe((data:any)=>{
       this.listaContratos=data.contratos_gerencia
+      contrato.value=""
     });
   }
 

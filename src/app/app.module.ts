@@ -20,6 +20,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { VerSolicitudGstComponent } from './components/ver-solicitud-gst/ver-solicitud-gst.component';
 import { NotificacionesComponent } from './components/notificaciones/notificaciones.component';
 import { SolicitudPendienteComponent } from './components/solicitud-pendiente/solicitud-pendiente.component';
+import { TareasContratoComponent } from './components/tareas-contrato/tareas-contrato.component';
+import { DocumentosEntradaTareaContratoComponent } from './components/documentos-entrada-tarea-contrato/documentos-entrada-tarea-contrato.component';
+import { DocumentosSalidaTareaContratoComponent } from './components/documentos-salida-tarea-contrato/documentos-salida-tarea-contrato.component';
+import { DocumentosGestionTareaContratoComponent } from './components/documentos-gestion-tarea-contrato/documentos-gestion-tarea-contrato.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ContratosGerenciaComponent } from './components/contratos-gerencia/contratos-gerencia.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,13 @@ import { SolicitudPendienteComponent } from './components/solicitud-pendiente/so
     HeaderComponent,
     VerSolicitudGstComponent,
     NotificacionesComponent,
-    SolicitudPendienteComponent
+    SolicitudPendienteComponent,
+    TareasContratoComponent,
+    DocumentosEntradaTareaContratoComponent,
+    DocumentosSalidaTareaContratoComponent,
+    DocumentosGestionTareaContratoComponent,
+    UsuariosComponent,
+    ContratosGerenciaComponent
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     public solicitudesUsuarioService:SolitudesUsuarioService,
     public notificacionesUsuarioService:NotificacionesService,
   ) {
-    this.usuario=sessionStorage.getItem("usuario");
+    this.usuario=localStorage.getItem("usuario");
    }
 
    mostrarMenu= false;
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    let dataUser:any=sessionStorage.getItem("usuario")
+    let dataUser:any=localStorage.getItem("usuario")
     
     if(dataUser!==undefined &&  dataUser!=""){
       this.usuario=JSON.parse(dataUser)
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
         if(val.url=="/home"){
           this.showHeader=false;
         }else{
-          let dataUser:any=sessionStorage.getItem("usuario")
+          let dataUser:any=localStorage.getItem("usuario")
           this.usuario=JSON.parse(dataUser)
           this.showHeader=true;
           this.mostrarMenu=false;
@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    sessionStorage.setItem("usuario","")
+    localStorage.setItem("usuario","")
     setTimeout(()=>{
       this.router.navigate(['home'], { });
     },500)

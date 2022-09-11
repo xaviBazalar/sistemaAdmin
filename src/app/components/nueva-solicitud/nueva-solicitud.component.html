@@ -17,7 +17,7 @@
         <div class="row mb-5">
             <div class="col-3 input-group mb-3" style="width: 35%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
-                <input (change)="getTareasContrato($event)" class="form-select" formControlName="iContrato"  list="listaContrato">
+                <input (change)="getTareasContrato($event)" class="form-select" id="iContrato" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
                     <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}</option>
                   </datalist>

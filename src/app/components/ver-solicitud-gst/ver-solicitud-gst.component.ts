@@ -45,7 +45,7 @@ export class VerSolicitudGstComponent implements OnInit {
   usuario:{
     _id:string|null,
     perfil:any
-  }  =JSON.parse(sessionStorage.getItem("usuario") || '{}');
+  }  =JSON.parse(localStorage.getItem("usuario") || '{}');
   showModal:boolean=false;
   id_historial:string|null = "";
   id_solicitud:string|null  ="";
@@ -362,7 +362,7 @@ export class VerSolicitudGstComponent implements OnInit {
 
   addHistorialSolicitud(){
     let mensaje:any=document.querySelector("#msjInteradcion")
-    let usuario:any | null= JSON.parse(sessionStorage.getItem("usuario") || '{}');
+    let usuario:any | null= JSON.parse(localStorage.getItem("usuario") || '{}');
     let dataHistorial:any={
       "solicitud": this.id_solicitud,
       "estado_resultado":this.solicitud.estado_resultado._id,

@@ -13,4 +13,8 @@ export class TareasContratoService {
   getTareasContrato(idcontrato:string){
     return this.http.get(`${this.url}/tareasContrato?contrato=${idcontrato}`) 
   }
+
+  addTareaContrato(data:any){
+    return this.http.post(`${this.url}/tareasContrato`,data)
+  }
 }

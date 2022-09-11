@@ -1,0 +1,9 @@
+.modalApp{
+    background: #0000008a;
+    z-index: 99999;
+    display: block;
+}
+
+.form-label{
+    width:132px;
+}

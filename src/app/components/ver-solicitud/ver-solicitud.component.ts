@@ -37,7 +37,7 @@ export class VerSolicitudComponent implements OnInit {
   usuario:{
     _id:string|null,
     perfil:any
-  }  =JSON.parse(sessionStorage.getItem("usuario") || '{}');
+  }  =JSON.parse(localStorage.getItem("usuario") || '{}');
   showModal:boolean=false;
   minDay:string=new Date().toISOString().split("T")[0];
   eIteraccion:boolean=false
@@ -186,7 +186,7 @@ export class VerSolicitudComponent implements OnInit {
 
   addHistorialSolicitud(){
     let mensaje:any=document.querySelector("#msjInteradcion")
-    let usuario:any | null= JSON.parse(sessionStorage.getItem("usuario") || '{}');
+    let usuario:any | null= JSON.parse(localStorage.getItem("usuario") || '{}');
     let dataHistorial:any={
       "solicitud": this.id_solicitud,
       "estado_resultado":this.solicitud.estado_resultado._id,

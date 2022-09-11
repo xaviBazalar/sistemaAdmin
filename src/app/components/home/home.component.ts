@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     private router:Router, 
     public loginService:LoginService,
     public formBuilder: FormBuilder) { 
-      sessionStorage.setItem("usuario","")
+      localStorage.setItem("usuario","")
   }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
       const dataLogin:any= await this.loginService.validate(login).toPromise();
       if(dataLogin.usuarios.length==1){
         this.errorLogin=false;
-        sessionStorage.setItem("usuario",JSON.stringify(dataLogin.usuarios[0]));
+        localStorage.setItem("usuario",JSON.stringify(dataLogin.usuarios[0]));
         setTimeout(()=>{
           this.router.navigate(['misSolicitudes'], { });
         },1000)
