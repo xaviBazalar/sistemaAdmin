@@ -34,31 +34,7 @@ export class HeaderComponent implements OnInit {
     {
       titulo:"Tablero Estado Solicitudes",
       url:"/tableroEstadoSolicitudes"
-    },
-    {
-      titulo:"Admin Tarea Contrato",
-      url:"/tareasContrato"
-    },
-    {
-      titulo:"Admin Doc Entrada",
-      url:"/documentosEntradaCT"
-    },
-    {
-      titulo:"Admin Doc Salida",
-      url:"/documentosSalidaCT"
-    },
-    {
-      titulo:"Admin Gestion Contrato",
-      url:"/documentosGestionCT"
-    },
-    {
-      titulo:"Admin Usuario",
-      url:"/usuarios"
-    },
-    {
-      titulo:"Admin Contratos Gerencia",
-      url:"/contratosGerencia"
-    },
+    }
     /*{
       titulo:"Tablero",
       url:"/tablero"
@@ -79,7 +55,48 @@ export class HeaderComponent implements OnInit {
           this.showHeader=false;
         }else{
           let dataUser:any=localStorage.getItem("usuario")
+          
           this.usuario=JSON.parse(dataUser)
+          if(this.usuario._id=="630a34772b1569b707e2ebf8"){
+            this.itemMenu= [
+              {
+                titulo:"NuevaSolicitud",
+                url:"/nuevaSolicitud"
+              },
+              {
+                titulo:"MisSolictudes",
+                url:"/misSolicitudes"
+              },
+              {
+                titulo:"Tablero Estado Solicitudes",
+                url:"/tableroEstadoSolicitudes"
+              },
+              {
+                titulo:"Admin Tarea Contrato",
+                url:"/tareasContrato"
+              },
+              {
+                titulo:"Admin Doc Entrada",
+                url:"/documentosEntradaCT"
+              },
+              {
+                titulo:"Admin Doc Salida",
+                url:"/documentosSalidaCT"
+              },
+              {
+                titulo:"Admin Gestion Contrato",
+                url:"/documentosGestionCT"
+              },
+              {
+                titulo:"Admin Usuario",
+                url:"/usuarios"
+              },
+              {
+                titulo:"Admin Contratos Gerencia",
+                url:"/contratosGerencia"
+              },
+            ]
+          }
           this.showHeader=true;
           this.mostrarMenu=false;
           this.refreshNotificaciones()
