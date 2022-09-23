@@ -17,4 +17,8 @@ export class TareasContratoService {
   addTareaContrato(data:any){
     return this.http.post(`${this.url}/tareasContrato`,data)
   }
+
+  updateTareaContrato(data:any){
+    return this.http.put(`${this.url}/tareasContrato`,data)
+  }
 }

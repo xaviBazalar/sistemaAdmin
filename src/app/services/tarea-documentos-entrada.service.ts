@@ -18,8 +18,8 @@ export class TareaDocumentosEntradaService {
     return this.http.post(`${this.url}/tareaDocumentosEntrada`,data)
   }
 
-  updateTareaDocumentosEntrada(data:any,id:string){
-    return this.http.put(`${this.url}/tareaDocumentosEntrada/${id}`,data)
+  updateTareaDocumentosEntrada(data:any){
+    return this.http.put(`${this.url}/tareaDocumentosEntrada/`,data)
   }
 }
 //http://localhost:8080/api/tareaDocumentosEntrada?tarea=62fad69c48d35ca4acd14687

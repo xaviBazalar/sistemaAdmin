@@ -17,4 +17,8 @@ export class DocumentosEntradaService {
   addDocumentoEntrada(data:any){
     return this.http.post(`${this.url}/documentosEntrada`,data)
   }
+
+  updateDocumentoEntrada(data:any){
+    return this.http.put(`${this.url}/documentosEntrada`,data)
+  }
 }

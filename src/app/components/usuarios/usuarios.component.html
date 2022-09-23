@@ -30,6 +30,8 @@
                         <th scope="col">Correo</th>
                         <th scope="col">Perfil</th>
                         <th scope="col">Usuario</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Puede Autorizar?</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -41,7 +43,10 @@
                         <td>{{usuario.correo}}</td>
                         <td>{{usuario.perfil.sigla}}</td>
                         <td>{{usuario.login}}</td>
+                        <td>{{usuario.estado?'Activo':'Inactivo'}}</td>
+                        <td>{{usuario.autorizar?'Si':'No'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{ usuario| json}}' (click)='editUsuario($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -58,7 +63,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Usuario</h5>
+          <h5 *ngIf="!showUpdateU" class="modal-title">Registro Usuario</h5>
+          <h5 *ngIf="showUpdateU" class="modal-title">Actualizar Usuario</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -90,13 +96,30 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Clave</label>
                     <input type="password" class="form-control" id="clave_usuario" placeholder="Escribir Clave" />
                 </div>
-                
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Puede Autorizar</label>
+                    <select class="form-select" id="autorizar" >
+                        <option value="">..seleccionar</option>
+                        <option value="1">Si</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div [ngStyle]="{'display':showUpdateU ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoU" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_usuario"  />
                 
                 
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addUsuario()">Registrar</button>
+          <button *ngIf="showUpdateU" type="button" class="btn btn-primary" (click)="updateUsuario()">Actualizar</button>
+          <button *ngIf="!showUpdateU" type="button" class="btn btn-primary" (click)="addUsuario()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalUsuario()">Cerrar</button>
         </div>
       </div>

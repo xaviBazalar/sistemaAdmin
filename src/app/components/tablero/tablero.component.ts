@@ -23,6 +23,12 @@ export class TableroComponent implements OnInit {
   listaUsuariosGST:any=[];
   listaUsuariosBKO:any=[];
   listaUsuarios:any;
+
+  listaPorHacer:any=[]
+  listaEnProceso:any=[]
+  listaEnTerminado:any=[]
+  listaEnRevision:any=[]
+
   constructor(
     public solicitudService:SolicitudesService,
     public gerenciaService:GerenciasService,
@@ -37,6 +43,24 @@ export class TableroComponent implements OnInit {
   ngOnInit(): void {
     this.solicitudService.getSolicitudes().subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
+      this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Proceso"
+      })
+
+      this.listaPorHacer=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Por Hacer"
+      })
+
+      this.listaEnTerminado=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Terminada"
+      })
+
+      this.listaEnRevision=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Revisión"
+      })
+
+
+      //console.log(this.listaPorHacer)
     })
 
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
@@ -80,17 +104,39 @@ export class TableroComponent implements OnInit {
     let perfil:any=document.querySelector("#perfil")
     let estado_solicitud:any=document.querySelector("#estado_solicitud")
     let estado_resultado:any=document.querySelector("#estado_resultado")
+    let fecha_solicitud:any=document.querySelector("#fecha_solicitud")
+    let fecha_inicio:any=document.querySelector("#fecha_inicio")
+    let fecha_entrega:any=document.querySelector("#fecha_entrega")
 
     let dataFilter:any={
       gerencia:gerencia.value,
       tarea:tarea.value,
       perfil:perfil.value,
       estado_solicitud:estado_solicitud.value,
-      estado_resultado:estado_resultado.value
+      estado_resultado:estado_resultado.value,
+      fecha_solicitud:fecha_solicitud.value,
+      fecha_inicio:fecha_inicio.value,
+      fecha_entrega:fecha_entrega.value
+
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
+      this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Proceso"
+      })
+
+      this.listaPorHacer=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Por Hacer"
+      })
+
+      this.listaEnTerminado=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Terminada"
+      })
+
+      this.listaEnRevision=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Revisión"
+      })
     })
   }
 

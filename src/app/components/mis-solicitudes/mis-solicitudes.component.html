@@ -8,6 +8,80 @@
         <div class="col-2">
            <!-- <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>-->
         </div>
+        <form action="">
+
+
+            <div class="row">
+    
+                <div class="col-3">
+                    <select id="gerencia" class="form-select" aria-label="Default select example">
+                        <option value="">..Seleccionar Gerencia</option>
+                        <option value="{{item._id}}" *ngFor="let item of listaGerencias">{{item.nombre_gerencia}}</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="tarea" class="form-select" aria-label="Default select example">
+                        <option value="">..Seleccionar Tarea</option>
+                        <option value="{{item._id}}" *ngFor="let item of listatareas">{{item.nombre_tarea}}</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="perfil" class="form-select" aria-label="Default select example">
+                        <option value="">..Seleccionar Persona</option>
+                        <option value="{{item._id}}" *ngFor="let item of listaUsuariosGST">{{item.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-success px-5" (click)="filterList()">Filtrar</button>
+               </div>
+               
+                   
+            </div>
+    
+    
+    
+            <div class="row my-3">
+    
+                <div class="col-3">
+                    <select id="estado_solicitud" class="form-select" aria-label="Default select example">
+                        <option value="">..Seleccionar Estado Solicitud</option>
+                        <option value="{{item._id}}" *ngFor="let item of listaEstadoSolicitud">{{item.nombre_estado}}</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="estado_resultado" class="form-select" aria-label="Default select example">
+                        <option value="">..Seleccionar Estado Resultado</option>
+                        <option value="{{item._id}}" *ngFor="let item of listaEstadoResultado">{{item.nombre_resultado}}</option>
+                    </select>
+                </div>
+                <div class="col-6">
+
+                </div>
+    
+                <div class="col-3 mt-3">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                    <input type="date" class="form-select" id="fecha_solicitud" />
+                </div>
+                <div class="col-3 mt-3">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                    <input type="date" class="form-select" id="fecha_inicio" />
+                </div>
+                <div class="col-3 mt-3">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega                                       </label>
+                    <input type="date" class="form-select" id="fecha_entrega" />
+                </div>
+                
+            </div>
+                   
+    
+    
+    
+            
+            
+    
+    
+    
+        </form>
     </div>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -29,11 +103,13 @@
                 <thead class="bg-#F53621">
                     <tr>
                         <th scope="col">Sol.N°</th>
+                        <th scope="col">Solicitante</th>
                         <th scope="col">Situacion</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Tarea</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Frecuencia</th>
+                        
                         <th scope="col">Asignada</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Resultado</th>
@@ -43,10 +119,16 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let solicitud of listaSolicitudesAsignadas">
-                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>#{{solicitud.idsecuencia}}</td>
+                        <td>
+                            <p>{{solicitud.solicitante.nombre}}</p>
+                        </td>
                         <td>Enviada</td>
+                        
                         <td>
                             <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                        </td>
+                        <td>
                             <p>{{solicitud.tarea.nombre_tarea}}</p>
                         </td>
                         <td>
@@ -54,18 +136,15 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{
+                            <a class="estado" [ngStyle]="{
                                 'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
-                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
-                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" href="#">
                                 <!--<i class="fa-solid fa-o"></i>-->
+                                {{solicitud.estado_solicitud.nombre_estado}}
                             </a>
-                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
+
         
-                        </td>
-                        <td>
-                            <p>{{solicitud.tarea.frecuencia}}</p>
-                            <p>1 vez</p>
                         </td>
                         <td>
                             <p>{{solicitud.gst.nombre}}</p>
@@ -75,10 +154,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
-                                <!--<i class="fa-solid fa-o "></i>-->
+                            <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
+                                {{solicitud.estado_resultado.nombre_resultado}}
                             </a>
-                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>
                             <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
@@ -95,11 +173,12 @@
                 <thead class="bg-#F53621">
                     <tr>
                         <th scope="col">Sol.N°</th>
+                        <th scope="col">Solicitante</th>
                         <th scope="col">Situacion</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Tarea</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Frecuencia</th>
                         <th scope="col">Asignada</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Resultado</th>
@@ -109,10 +188,15 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let solicitud of listaSolicitudes">
-                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>#{{solicitud.idsecuencia}}</td>
+                        <td>
+                            <p>{{solicitud.solicitante.nombre}}</p>
+                        </td>
                         <td>Enviada</td>
                         <td>
                             <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                        </td>
+                        <td>
                             <p>{{solicitud.tarea.nombre_tarea}}</p>
                         </td>
                         <td>
@@ -120,18 +204,13 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{
+                            <a class="estado" [ngStyle]="{
                                 'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
-                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
-                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" href="#">
                                 <!--<i class="fa-solid fa-o"></i>-->
+                                {{solicitud.estado_solicitud.nombre_estado}}
                             </a>
-                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
-        
-                        </td>
-                        <td>
-                            <p>{{solicitud.tarea.frecuencia}}</p>
-                            <p>1 vez</p>
                         </td>
                         <td>
                             <p>{{solicitud.gst.nombre}}</p>
@@ -141,10 +220,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
-                                <!--<i class="fa-solid fa-o "></i>-->
+                            <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
+                                {{solicitud.estado_resultado.nombre_resultado}}
                             </a>
-                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>
                             <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
@@ -164,8 +242,10 @@
                 <thead class="bg-#F53621">
                     <tr>
                         <th scope="col">Sol.N°</th>
+                        <th scope="col">Solicitante</th>
                         <th scope="col">Situacion</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Tarea</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
@@ -178,10 +258,15 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let solicitud of listaSolicitudesPendiente">
-                        <td>#MM-{{solicitud.idsecuencia}}</td>
+                        <td>#{{solicitud.idsecuencia}}</td>
+                        <td>
+                            <p>{{solicitud.solicitante.nombre}}</p>
+                        </td>
                         <td>Enviada</td>
                         <td>
                             <p>{{solicitud.contrato.contradoid}} {{solicitud.contrato.contrato}}</p>
+                        </td>
+                        <td>
                             <p>{{solicitud.tarea.nombre_tarea}}</p>
                         </td>
                         <td>
@@ -189,13 +274,13 @@
                             <p>Solicitado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{
+                            <a class="estado" [ngStyle]="{
                                 'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
-                                '#f3f3f3' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
-                                '#ffeed0': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d6eace':'#e4c1eb'}" href="#">
+                                '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                                '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" href="#">
                                 <!--<i class="fa-solid fa-o"></i>-->
+                                {{solicitud.estado_solicitud.nombre_estado}}
                             </a>
-                            <p>{{solicitud.estado_solicitud.nombre_estado}}</p>
         
                         </td>
                         <td>
@@ -210,10 +295,9 @@
                             <p>Iniciado</p>
                         </td>
                         <td>
-                            <a class="circle-estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#ff8352' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#3e8af7': '#72bb53'}" href="#">
-                                <!--<i class="fa-solid fa-o "></i>-->
+                            <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
+                                {{solicitud.estado_resultado.nombre_resultado}}
                             </a>
-                            <p>{{solicitud.estado_resultado.nombre_resultado}}</p>
                         </td>
                         <td>
                             <a [routerLink]="['/solicitudPendiente/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Finalizar Solicitud</button></a>

@@ -26,6 +26,7 @@ export class UsuariosComponent implements OnInit {
   }  =JSON.parse(localStorage.getItem("usuario") || '{}');
 
   showModalUsuario:boolean=false
+  showUpdateU:boolean=false
   constructor(
     public tareaService:TareasService,
     public contratosService:ContratosService,
@@ -59,6 +60,7 @@ export class UsuariosComponent implements OnInit {
     let login:any=document.querySelector("#login_usuario")
     let password:any=document.querySelector("#clave_usuario")
     let perfil:any=document.querySelector("#perfil_usuario")
+    let autorizar:any=document.querySelector("#autorizar")
 
     let dataUsuario:any={
       nombre:nombre.value,
@@ -66,7 +68,8 @@ export class UsuariosComponent implements OnInit {
       login:login.value,
       password:password.value,
       estado:true,
-      perfil:perfil.value
+      perfil:perfil.value,
+      autorizar:autorizar.value
     }
 
     this.usuariosService.addUsuario(dataUsuario).subscribe((data:any)=>{
@@ -76,12 +79,85 @@ export class UsuariosComponent implements OnInit {
 
   }
 
+  editUsuario(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateU=true
+    let nombre:any=document.querySelector("#nombre_usuario")
+    let correo:any=document.querySelector("#correo_usuario")
+    let login:any=document.querySelector("#login_usuario")
+    let password:any=document.querySelector("#clave_usuario")
+    let perfil:any=document.querySelector("#perfil_usuario")
+    let estado:any=document.querySelector("#estadoU")
+    let autorizar:any=document.querySelector("#autorizar")
+    let id:any=document.querySelector("#id_usuario")
+    
+
+    nombre.value=data.nombre
+    correo.value=data.correo
+    login.value=data.login
+    password.value=data.password
+    perfil.value=data.perfil._id
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    autorizar=(data.autorizar)?"1":"0"
+    this.openModalUsuario()
+  }
+
+  updateUsuario(){
+    let nombre:any=document.querySelector("#nombre_usuario")
+    let correo:any=document.querySelector("#correo_usuario")
+    let login:any=document.querySelector("#login_usuario")
+    let password:any=document.querySelector("#clave_usuario")
+    let perfil:any=document.querySelector("#perfil_usuario")
+    let autorizar:any=document.querySelector("#autorizar")
+    let estado:any=document.querySelector("#estadoU")
+    let id:any=document.querySelector("#id_usuario")
+
+    let dataUpdate:any={
+      nombre:nombre.value,
+      correo:correo.value,
+      login:login.value,
+      perfil:perfil.value,
+      autorizar:autorizar.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    if(password.value!==undefined){
+      dataUpdate.password=password.value
+    }
+
+    this.usuariosService.updateUsuario(dataUpdate).subscribe((data:any)=>{
+      this.refreshUsuarios()
+      this.closeModalUsuario()
+    })
+  }
+
   openModalUsuario(){
     this.showModalUsuario=true;
   }
 
   closeModalUsuario(){
     this.showModalUsuario=false;
+    this.showUpdateU=false
+    this.resetFormU()
+  }
+
+  resetFormU(){
+    let nombre:any=document.querySelector("#nombre_usuario")
+    let correo:any=document.querySelector("#correo_usuario")
+    let login:any=document.querySelector("#login_usuario")
+    let password:any=document.querySelector("#clave_usuario")
+    let perfil:any=document.querySelector("#perfil_usuario")
+    let estado:any=document.querySelector("#estadoU")
+    let id:any=document.querySelector("#id_usuario")
+    nombre.value=""
+    correo.value=""
+    login.value=""
+    password.value=""
+    perfil.value=""
+    estado.value=""
+    id.value=""
   }
 
 

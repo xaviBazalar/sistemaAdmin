@@ -17,5 +17,9 @@ export class GerenciasService {
   addGerencia(data:any){
     return this.http.post(`${this.url}/gerencia`,data)
   }
+
+  updateGerencia(data:any){
+    return this.http.put(`${this.url}/gerencia`,data)
+  }
   
 }

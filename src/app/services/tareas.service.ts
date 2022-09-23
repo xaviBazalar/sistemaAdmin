@@ -19,5 +19,8 @@ export class TareasService {
     return this.http.post(`${this.url}/tareas`,data)
   }
 
+  updateTarea(data:any){
+    return this.http.put(`${this.url}/tareas`,data)
+  }
   
 }

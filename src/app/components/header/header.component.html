@@ -1,6 +1,6 @@
 <div class="header" *ngIf="showHeader">
     <div class="container box-header">
-        <img class="logo" src="assets/img/logo.png" />
+        <img class="logo" src="assets/img/logo-pelambres.png" />
         <div style="position:relative;">
             {{usuario.nombre}}-{{usuario.perfil.sigla}}
             <img src="assets/icons/icon-user.png" />
@@ -21,11 +21,17 @@
         
 
     <div style="background: #f9f9f9;height: 800px;" *ngIf="mostrarMenu">
-        <a  *ngFor="let item of itemMenu"   (click)="mostrarMenu = !mostrarMenu" routerLink="{{item.url}}">
+        <a (mouseover)='(item.submenu.length>0)? showSubmenu = true:showSubmenu = false'  [ngClass]="(item.submenu.length>0) ? 'linkMenu wsubmenu': 'linkMenu '"  class="" *ngFor="let item of itemMenu"   (click)="mostrarMenu = !mostrarMenu" routerLink="{{item.url}}">
             <img src="assets/icons/icon-board-x.png"/>
             <small class="link-menu">{{ item.titulo }}</small>
+            <div class="submenu" *ngIf="showSubmenu">
+                <a  *ngFor="let subitem of item.submenu" (mouseover) = 'showSubmenu = true'  (click)="mostrarMenu = !mostrarMenu" routerLink="{{subitem.url}}" >
+                    {{ subitem.titulo }}
+                </a>
+            </div>
+
         </a>
-        <a (click)="logout()" >
+        <a (click)="logout()" (mouseover)='showSubmenu = false' >
             <img src="assets/icons/icon-board-x.png"/>
             <small class="link-menu">Salir</small>
         </a>

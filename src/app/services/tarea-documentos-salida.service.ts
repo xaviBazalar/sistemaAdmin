@@ -18,7 +18,7 @@ export class TareaDocumentosSalidaService {
     return this.http.post(`${this.url}/tareaDocumentosSalida`,data)
   }
 
-  updateTareaDocumentosSalida(data:any,id:string){
-    return this.http.put(`${this.url}/tareaDocumentosSalida/${id}`,data)
+  updateTareaDocumentosSalida(data:any){
+    return this.http.put(`${this.url}/tareaDocumentosSalida`,data)
   }
 }

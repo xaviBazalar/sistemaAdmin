@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   showHeader=false;
   usuario:any;
   totalNotificaciones:number=0
+  showSubmenu:boolean=false
   constructor(
     private router: Router,
     public solicitudesUsuarioService:SolitudesUsuarioService,
@@ -25,15 +26,18 @@ export class HeaderComponent implements OnInit {
    itemMenu:any= [
     {
       titulo:"NuevaSolicitud",
-      url:"/nuevaSolicitud"
+      url:"/nuevaSolicitud",
+      submenu:[]
     },
     {
       titulo:"MisSolictudes",
-      url:"/misSolicitudes"
+      url:"/misSolicitudes",
+      submenu:[]
     },
     {
       titulo:"Tablero Estado Solicitudes",
-      url:"/tableroEstadoSolicitudes"
+      url:"/tableroEstadoSolicitudes",
+      submenu:[]
     }
     /*{
       titulo:"Tablero",
@@ -61,40 +65,49 @@ export class HeaderComponent implements OnInit {
             this.itemMenu= [
               {
                 titulo:"NuevaSolicitud",
-                url:"/nuevaSolicitud"
+                url:"/nuevaSolicitud",
+                submenu:[]
               },
               {
                 titulo:"MisSolictudes",
-                url:"/misSolicitudes"
+                url:"/misSolicitudes",
+                submenu:[]
               },
               {
                 titulo:"Tablero Estado Solicitudes",
-                url:"/tableroEstadoSolicitudes"
+                url:"/tableroEstadoSolicitudes",
+                submenu:[]
               },
               {
-                titulo:"Admin Tarea Contrato",
-                url:"/tareasContrato"
-              },
-              {
-                titulo:"Admin Doc Entrada",
-                url:"/documentosEntradaCT"
-              },
-              {
-                titulo:"Admin Doc Salida",
-                url:"/documentosSalidaCT"
-              },
-              {
-                titulo:"Admin Gestion Contrato",
-                url:"/documentosGestionCT"
-              },
-              {
-                titulo:"Admin Usuario",
-                url:"/usuarios"
-              },
-              {
-                titulo:"Admin Contratos Gerencia",
-                url:"/contratosGerencia"
-              },
+                titulo:"Administración Sistema",
+                url:"#",
+                submenu:[
+                  {
+                    titulo:"Admin Tarea Contrato",
+                    url:"/tareasContrato"
+                  },
+                  {
+                    titulo:"Admin Doc Entrada",
+                    url:"/documentosEntradaCT"
+                  },
+                  {
+                    titulo:"Admin Doc Salida",
+                    url:"/documentosSalidaCT"
+                  },
+                  {
+                    titulo:"Admin Gestion Contrato",
+                    url:"/documentosGestionCT"
+                  },
+                  {
+                    titulo:"Admin Usuario",
+                    url:"/usuarios"
+                  },
+                  {
+                    titulo:"Admin Contratos Gerencia",
+                    url:"/contratosGerencia"
+                  },
+                ]
+              }
             ]
           }
           this.showHeader=true;

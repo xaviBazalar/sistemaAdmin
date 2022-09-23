@@ -37,6 +37,9 @@
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Tarea</th>
+                        <th scope="col">GST</th>
+                        <th scope="col">BKO</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -46,7 +49,11 @@
                         <td>#</td>
                         <td>{{tareaContrato.contrato.contrato}}-{{tareaContrato.contrato.contradoid}}</td>
                         <td>{{tareaContrato.tarea.nombre_tarea}}</td>
+                        <td>{{tareaContrato.gst.nombre}}</td>
+                        <td>{{tareaContrato.bko.nombre}}</td>
+                        <td>{{tareaContrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button id="{{tareaContrato._id}}" type="button" class="btn btn-primary btn-sm" attr.data='{{tareaContrato| json}}' (click)='editTareaContrato($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -66,6 +73,7 @@
                         <th scope="col">Tarea</th>
                         <th scope="col">Frecuencia</th>
                         <th scope="col">SLA</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -76,7 +84,9 @@
                         <td>{{tarea.nombre_tarea}}</td>
                         <td>{{tarea.frecuencia}}</td>
                         <td>{{tarea.SLA}}</td>
+                        <td>{{tarea.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tarea| json}}' (click)='editTarea($event)'>Editar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -94,6 +104,7 @@
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Nro Contrato</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -103,7 +114,9 @@
                         <td>#</td>
                         <td>{{contrato.contrato}}</td>
                         <td>{{contrato.contradoid}}</td>
+                        <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -119,7 +132,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Tarea Contrato</h5>
+          <h5 *ngIf="!showUpdate" class="modal-title">Registro Tarea Contrato</h5>
+          <h5 *ngIf="showUpdate" class="modal-title">Actualizar Tarea Contrato</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -145,10 +159,38 @@
                         </option>
                     </select>
                 </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GST</label>
+                    <select class="form-select" id="usuarioGST" >
+                        <option value="">..seleccionar usuario</option>
+                        <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST">
+                            {{usuario.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">BKO</label>
+                    <select class="form-select" id="usuarioBKO" >
+                        <option value="">..seleccionar usuario</option>
+                        <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">
+                            {{usuario.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div [ngStyle]="{'display':showUpdate ? 'flex' : 'none' }" class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoTC" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_tarea_contrato"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addTareaContrato()">Registrar</button>
+          <button *ngIf="showUpdate" type="button" class="btn btn-primary" (click)="updateTareaContrato()">Actualizar</button>
+          <button *ngIf="!showUpdate" type="button" class="btn btn-primary" (click)="addTareaContrato()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTareaContrato()">Cerrar</button>
         </div>
       </div>
@@ -159,7 +201,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Tarea</h5>
+          <h5 *ngIf="!showUpdateTarea" class="modal-title">Registro Tarea</h5>
+          <h5 *ngIf="showUpdateTarea" class="modal-title">Update Tarea</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -182,10 +225,20 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">SLA</label>
                     <input class="form-control" id="sla_tarea" placeholder="Escribir SLA" />
                 </div>
+                <div [ngStyle]="{'display':showUpdateTarea ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoT" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_tarea"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addTarea()">Registrar</button>
+          <button *ngIf="showUpdateTarea" type="button" class="btn btn-primary" (click)="updateTarea()">Actualizar</button>
+          <button *ngIf="!showUpdateTarea" ype="button" class="btn btn-primary" (click)="addTarea()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTarea()">Cerrar</button>
         </div>
       </div>
@@ -196,7 +249,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Contrato</h5>
+          <h5 *ngIf="!showUpdateContrato"class="modal-title">Registro Contrato</h5>
+          <h5 *ngIf="showUpdateContrato" class="modal-title">Update Contrato</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -211,10 +265,20 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nro Contrato</label>
                     <input class="form-control" id="nro_contrato" placeholder="Escribir Nro Contrato" />
                 </div>
+                <div [ngStyle]="{'display':showUpdateContrato ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoC" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_contrato"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
+          <button *ngIf="showUpdateContrato" type="button" class="btn btn-primary" (click)="updateContrato()">Actualizar</button>
+          <button *ngIf="!showUpdateContrato" type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContrato()">Cerrar</button>
         </div>
       </div>

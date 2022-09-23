@@ -23,6 +23,10 @@ export class ContratosGerenciaComponent implements OnInit {
   listaContratosGerencia:any=[];
   listaGerencias:any=[];
 
+  showUpdateCG:boolean=false
+  showUpdateG:boolean=false
+  showUpdateC:boolean=false
+
   usuario:{
     _id:string|null,
     perfil:any
@@ -92,6 +96,41 @@ export class ContratosGerenciaComponent implements OnInit {
     })
   }
 
+  editContratoGerencia(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateCG=true
+
+    let gerencia:any=document.querySelector("#gerenciaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoCG")
+    let id:any=document.querySelector("#id_cg")
+    gerencia.value=data.gerencia._id
+    contrato.value=data.contrato._id
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    this.openModalContratoGerencia()
+  }
+
+  updateContratoGerencia(){
+    let gerencia:any=document.querySelector("#gerenciaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoCG")
+    let id:any=document.querySelector("#id_cg")
+
+    let dataContratoG:any={
+      gerencia:gerencia.value,
+      contrato:contrato.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    this.contratosGerenciaService.updateContratoGerencia(dataContratoG).subscribe((data:any)=>{
+      this.closeModalContratoGerencia()
+      this.refreshListaContratosGerencia()
+    })
+  }
+  
+
   addGerencia(){
     let nombre_gerencia:any=document.querySelector("#nombre_gerencia")
 
@@ -100,6 +139,36 @@ export class ContratosGerenciaComponent implements OnInit {
     }
 
     this.gerenciasService.addGerencia(dataGerencia).subscribe((data:any)=>{
+      this.closeModalGerencia()
+      this.refreshListaGerencia()
+    })
+  }
+
+  editGerencia(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateG=true
+
+    let nombre_gerencia:any=document.querySelector("#nombre_gerencia")
+    let estado:any=document.querySelector("#estadoG")
+    let id:any=document.querySelector("#id_g")
+    nombre_gerencia.value=data.nombre_gerencia
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    this.openModalGerencia()
+  }
+  
+  updateGerencia(){
+    let nombre_gerencia:any=document.querySelector("#nombre_gerencia")
+    let estado:any=document.querySelector("#estadoG")
+    let id:any=document.querySelector("#id_g")
+
+    let dataUpdate:any={
+      nombre_gerencia:nombre_gerencia.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    this.gerenciasService.updateGerencia(dataUpdate).subscribe((data:any)=>{
       this.closeModalGerencia()
       this.refreshListaGerencia()
     })
@@ -120,6 +189,39 @@ export class ContratosGerenciaComponent implements OnInit {
     })
   }
 
+  editContrato(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateC=true
+
+    let contrato:any=document.querySelector("#nombre_contrato")
+    let contradoid:any=document.querySelector("#nro_contrato")
+    let estado:any=document.querySelector("#estadoC")
+    let id:any=document.querySelector("#id_c")
+    contrato.value=data.contrato,
+    contradoid.value=data.contradoid
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    this.openModalContrato()
+  }
+
+  updateContrato(){
+    let contrato:any=document.querySelector("#nombre_contrato")
+    let contradoid:any=document.querySelector("#nro_contrato")
+    let estado:any=document.querySelector("#estadoC")
+    let id:any=document.querySelector("#id_c")
+
+    let dataUpdate:any={
+      contrato:contrato.value,
+      contradoid:contradoid.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    this.contratosService.updateContrato(dataUpdate).subscribe((data:any)=>{
+      this.closeModalContrato()
+      this.refreshListaContratos()
+    })
+  }
 
   openModalContratoGerencia(){
     this.showModalContratoGerencia=true;
@@ -135,13 +237,53 @@ export class ContratosGerenciaComponent implements OnInit {
 
   closeModalContratoGerencia(){
     this.showModalContratoGerencia=false;
+    this.showUpdateCG=false;
+    this.resetFormCG()
   }
 
   closeModalGerencia(){
     this.showModalGerencia=false;
+    this.showUpdateG=false
+    this.resetFormG()
   }
 
   closeModalContrato(){
     this.showModalContrato=false;
+    this.showUpdateC=false
+    this.resetFormC()
+  }
+
+  resetFormCG(){
+    let gerencia:any=document.querySelector("#gerenciaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoCG")
+    let id:any=document.querySelector("#id_cg")
+
+    gerencia.value=""
+    contrato.value=""
+    estado.value=""
+    id.value=""
+  }
+
+  resetFormG(){
+    let nombre_gerencia:any=document.querySelector("#nombre_gerencia")
+    let estado:any=document.querySelector("#estadoCG")
+    let id:any=document.querySelector("#id_cg")
+
+    nombre_gerencia.value=""
+    estado.value=""
+    id.value=""
+  }
+
+  resetFormC(){
+    let contrato:any=document.querySelector("#nombre_contrato")
+    let contradoid:any=document.querySelector("#nro_contrato")
+    let estado:any=document.querySelector("#estadoCG")
+    let id:any=document.querySelector("#id_cg")
+
+    contrato.value=""
+    contradoid.value=""
+    estado.value=""
+    id.value=""
   }
 }

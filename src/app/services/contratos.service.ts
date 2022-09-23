@@ -18,4 +18,8 @@ export class ContratosService {
   addContrato(data:any){
     return this.http.post(`${this.url}/contratos`,data)
   }
+
+  updateContrato(data:any){
+    return this.http.put(`${this.url}/contratos`,data)
+  }
 }

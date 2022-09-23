@@ -35,6 +35,7 @@
                         <th scope="col">Tarea</th>
                         <th scope="col">Documento Entrada</th>
                         <th scope="col">Tipo Documento</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -46,7 +47,9 @@
                         <td>{{tareaDE.tarea.nombre_tarea}}</td>
                         <td>{{tareaDE.documento_entrada.descripcion}}</td>
                         <td>{{tareaDE.documento_entrada.tipo_documento}}</td>
+                        <td>{{tareaDE.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tareaDE| json}}' (click)='editDocumentoEntradaTC($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -65,6 +68,7 @@
                         <th scope="col">N°</th>
                         <th scope="col">Documento Entrada</th>
                         <th scope="col">Tipo Documento</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -74,7 +78,9 @@
                         <td>#</td>
                         <td>{{documentoEntrada.descripcion}}</td>
                         <td>{{documentoEntrada.tipo_documento}}</td>
+                        <td>{{documentoEntrada.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{documentoEntrada| json}}' (click)='editDocumentoEntrada($event)'>Editar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -89,7 +95,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Documento Entrada - Contrato Tarea</h5>
+          <h5 *ngIf="!showUpdateDocumentoETC" class="modal-title">Registro Documento Entrada - Contrato Tarea</h5>
+          <h5 *ngIf="showUpdateDocumentoETC" class="modal-title">Actualizar Documento Entrada - Contrato Tarea</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -124,11 +131,21 @@
                         </option>
                     </select>
                 </div>
+                <div [ngStyle]="{'display':showUpdateDocumentoETC ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoDETC" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_documento_e_tc"  />
                 
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addDocumentoEntradaTC()">Registrar</button>
+          <button *ngIf="showUpdateDocumentoETC" type="button" class="btn btn-primary" (click)="updateDocumentoEntradaTC()">Actualizar</button>
+          <button *ngIf="!showUpdateDocumentoETC" type="button" class="btn btn-primary" (click)="addDocumentoEntradaTC()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDocumentoEntradaCT()">Cerrar</button>
         </div>
       </div>
@@ -139,7 +156,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Documento Entrada</h5>
+          <h5 *ngIf="!showUpdateDocumentoE" class="modal-title">Registro Documento Entrada</h5>
+          <h5 *ngIf="showUpdateDocumentoE" class="modal-title">Actualizar Documento Entrada </h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -157,13 +175,27 @@
                         <option value="word" >word</option>
                         <option value="excel" >excel</option>
                         <option value="pdf" >pdf</option>
+                        <option value="pdf+doc" >pdf+doc</option>
                     </select>
                 </div>
-
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;"> URL</label>
+                    <input class="form-control" id="url_documento" placeholder="Escribir Url" />
+                </div>
+                <div [ngStyle]="{'display':showUpdateDocumentoE ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoDE" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_documento_e"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addDocumentoEntrada()">Registrar</button>
+          <button *ngIf="showUpdateDocumentoE" type="button" class="btn btn-primary" (click)="updateDocumentoEntrada()">Actualizar</button>
+          <button *ngIf="!showUpdateDocumentoE" type="button" class="btn btn-primary" (click)="addDocumentoEntrada()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDocumentoEntrada()">Cerrar</button>
         </div>
       </div>

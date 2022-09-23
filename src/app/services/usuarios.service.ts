@@ -20,4 +20,8 @@ export class UsuariosService {
     return this.http.post(`${this.url}/usuarios`,data)
   }
 
+  updateUsuario(data:any){
+    return this.http.put(`${this.url}/usuarios`,data)
+  }
+
 }

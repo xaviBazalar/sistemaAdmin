@@ -17,4 +17,8 @@ export class DocumentosSalidaService {
   addDocumentoSalida(data:any){
     return this.http.post(`${this.url}/documentosSalida`,data)
   }
+
+  updateDocumentoSalida(data:any){
+    return this.http.put(`${this.url}/documentosSalida`,data)
+  }
 }

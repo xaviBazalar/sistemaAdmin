@@ -18,4 +18,8 @@ export class DocumentacionSolicitudedService {
     return this.http.post(`${this.url}/documentacionSolicitudes`,data)
   }
 
+  updateDocumentacionSolicitud(data:any){
+    return this.http.put(`${this.url}/documentacionSolicitudes`,data)
+  }
+
 }

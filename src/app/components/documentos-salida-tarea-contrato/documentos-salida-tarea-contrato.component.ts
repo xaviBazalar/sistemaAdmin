@@ -24,6 +24,9 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   showModalDocumentoSalidaTC:boolean=false
   showModalDocumentoSalida:boolean=false
+
+  showUpdateDocumentoSTC:boolean=false
+  showUpdateDocumentoS:boolean=false
   constructor(public tareaService:TareasService,
     public contratosService:ContratosService,
     public documentosEntradaService:DocumentosEntradaService,
@@ -78,6 +81,44 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   }
 
+  editDocumentoSalidaTC(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateDocumentoSTC=true
+
+    let tarea:any=document.querySelector("#tareaC")
+    let documento_salida:any=document.querySelector("#documentoSalidaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoDSTC")
+    let id:any=document.querySelector("#id_documento_s_tc")
+    tarea.value=data.tarea._id
+    documento_salida.value=data.documento_salida._id
+    contrato.value=data.contrato._id
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    this.openModalDocumentoSalidaCT()
+  }
+
+  updateDocumentoSalidaTC(){
+    let tarea:any=document.querySelector("#tareaC")
+    let documento_salida:any=document.querySelector("#documentoSalidaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoDSTC")
+    let id:any=document.querySelector("#id_documento_s_tc")
+
+    let dataDocumentoSTC:any={
+      tarea:tarea.value,
+      documento_salida:documento_salida.value,
+      contrato:contrato.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    this.tareaDocumentosSalidaService.updateTareaDocumentosSalida(dataDocumentoSTC).subscribe((data:any)=>{
+      this.refreshTareaDocumentosSalida()
+      this.closeModalDocumentoSalidaCT()
+    })
+  }
+
   addDocumentoSalida(){
     let descripcion:any=document.querySelector("#nombre_documento")
     let tipo_documento:any=document.querySelector("#tipo_documento")
@@ -97,6 +138,39 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   }
 
+  editDocumentoSalida(info:any){
+    let data=JSON.parse(info.target.getAttribute("data"))
+    this.showUpdateDocumentoS=true
+    let descripcion:any=document.querySelector("#nombre_documento")
+    let tipo_documento:any=document.querySelector("#tipo_documento")
+    let estado:any=document.querySelector("#estadoDS")
+    let id:any=document.querySelector("#id_documento_s")
+    descripcion.value=data.descripcion
+    tipo_documento.value=data.tipo_documento
+    estado.value=(data.estado)?"1":"0"
+    id.value=data._id
+    this.openModalDocumentoSalida()
+  }
+
+  updateDocumentoSalida(){
+    let descripcion:any=document.querySelector("#nombre_documento")
+    let tipo_documento:any=document.querySelector("#tipo_documento")
+    let estado:any=document.querySelector("#estadoDS")
+    let id:any=document.querySelector("#id_documento_s")
+
+    let dataDocumentoSalida:any={
+      tipo_documento:tipo_documento.value,
+      descripcion:descripcion.value,
+      estado:estado.value,
+      id:id.value
+    }
+
+    this.documentosSalidaService.updateDocumentoSalida(dataDocumentoSalida).subscribe((data:any)=>{
+      this.refreshDocumentosSalida()
+      this.closeModalDocumentoSalida()
+    })
+  }
+
   openModalDocumentoSalidaCT(){
     this.showModalDocumentoSalidaTC=true;
   }
@@ -107,10 +181,38 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   closeModalDocumentoSalidaCT(){
     this.showModalDocumentoSalidaTC=false;
+    this.showUpdateDocumentoSTC=false
+    this.resetFormDSTC()
   }
 
   closeModalDocumentoSalida(){
     this.showModalDocumentoSalida=false;
+    this.showUpdateDocumentoS=false
+    this.resetFormDS()
+  }
+
+  resetFormDSTC(){
+    let tarea:any=document.querySelector("#tareaC")
+    let documento_salida:any=document.querySelector("#documentoSalidaC")
+    let contrato:any=document.querySelector("#contratoC")
+    let estado:any=document.querySelector("#estadoDETC")
+    let id:any=document.querySelector("#id_documento_e_tc")
+    tarea.value=""
+    documento_salida.value=""
+    contrato.value=""
+    estado.value=""
+    id.value=""
+  }
+
+  resetFormDS(){
+    let descripcion:any=document.querySelector("#nombre_documento")
+    let tipo_documento:any=document.querySelector("#tipo_documento")
+    let estado:any=document.querySelector("#estadoDS")
+    let id:any=document.querySelector("#id_documento_s")
+    descripcion.value=""
+    tipo_documento.value=""
+    estado.value=""
+    id.value=""
   }
 
 }

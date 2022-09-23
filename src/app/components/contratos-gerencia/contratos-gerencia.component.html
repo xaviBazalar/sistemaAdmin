@@ -37,6 +37,7 @@
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Gerencia</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -46,7 +47,9 @@
                         <td>#</td>
                         <td>{{contratoGerencia.contrato.contrato}}-{{contratoGerencia.contrato.contradoid}}</td>
                         <td>{{contratoGerencia.gerencia.nombre_gerencia}}</td>
+                        <td>{{contratoGerencia.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{contratoGerencia| json}}' (click)='editContratoGerencia($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -64,6 +67,7 @@
                     <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Gerencia</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -72,7 +76,9 @@
                     <tr *ngFor="let gerencia of listaGerencias">
                         <td>#</td>
                         <td>{{gerencia.nombre_gerencia}}</td>
+                        <td>{{gerencia.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{gerencia| json}}' (click)='editGerencia($event)'>Editar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -90,6 +96,7 @@
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Nro Contrato</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -99,7 +106,9 @@
                         <td>#</td>
                         <td>{{contrato.contrato}}</td>
                         <td>{{contrato.contradoid}}</td>
+                        <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -115,7 +124,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Contrato Gerencia</h5>
+          <h5 *ngIf="!showUpdateCG" class="modal-title">Registro Contrato Gerencia</h5>
+          <h5 *ngIf="showUpdateCG" class="modal-title">Update Contrato Gerencia</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -141,10 +151,20 @@
                         </option>
                     </select>
                 </div>
+                <div [ngStyle]="{'display':showUpdateCG ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoCG" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_cg"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addContratoGerencia()">Registrar</button>
+          <button *ngIf="showUpdateCG" type="button" class="btn btn-primary" (click)="updateContratoGerencia()">Actualizar</button>
+          <button *ngIf="!showUpdateCG" type="button" class="btn btn-primary" (click)="addContratoGerencia()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContratoGerencia()">Cerrar</button>
         </div>
       </div>
@@ -155,7 +175,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Gerencia</h5>
+          <h5 *ngIf="!showUpdateG" class="modal-title">Registro Gerencia</h5>
+          <h5 *ngIf="showUpdateG" class="modal-title">Update Gerencia</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -168,9 +189,19 @@
                 </div>
                 
             </div>
+            <div [ngStyle]="{'display':showUpdateG ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                <select class="form-select" id="estadoG" >
+                    <option value="">..seleccionar estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
+            <input type="hidden" class="form-control" id="id_g"  />
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addGerencia()">Registrar</button>
+          <button *ngIf="showUpdateG" type="button" class="btn btn-primary" (click)="updateGerencia()">Actualizar</button>
+          <button *ngIf="!showUpdateG" type="button" class="btn btn-primary" (click)="addGerencia()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalGerencia()">Cerrar</button>
         </div>
       </div>
@@ -181,7 +212,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro Contrato</h5>
+          <h5 *ngIf="!showUpdateC" class="modal-title">Registro Contrato</h5>
+          <h5 *ngIf="showUpdateC" class="modal-title">Update Contrato</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -196,10 +228,20 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nro Contrato</label>
                     <input class="form-control" id="nro_contrato" placeholder="Escribir Nro Contrato" />
                 </div>
+                <div [ngStyle]="{'display':showUpdateC ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoC" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_c"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
+          <button *ngIf="showUpdateC" type="button" class="btn btn-primary" (click)="updateContrato()">Actualizar</button>
+          <button *ngIf="!showUpdateC" type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContrato()">Cerrar</button>
         </div>
       </div>

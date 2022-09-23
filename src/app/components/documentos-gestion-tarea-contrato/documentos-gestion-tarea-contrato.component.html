@@ -30,6 +30,7 @@
                         <th scope="col">Contrato</th>
                         <th scope="col">Tarea</th>
                         <th scope="col">Seguimiento Gestion</th>
+                        <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -40,7 +41,9 @@
                         <td>{{tareaG.contrato.contrato}}-{{tareaG.contrato.contradoid}}</td>
                         <td>{{tareaG.tarea.nombre_tarea}}</td>
                         <td>{{tareaG.nombre_documento}}</td>
+                        <td>{{tareaG.estado?'Activo':'Inactivo'}}</td>
                         <td>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tareaG| json}}' (click)='editDocumentoGestionTC($event)'>Editar</button>
                         </td>
         
                     </tr>
@@ -57,7 +60,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Registro  Gestion - Contrato Tarea</h5>
+          <h5 *ngIf="!showUpdateDS" class="modal-title">Registro  Gestion - Contrato Tarea</h5>
+          <h5 *ngIf="showUpdateDS" class="modal-title">Actualizar Gestion - Contrato Tarea</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -87,11 +91,20 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gestion</label>
                     <input class="form-control" id="gestionC" placeholder="Escribir Nombre Gestion" />
                 </div>
-                
+                <div [ngStyle]="{'display':showUpdateDS ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <select class="form-select" id="estadoDS" >
+                        <option value="">..seleccionar estado</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <input type="hidden" class="form-control" id="id_ds"  />
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addDocumentoGestionTC()">Registrar</button>
+          <button *ngIf="showUpdateDS" type="button" class="btn btn-primary" (click)="updateDocumentoGestionTC()">Actualizar</button>
+          <button *ngIf="!showUpdateDS" type="button" class="btn btn-primary" (click)="addDocumentoGestionTC()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDocumentoGestionCT()">Cerrar</button>
         </div>
       </div>

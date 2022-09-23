@@ -11,3 +11,20 @@
     margin: auto;
     border: 1px solid #c7c7c7;
 }
+
+.table{
+    font-size: 12px;
+}
+
+.table p{
+    margin:0px;
+}
+
+.estado{
+    background-color: rgb(47, 125, 148);
+    padding: 7px;
+    color: black;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
