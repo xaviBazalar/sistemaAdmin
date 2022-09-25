@@ -50,6 +50,7 @@ export class VerSolicitudGstComponent implements OnInit {
   id_historial:string|null = "";
   id_solicitud:string|null  ="";
   urlRespuesta:string|null  ="";
+  urlPregunta:string|null  ="";
   isSubmittedFile:boolean=false;
   regFormFile:any;
   idTareDocumentoRespuesta:string|null  ="";
@@ -368,6 +369,7 @@ export class VerSolicitudGstComponent implements OnInit {
       "estado_resultado":this.solicitud.estado_resultado._id,
       "usuario": usuario._id,
       "mensaje": mensaje.value,
+      "url_file_pregunta":(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:((this.urlPregunta!="")?"/api/upload?id="+this.urlPregunta:""),
       solicitante:this.usuario._id
     }
 
@@ -375,6 +377,7 @@ export class VerSolicitudGstComponent implements OnInit {
       this.refreshHistorialSolicitud()
       this.refreshBitacoraSolicitud()
       mensaje.value=""
+      this.urlPregunta=""
       this.eIteraccion=true
     })
     
@@ -399,6 +402,18 @@ export class VerSolicitudGstComponent implements OnInit {
     })
   }
 
+  addFileHistorialPregunta(){
+    var formData = new FormData();
+    const docfile = document.querySelector('#filePregunta') as HTMLInputElement;
+    const docProd=docfile.files instanceof FileList
+    ? docfile.files[0] : ''
+    formData.append("archivo", docProd);
+
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+      this.urlPregunta=data.urlFile
+    })
+  }
+
   getFecRegistro=()=>{
     var today = new Date();
     var now = today.toLocaleString();
@@ -418,7 +433,7 @@ export class VerSolicitudGstComponent implements OnInit {
       respuesta:msg.value,
       fecha_respuesta:this.getFecRegistro(),
       usuario_respuesta:this.usuario._id,
-      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:"",
+      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:((this.urlPregunta!="")?"/api/upload?id="+this.urlPregunta:""),
       solicitante:this.usuario._id
     }
     this.historialSolicitudService.updateHistorialResultadoSolicitud(dataHistorial,id).subscribe((data:any)=>{

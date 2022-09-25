@@ -34,6 +34,7 @@ export class VerSolicitudComponent implements OnInit {
   id_solicitud:string|null  ="";
   id_historial:string|null = "";
   urlRespuesta:string|null = "";
+  urlPregunta:string|null = "";
   usuario:{
     _id:string|null,
     perfil:any
@@ -111,6 +112,18 @@ export class VerSolicitudComponent implements OnInit {
     })
   }
 
+  addFileHistorialPregunta(){
+    var formData = new FormData();
+    const docfile = document.querySelector('#filePregunta') as HTMLInputElement;
+    const docProd=docfile.files instanceof FileList
+    ? docfile.files[0] : ''
+    formData.append("archivo", docProd);
+
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+      this.urlPregunta=data.urlFile
+    })
+  }
+
   getDescripcionDocumentoEntrada(idTareaDocumento:string){
     let data=""
     for(let item of this.listaTareaDocumentos){
@@ -157,6 +170,13 @@ export class VerSolicitudComponent implements OnInit {
     return data;
   }
 
+  validateUrl(url:string){
+    if(url.indexOf("http")>-1){
+      return url
+    }else{
+      return this.baseUrlGet+url
+    }
+  }
 
   getTareaDocumentosEntrada(tarea:string) {
     this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.solicitud.contrato._id).subscribe((data:any)=>{
@@ -193,12 +213,14 @@ export class VerSolicitudComponent implements OnInit {
       "usuario": usuario._id,
       "mensaje": mensaje.value,
       "usuario_asignado":this.solicitud.gst._id,
-      "solicitante":this.usuario._id
+      "solicitante":this.usuario._id,
+      "url_file_pregunta":(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:((this.urlPregunta!="")?"/api/upload?id="+this.urlPregunta:""),
     }
 
     this.historialSolicitudService.addHistorialResultadoSolicitud(dataHistorial).subscribe((data:any)=>{
       this.refreshHistorialSolicitud()
       mensaje.value=""
+      this.urlPregunta=""
       this.eIteraccion=true
     })
 
@@ -241,7 +263,8 @@ export class VerSolicitudComponent implements OnInit {
       respuesta:msg.value,
       fecha_respuesta:this.getFecRegistro(),
       usuario_respuesta:this.usuario._id,
-      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:"",
+      url_file:(this.urlRespuesta!="")?"/api/upload?id="+this.urlRespuesta:((this.urlPregunta!="")?"/api/upload?id="+this.urlPregunta:""),
+
       solicitante:this.usuario._id
     }
     this.historialSolicitudService.updateHistorialResultadoSolicitud(dataHistorial,id).subscribe((data:any)=>{

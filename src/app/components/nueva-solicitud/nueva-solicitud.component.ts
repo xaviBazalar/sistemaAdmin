@@ -71,7 +71,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
   ngOnInit(): void {
     this.regFormFile=this.formBuilder.group({
-      iFile:['', Validators.required],
+      iFile:[''],
       //iTypeDocFile:['', Validators.required],
     })
 
@@ -81,7 +81,7 @@ export class NuevaSolicitudComponent implements OnInit {
       iGerencia:['', Validators.required],
       iContrato:['', Validators.required],
       iTarea:['', Validators.required],
-      iGst:['63005b09a608b63a870dfd59', Validators.required],
+      iGst:['', Validators.required],
       iBko:['', Validators.required],
       iMensaje:['', Validators.required],
       iFechaSolicitud:[this.getFecActual(), Validators.required],
@@ -90,7 +90,7 @@ export class NuevaSolicitudComponent implements OnInit {
      })
 
      //this.regForm.controls['iGst'].setValue(this.default, {onlySelf: true});
-    this.gerenciaService.getGerencias().subscribe((data:any)=>{
+    this.gerenciaService.getGerenciasActivas().subscribe((data:any)=>{
       this.listaGerencias=data.gerencias;
     })
 
@@ -181,8 +181,14 @@ export class NuevaSolicitudComponent implements OnInit {
     } 
 
     this.tareasContratoService.getTareasContrato(idContrato).subscribe((data:any)=>{
-      if(data.contratos.length>0){
-        this.listaTareasContrato=data.contratos;
+      if(data.contratos.length>0 ){
+        //this.listaTareasContrato=data.contratos;
+        this.listaTareasContrato=[]
+        for (const contrato of data.contratos) {
+          if(contrato.estado==true || contrato.estado==1){
+            this.listaTareasContrato.push(contrato)
+          }
+        }
         this.mostrarTareas=true;
       }else{
         this.mostrarTareas=false;
@@ -194,13 +200,23 @@ export class NuevaSolicitudComponent implements OnInit {
   getContratosGerencia({ target }:any){
     let gerencia=target.value;
     let contrato:any=document.querySelector("#iContrato")
-    this.contratosGerenciaService.getContratosGerencia(gerencia).subscribe((data:any)=>{
+    this.contratosGerenciaService.getContratosGerenciaActivos(gerencia).subscribe((data:any)=>{
       this.listaContratos=data.contratos_gerencia
       contrato.value=""
     });
   }
 
   getTareaDocumentosEntrada({ target }:any) {
+    let gst:any=document.querySelector("#iGst")
+    let bko:any=document.querySelector("#iBko")
+    for (const info of this.listaTareasContrato) {
+      if(info.tarea._id==target.value){
+        gst.value=info.gst._id
+        bko.value=info.bko._id
+        break
+      }
+    }
+
     this.tareaSelected=target.value
     let tarea=target.value;
     this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp).subscribe((data:any)=>{
@@ -238,8 +254,14 @@ export class NuevaSolicitudComponent implements OnInit {
     this.idTareDocumentoEntrada=valor;
     this.tipoTareaSelected=tipoArchivo
     let inputF=document.querySelector('#file')
+    let previewFile:any=document.querySelector("#customFileLang")
+    previewFile.readOnly=true
     if(this.tipoTareaSelected=="word"){
       inputF?.setAttribute("accept",".doc,.docx")
+    }
+
+    if(this.tipoTareaSelected=="pdf+doc"){
+      inputF?.setAttribute("accept",".doc,.docx,.pdf")
     }
 
     if(this.tipoTareaSelected=="excel"){
@@ -248,6 +270,19 @@ export class NuevaSolicitudComponent implements OnInit {
 
     if(this.tipoTareaSelected=="pdf"){
       inputF?.setAttribute("accept",".pdf")
+    }
+
+    if(this.tipoTareaSelected=="txt"){
+      inputF?.setAttribute("accept",".txt")
+    }
+
+    if(this.tipoTareaSelected=="zip"){
+      inputF?.setAttribute("accept",".zip,.rar,.tar")
+    }
+
+    if(this.tipoTareaSelected=="url"){
+      inputF?.setAttribute("accept","")
+      previewFile?.removeAttribute("readonly")
     }
 
   }
@@ -268,24 +303,17 @@ export class NuevaSolicitudComponent implements OnInit {
     const imanProd=imagefile.files instanceof FileList
     ? imagefile.files[0] : ''
     formData.append("archivo", imanProd);
+   
+    
 
     this.isSubmittedFile=true;
     let observacion:any=document.querySelector("#iObsFile") 
-    if (this.regFormFile.dirty && this.regFormFile.valid && this.idTareDocumentoEntrada!="") {
-        this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-          
-          /*let dataUpdate={
-            _id:this.idTareDocumentoEntrada,
-            validado:true,
-            url_ref:"/api/upload?id="+data.urlFile,
-            observacion:observacion.value,
-            randomId:this.tokenTemp
-          } */
-
+    if (this.idTareDocumentoEntrada!="") {
+        if(previewFile.value.indexOf("http")>-1){
           let dataAdd={
             tarea_documento:this.idTareDocumentoEntrada,
             validado:true,
-            url_ref:"/api/upload?id="+data.urlFile,
+            url_ref:previewFile.value,
             observacion:observacion.value,
             randomId:this.tokenTemp
           } 
@@ -300,9 +328,40 @@ export class NuevaSolicitudComponent implements OnInit {
             this.isSubmittedFile=false;
             observacion.value=""
          })
-
-
-        })
+        }else{
+          this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+          
+            /*let dataUpdate={
+              _id:this.idTareDocumentoEntrada,
+              validado:true,
+              url_ref:"/api/upload?id="+data.urlFile,
+              observacion:observacion.value,
+              randomId:this.tokenTemp
+            } */
+  
+            let dataAdd={
+              tarea_documento:this.idTareDocumentoEntrada,
+              validado:true,
+              url_ref:"/api/upload?id="+data.urlFile,
+              observacion:observacion.value,
+              randomId:this.tokenTemp
+            } 
+  
+            this.tareaDocumentoEntradaSolicitud.addTareaDocumentosEntradaSolicitud(dataAdd).subscribe((data:any)=>{
+              //this.refreshTareaDocumentosEntrada()
+              this.refreshTareaDocumentosEntradaSolicitud()
+              this.isSubmittedFile=false
+              this.regFormFile.reset()
+              this.idTareDocumentoEntrada=""
+              previewFile.value=""
+              this.isSubmittedFile=false;
+              observacion.value=""
+           })
+  
+  
+          })
+        }
+        
     }
   }
 

@@ -15,6 +15,10 @@ export class ContratosService {
     return this.http.get(`${this.url}/contratos`) 
   }
 
+  getContratosActivos(){
+    return this.http.get(`${this.url}/contratos?estado=true`) 
+  }
+
   addContrato(data:any){
     return this.http.post(`${this.url}/contratos`,data)
   }

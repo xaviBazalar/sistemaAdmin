@@ -145,7 +145,7 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
                     <select class="form-select" id="contratoC" >
                         <option value="">..seleccionar contrato</option>
-                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContrato">
+                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContratoActivas">
                             {{contrato.contrato}}-{{contrato.contradoid}}
                         </option>
                     </select>
@@ -154,7 +154,7 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
                     <select class="form-select" id="tareaC" >
                         <option value="">..seleccionar tarea</option>
-                        <option value="{{tarea._id}}" *ngFor="let tarea of listaTareas">
+                        <option value="{{tarea._id}}" *ngFor="let tarea of listaTareasActivas">
                             {{tarea.nombre_tarea}}
                         </option>
                     </select>

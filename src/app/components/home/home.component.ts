@@ -11,6 +11,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   loginForm:any;
   errorLogin:boolean=false;
+  recoveryPassword:boolean=false;
   constructor(
     private router:Router, 
     public loginService:LoginService,
@@ -23,6 +24,14 @@ export class HomeComponent implements OnInit {
       login:['', Validators.required],
       password:['', Validators.required],
      })
+  }
+
+  openRecoveryP(){
+    this.recoveryPassword=true
+  }
+
+  closeRecoveryP(){
+    this.recoveryPassword=false
   }
 
   async validatelogin(){

@@ -15,7 +15,7 @@
 }
 
 .header{
-    border-bottom: 1px solid #d0d0d0;
+    border-bottom: 1px solid #eff7f9;
     padding: 12px;
 }
 
@@ -23,7 +23,7 @@
     width: 60px;
     /* height: 856px; */
     position: fixed;
-    background: #d5ebeb;
+    background: #eff7f9;
     z-index: 9999;
     top: 0px;
     display: flex;
@@ -31,7 +31,7 @@
 }
 
 .sidebar-open{
-    width: 160px;
+    width: 222px;
 }
 
 .sidebar>div{
@@ -42,13 +42,14 @@
     width:100%;
     padding: 10px;
     text-decoration: none;
-    color: #00758e;
+    color: #007693;
     display: flex;
     align-items: center;
+    background:#eff7f9;
 }
 
 .sidebar div a img{
-    width: 40px;
+    width: 26px;
     margin-left: 2px;
     margin-bottom: 1px;
     margin-bottom: -1px;    
@@ -104,18 +105,20 @@ h4{
 
 .linkMenu{
     position:relative;
+    text-transform: uppercase;
 }
 
 .submenu{
     position: absolute;
     top: 0px;
-    left: 150px;
+    left: 220px;
     width: 200px;
 }
 
 .submenu a{
     font-size: 11px;
-    background: #f9f9f9;
+    background: #eff7f9;
+    text-transform: uppercase;
 }
 
    

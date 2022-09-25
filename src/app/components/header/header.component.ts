@@ -25,19 +25,22 @@ export class HeaderComponent implements OnInit {
 
    itemMenu:any= [
     {
-      titulo:"NuevaSolicitud",
+      titulo:"Nueva Solicitud",
       url:"/nuevaSolicitud",
-      submenu:[]
+      submenu:[],
+      icon:"icon-add.png"
     },
     {
-      titulo:"MisSolictudes",
+      titulo:"Mis Solictudes",
       url:"/misSolicitudes",
-      submenu:[]
+      submenu:[],
+      icon:"icon-list.png"
     },
     {
-      titulo:"Tablero Estado Solicitudes",
+      titulo:"Tablero Solicitudes",
       url:"/tableroEstadoSolicitudes",
-      submenu:[]
+      submenu:[],
+      icon:"icon-dash.png"
     }
     /*{
       titulo:"Tablero",
@@ -64,19 +67,22 @@ export class HeaderComponent implements OnInit {
           if(this.usuario._id=="630a34772b1569b707e2ebf8"){
             this.itemMenu= [
               {
-                titulo:"NuevaSolicitud",
+                titulo:"Nueva Solicitud",
                 url:"/nuevaSolicitud",
-                submenu:[]
+                submenu:[],
+                icon:"icon-add.png"
               },
               {
-                titulo:"MisSolictudes",
+                titulo:"Mis Solictudes",
                 url:"/misSolicitudes",
-                submenu:[]
+                submenu:[],
+                icon:"icon-list.png"
               },
               {
-                titulo:"Tablero Estado Solicitudes",
+                titulo:"Tablero Solicitudes",
                 url:"/tableroEstadoSolicitudes",
-                submenu:[]
+                submenu:[],
+                icon:"icon-dash.png"
               },
               {
                 titulo:"Administración Sistema",
@@ -84,29 +90,36 @@ export class HeaderComponent implements OnInit {
                 submenu:[
                   {
                     titulo:"Admin Tarea Contrato",
-                    url:"/tareasContrato"
+                    url:"/tareasContrato",
+                    icon:"icon-conf.png"
                   },
                   {
                     titulo:"Admin Doc Entrada",
-                    url:"/documentosEntradaCT"
+                    url:"/documentosEntradaCT",
+                    icon:"icon-conf.png"
                   },
                   {
                     titulo:"Admin Doc Salida",
-                    url:"/documentosSalidaCT"
+                    url:"/documentosSalidaCT",
+                    icon:"icon-conf.png"
                   },
                   {
                     titulo:"Admin Gestion Contrato",
-                    url:"/documentosGestionCT"
+                    url:"/documentosGestionCT",
+                    icon:"icon-conf.png"
                   },
                   {
                     titulo:"Admin Usuario",
-                    url:"/usuarios"
+                    url:"/usuarios",
+                    icon:"icon-conf.png"
                   },
                   {
                     titulo:"Admin Contratos Gerencia",
-                    url:"/contratosGerencia"
+                    url:"/contratosGerencia",
+                    icon:"icon-conf.png"
                   },
-                ]
+                ],
+                icon:"icon-conf.png"
               }
             ]
           }

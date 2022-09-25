@@ -14,6 +14,10 @@ export class GerenciasService {
     return this.http.get(`${this.url}/gerencia`) 
   }
 
+  getGerenciasActivas(){
+    return this.http.get(`${this.url}/gerencia?estado=true`) 
+  }
+
   addGerencia(data:any){
     return this.http.post(`${this.url}/gerencia`,data)
   }

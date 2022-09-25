@@ -287,7 +287,10 @@
             <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
             <textarea class=" form-control"  name="" id="msjInteradcion" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
         </div>       
-       
+        <div class="col-7 input-group mb-3 mx-5 align-items-center ">
+            <label for="basic-url" class="form-label lbl-interaccion" ></label>
+            <input type="file" name="filePregunta" id="filePregunta" (change)="addFileHistorialPregunta()" />
+        </div> 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
             <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  (click)="addHistorialSolicitud()"type="button" >Interactuar</button>
         </div>
@@ -315,6 +318,7 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Respondido por</th>
                     <th scope="col">Feedback</th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -349,6 +353,7 @@
                     <td>
                         {{historial.respuesta}}
                     </td>
+                    
                     <td *ngIf="!historial.usuario_respuesta">
                         <button *ngIf="usuario._id!=historial.usuario._id" type="button" style="margin-right: 4px;" class="btn btn-primary btn-sm  "
                             role="button" aria-pressed="true" (click)=openModalFeedback(historial._id)>Responder</button>
@@ -359,6 +364,11 @@
                     <td >
                         <!--<button type="button" class="btn btn-primary btn-sm "
                             role="button" aria-pressed="true">Ver</button>-->
+                    </td>
+                    <td >
+                        <a class="" href="{{baseUrlGet}}{{historial.url_file_pregunta}}" target="blank">
+                            <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file_pregunta!=''"/>
+                        </a>
                     </td>
                     <td >
                         <a class="" href="{{baseUrlGet}}{{historial.url_file}}" target="blank">

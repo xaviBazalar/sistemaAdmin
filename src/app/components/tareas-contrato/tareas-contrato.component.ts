@@ -18,7 +18,9 @@ export class TareasContratoComponent implements OnInit {
   listaSolicitudesAsignadas:any;
 
   listaTareas:any=[];
+  listaTareasActivas:any=[];
   listaContrato:any=[];
+  listaContratoActivas:any=[];
   listaTareasContrato:any=[];
 
   listaUsuariosGST:any=[];
@@ -64,10 +66,22 @@ export class TareasContratoComponent implements OnInit {
 
     this.tareaService.getTareas().subscribe((data:any)=>{
       this.listaTareas=data.tareas
+      this.listaTareasActivas=[]
+      for (const tarea of data.tareas) {
+        if(tarea.estado==true || tarea.estado==1){
+          this.listaTareasActivas.push(tarea)
+        }
+      }
     })
 
     this.contratosService.getContratos().subscribe((data:any)=>{
       this.listaContrato=data.contratos
+      this.listaContratoActivas=[]
+      for (const contrato of data.contratos) {
+        if(contrato.estado==true || contrato.estado==1){
+          this.listaContratoActivas.push(contrato)
+        }
+      }
     })
 
     this.tareasContratoService.getTareasContrato("").subscribe((data:any)=>{
@@ -78,12 +92,24 @@ export class TareasContratoComponent implements OnInit {
   refreshListaTareas(){
     this.tareaService.getTareas().subscribe((data:any)=>{
       this.listaTareas=data.tareas
+      this.listaTareasActivas=[]
+      for (const tarea of data.tareas) {
+        if(tarea.estado==true || tarea.estado==1){
+          this.listaTareasActivas.push(tarea)
+        }
+      }
     })
   }
 
   refreshListaContratos(){
     this.contratosService.getContratos().subscribe((data:any)=>{
       this.listaContrato=data.contratos
+      this.listaContratoActivas=[]
+      for (const contrato of data.contratos) {
+        if(contrato.estado==true || contrato.estado==1){
+          this.listaContratoActivas.push(contrato)
+        }
+      }
     })
   }
 

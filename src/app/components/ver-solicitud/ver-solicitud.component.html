@@ -40,7 +40,7 @@
                 <hr>
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
-                    <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                    <a class="link-download" [href]="validateUrl(item.url_ref)"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
@@ -184,6 +184,10 @@
         <div class="col-7 input-group mb-3 mx-5  my-5 align-items-center ">
             <label for="basic-url" class="form-label lbl-interaccion" >Mensaje/Obs</label>
             <textarea class=" form-control"  name="" id="msjInteradcion" cols="7" rows="3" class="tamaño-estable" style="width: 70%;" ></textarea>
+        </div>  
+        <div class="col-7 input-group mb-3 mx-5 align-items-center ">
+            <label for="basic-url" class="form-label lbl-interaccion" ></label>
+            <input type="file" name="filePregunta" id="filePregunta" (change)="addFileHistorialPregunta()" />
         </div>       
         <div class="d-grid gap-2 d-md-flex justify-content-md-end my-2">
             <button class="btn btn-primary me-md-2 px-5 btn-interactuar "  type="button" (click)="addHistorialSolicitud()" >Interactuar</button>
@@ -212,6 +216,7 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Respondido por</th>
                     <th scope="col">Feedback</th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -256,6 +261,11 @@
                     <td >
                         <!--<button type="button" class="btn btn-primary btn-sm "
                             role="button" aria-pressed="true">Ver</button>-->
+                    </td>
+                    <td >
+                        <a class="" href="{{baseUrlGet}}{{historial.url_file_pregunta}}" target="blank">
+                            <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file_pregunta!=''"/>
+                        </a>
                     </td>
                     <td >
                         <a class="" href="{{baseUrlGet}}{{historial.url_file}}" target="blank">
