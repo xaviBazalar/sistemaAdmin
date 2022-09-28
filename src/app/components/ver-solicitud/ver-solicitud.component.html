@@ -7,7 +7,7 @@
             Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
         </div>
         <div class="col-3">
-            Solicitud ID: <b>MMR-{{solicitud.idsecuencia}}</b>
+            Solicitud ID: <b>{{solicitud.idsecuencia}}</b>
         </div> 
     </div>
     <hr>
@@ -40,7 +40,7 @@
                 <hr>
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
-                    <a class="link-download" [href]="validateUrl(item.url_ref)"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                    <a class="link-download" target="blank" [href]="validateUrl(item.url_ref)"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
@@ -96,7 +96,7 @@
                     <hr>
     
                     <div class="form-check" *ngFor="let item of listaTareaDocumentosSalidaSolicitud">
-                        <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                        <a class="link-download" target="blank" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                         <img class="img-checked-val" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                         
                         <img class="img-checked-val" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>

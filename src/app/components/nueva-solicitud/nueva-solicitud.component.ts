@@ -207,12 +207,11 @@ export class NuevaSolicitudComponent implements OnInit {
   }
 
   getTareaDocumentosEntrada({ target }:any) {
-    let gst:any=document.querySelector("#iGst")
-    let bko:any=document.querySelector("#iBko")
+    
     for (const info of this.listaTareasContrato) {
       if(info.tarea._id==target.value){
-        gst.value=info.gst._id
-        bko.value=info.bko._id
+        this.regForm.controls['iGst'].setValue(info.gst._id);
+        this.regForm.controls['iBko'].setValue(info.bko._id);
         break
       }
     }
@@ -284,6 +283,7 @@ export class NuevaSolicitudComponent implements OnInit {
       inputF?.setAttribute("accept","")
       previewFile?.removeAttribute("readonly")
     }
+    previewFile.value=""
 
   }
 

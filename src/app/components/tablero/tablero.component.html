@@ -80,59 +80,61 @@
     </form>
     <hr>
     
-    <div class="row">
-        <div style="cursor: pointer;" class="col-3 box-card" >
-            <div class="card" *ngFor="let solicitud of listaEnProceso" (click)="goToSolicitud(solicitud._id)">
-                <div [ngStyle]="{
-                    'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
-                    '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
-                    '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" class="card-body">
-                  <h4 style="font-weight:300;" class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
-                  <h5 style="font-weight:200;" class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
-                  <h6 style="font-weight:400;" class="card-subtitle mb-2 text-muted">{{solicitud.solicitante.nombre}}</h6>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}-{{solicitud.contrato.contradoid}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{solicitud.gerencia.nombre_gerencia}}</h6><!--Contrato Mina-->
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
-                    <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
-                </div>
-                <div class="card-tablero card-body card-resultado">
-                    <p>RESULTADO</p>
-                    <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
-                </div>
-            </div>
-        </div>
-        <div style="cursor: pointer;" class="col-3 box-card" >
-            <div class="card"  *ngFor="let solicitud of listaPorHacer" (click)="goToSolicitud(solicitud._id)">
-                <div [ngStyle]="{
-                    'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
-                    '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
-                    '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" class="card-body">
-                  <h4 style="font-weight:300;" class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
-                  <h5 style="font-weight:200;" class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
-                  <h6 style="font-weight:400;" class="card-subtitle mb-2 text-muted">{{solicitud.solicitante.nombre}}</h6>
-                </div>
-                <div  class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}-{{solicitud.contrato.contradoid}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{solicitud.gerencia.nombre_gerencia}}</h6><!--Contrato Mina-->
-                </div>
-                <div class="card-body" >
-                    <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
-                    <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
-                </div>
-                <div class="card-tablero card-body card-resultado">
-                    <p>RESULTADO</p>
-                    <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
+    
+        
+        <div class="row">
+            <div style="cursor: pointer;" class="col-3 box-card" >
+                <div class="card"  *ngFor="let solicitud of listaPorHacer" (click)="goToSolicitud(solicitud._id)">
+                    <div [ngStyle]="{
+                        'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                        '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                        '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" class="card-body">
+                      <h4 style="font-weight:300;" class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
+                      <h5 style="font-weight:200;" class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
+                      <h6 style="font-weight:400;" class="card-subtitle mb-2 text-muted">{{solicitud.solicitante.nombre}}</h6>
+                    </div>
+                    <div  class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}-{{solicitud.contrato.contradoid}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{solicitud.gerencia.nombre_gerencia}}</h6><!--Contrato Mina-->
+                    </div>
+                    <div class="card-body" >
+                        <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
+                        <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
+                    </div>
+                    <div class="card-tablero card-body card-resultado">
+                        <p>RESULTADO</p>
+                        <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div style="cursor: pointer;" class="col-3 box-card" >
+                <div class="card" *ngFor="let solicitud of listaEnProceso" (click)="goToSolicitud(solicitud._id)">
+                    <div [ngStyle]="{
+                        'background-color':solicitud.estado_solicitud.nombre_estado === 'Por Hacer' ? 
+                        '#bad2d9' : solicitud.estado_solicitud.nombre_estado === 'En Proceso'? 
+                        '#2f7d94': solicitud.estado_solicitud.nombre_estado === 'Terminada'?'#d69524':'#b92d29'}" class="card-body">
+                      <h4 style="font-weight:300;" class="card-title">{{solicitud.estado_solicitud.nombre_estado}}</h4>
+                      <h5 style="font-weight:200;" class="card-subtitle mb-2 text-muted">{{solicitud.tarea.nombre_tarea}}</h5>
+                      <h6 style="font-weight:400;" class="card-subtitle mb-2 text-muted">{{solicitud.solicitante.nombre}}</h6>
+                    </div>
+                    <div  class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted">{{solicitud.contrato.contrato}}-{{solicitud.contrato.contradoid}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{solicitud.gerencia.nombre_gerencia}}</h6><!--Contrato Mina-->
+                    </div>
+                    <div class="card-body" >
+                        <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
+                        <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
+                    </div>
+                    <div class="card-tablero card-body card-resultado">
+                        <p>RESULTADO</p>
+                        <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
+                    </div>
+                </div>
+            </div>
         <div style="cursor: pointer;" class="col-3 box-card" >
             <div class="card"  *ngFor="let solicitud of listaEnRevision" (click)="goToSolicitud(solicitud._id)">
                 <div [ngStyle]="{

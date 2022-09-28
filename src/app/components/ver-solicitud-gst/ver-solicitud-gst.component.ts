@@ -461,7 +461,7 @@ export class VerSolicitudGstComponent implements OnInit {
         _id:this.id_solicitud,
         estado_solicitud:estado_solicitud.value,
         fecha_inicio:fecha_inicio.value,
-        fecha_solicitud:fecha_solicitud.value,
+        fecha_entrega:fecha_solicitud.value,
         gst:gst.value,
         bko:bko.value,
         solicitante:this.usuario._id

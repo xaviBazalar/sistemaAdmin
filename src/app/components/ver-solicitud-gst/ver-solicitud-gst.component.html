@@ -7,7 +7,7 @@
             Frecuencia: <b>{{solicitud.tarea.frecuencia}}</b>
         </div>
         <div class="col-3">
-            Solicitud ID: <b>MMR-{{solicitud.idsecuencia}}</b>
+            Solicitud ID: <b>{{solicitud.idsecuencia}}</b>
         </div> 
     </div>
     <hr>
@@ -40,7 +40,7 @@
                 <hr>
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
-                    <a class="link-download" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                    <a class="link-download" target="blank" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
@@ -92,7 +92,7 @@
             </div>
             <div class="col-3 input-group" style="width: 45%;">
                 <label for="basic-url" class="form-label lbl-box-solicitud" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
-                <input class="form-control" type="date" id="iFechaInicio" value="{{solicitud.fecha_solicitud}}" />
+                <input class="form-control" type="date" id="iFechaInicio" value="{{solicitud.fecha_inicio}}" />
                 
             </div>
         </div>
