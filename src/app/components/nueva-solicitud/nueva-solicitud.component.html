@@ -19,8 +19,8 @@
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
                 <input autocomplete="off" (change)="getTareasContrato($event)" class="form-select" id="iContrato" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
-                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}</option>
-                  </datalist>
+                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}-{{contrato.contrato.adc.nombre}}</option>
+                </datalist>
                 <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">*El campo contrato es requerido</span>
             </div>
             <div class="input-group mb-3 form-check box-check" style="width: 25%;">

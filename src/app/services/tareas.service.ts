@@ -11,8 +11,8 @@ export class TareasService {
 
   constructor(private http:HttpClient) { }
 
-  getTareas(){
-    return this.http.get(`${this.url}/tareas`)
+  getTareas(page:any=1,extraParams:any){
+    return this.http.get(`${this.url}/tareas?page=${page}&${extraParams}`)
   }
 
   addTarea(data:any){

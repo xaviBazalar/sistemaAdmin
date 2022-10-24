@@ -134,12 +134,12 @@ export class SolicitudPendienteComponent implements OnInit {
       }
     })
 
-    this.tareasServicio.getTareas().subscribe((data:any)=>{
+    this.tareasServicio.getTareas(1,"").subscribe((data:any)=>{
       this.listatareas=data.tareas;
      
     })
 
-    this.contratosServicio.getContratos().subscribe((data:any)=>{
+    this.contratosServicio.getContratos(1,"").subscribe((data:any)=>{
       this.listaContratos=data.contratos;
      
     })

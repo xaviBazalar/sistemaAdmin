@@ -102,19 +102,19 @@ export class NuevaSolicitudComponent implements OnInit {
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
       for (const usuario of data.usuarios) {
-        if(usuario.perfil.sigla=="GST"){
+        if(usuario.perfil.sigla=="GST" && usuario.estado ){
           //if(this.usuarioLogin._id!=usuario._id){
             this.listaUsuariosGST.push(usuario)
           //}
         }
 
-        if(usuario.perfil.sigla=="BKO"){
+        if(usuario.perfil.sigla=="BKO" && usuario.estado){
           this.listaUsuariosBKO.push(usuario)
         }
       }
     })
 
-    this.tareasServicio.getTareas().subscribe((data:any)=>{
+    this.tareasServicio.getTareas(1,"").subscribe((data:any)=>{
       this.listatareas=data.tareas;
      
     })
@@ -174,7 +174,7 @@ export class NuevaSolicitudComponent implements OnInit {
     let idContrato:string=""
     for(let contrato of this.listaContratos){
 
-      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid)==contratoTxt){
+      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre)==contratoTxt){
         idContrato=contrato.contrato._id
         this.contratoTemp=contrato.contrato._id
       }

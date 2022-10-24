@@ -34,11 +34,11 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     public tareaDocumentosSalidaService:TareaDocumentosSalidaService) { }
 
   ngOnInit(): void {
-    this.tareaService.getTareas().subscribe((data:any)=>{
+    this.tareaService.getTareas(1,"").subscribe((data:any)=>{
       this.listaTareas=data.tareas
     })
 
-    this.contratosService.getContratos().subscribe((data:any)=>{
+    this.contratosService.getContratos(1,"").subscribe((data:any)=>{
       this.listaContrato=data.contratos
     })
 

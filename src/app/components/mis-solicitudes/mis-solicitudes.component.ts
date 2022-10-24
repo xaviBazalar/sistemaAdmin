@@ -123,7 +123,7 @@ export class MisSolicitudesComponent implements OnInit {
       this.listaGerencias=data.gerencias;
     })
 
-    this.tareasServicio.getTareas().subscribe((data:any)=>{
+    this.tareasServicio.getTareas(1,"").subscribe((data:any)=>{
       this.listatareas=data.tareas;
     })
 

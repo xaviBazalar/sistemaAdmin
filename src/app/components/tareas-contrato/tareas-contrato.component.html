@@ -34,6 +34,19 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchContrato" (keypress)="filterTareasContratos()" />
+                        </th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchTarea"/>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col-3"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Tarea</th>
@@ -69,6 +82,14 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col"><input type="text" class="form-input" id="searchTareaC" (keyup)="filterTareas()" /></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col-3"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Tarea</th>
                         <th scope="col">Frecuencia</th>
@@ -91,6 +112,23 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation nav-tarea">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="pagTareas.hasPrevPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaContratos(pagTareas.page-1)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </span>
+                  </li>
+                  <li [ngClass]="((nro+1)==pagTareas.page) ? 'page-item active': 'page-item '" (click)="refreshListaContratos(nro+1)" *ngFor="let item of pagTareas.totalPages;let nro = index"><span style="cursor: pointer;" class="page-link" >{{nro+1}}</span></li>
+                  <li class="page-item" *ngIf="pagTareas.hasNextPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaContratos(pagTareas.page+1)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </span>
+                  </li>
+                </ul>
+            </nav>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTarea()">Nueva</button>
             </div>
@@ -101,9 +139,18 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col"><input type="text" class="form-input" id="searchContratoC" (keyup)="filterContratos()" /></th>
+                        <th scope="col"><input type="text" class="form-input" id="searchNroContratoC" (keyup)="filterContratos()" /></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col-3"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Nro Contrato</th>
+                        <th scope="col">ADC</th>
                         <th scope="col">Estado</th>
                         <th scope="col-3"></th>
                     </tr>
@@ -114,6 +161,7 @@
                         <td>#</td>
                         <td>{{contrato.contrato}}</td>
                         <td>{{contrato.contradoid}}</td>
+                        <td>{{contrato.adc.nombre}}</td>
                         <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>Editar</button>
@@ -122,6 +170,23 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation nav-contrato">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="pagContratos.hasPrevPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaContratos(pagContratos.page-1)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </span>
+                  </li>
+                  <li [ngClass]="((nro+1)==pagContratos.page) ? 'page-item active': 'page-item '" (click)="refreshListaContratos(nro+1)" *ngFor="let item of pagContratos.totalPages;let nro = index"><span style="cursor: pointer;" class="page-link" >{{nro+1}}</span></li>
+                  <li class="page-item" *ngIf="pagContratos.hasNextPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaContratos(pagContratos.page+1)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </span>
+                  </li>
+                </ul>
+            </nav>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalContrato()">Nueva</button>
             </div>
@@ -143,21 +208,20 @@
                 
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
-                    <select class="form-select" id="contratoC" >
-                        <option value="">..seleccionar contrato</option>
-                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContratoActivas">
-                            {{contrato.contrato}}-{{contrato.contradoid}}
-                        </option>
-                    </select>
+                    
+                    <input autocomplete="off" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                    <datalist id="listaContrato"  >
+                        <option *ngFor="let contrato of listaContratoActivas" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="contratoC" />
                 </div>
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
-                    <select class="form-select" id="tareaC" >
-                        <option value="">..seleccionar tarea</option>
-                        <option value="{{tarea._id}}" *ngFor="let tarea of listaTareasActivas">
-                            {{tarea.nombre_tarea}}
-                        </option>
-                    </select>
+                    <input autocomplete="off" (change)="getTarea($event)" class="form-select" id="NtareaC" list="listaTareas">
+                    <datalist id="listaTareas"  >
+                        <option *ngFor="let tarea of listaTareasActivas" >{{tarea.nombre_tarea}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="tareaC" />
                 </div>
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GST</label>
@@ -265,6 +329,15 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nro Contrato</label>
                     <input class="form-control" id="nro_contrato" placeholder="Escribir Nro Contrato" />
                 </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">ADC</label>
+                    <select class="form-select" id="usuarioADC" >
+                        <option value="">..seleccionar usuario</option>
+                        <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosADC">
+                            {{usuario.nombre}}
+                        </option>
+                    </select>
+                </div>
                 <div [ngStyle]="{'display':showUpdateContrato ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
                     <select class="form-select" id="estadoC" >
@@ -273,6 +346,7 @@
                         <option value="0">Inactivo</option>
                     </select>
                 </div>
+
                 <input type="hidden" class="form-control" id="id_contrato"  />
             </div>
         </div>

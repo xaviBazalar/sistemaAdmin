@@ -21,4 +21,10 @@ export class TareasContratoService {
   updateTareaContrato(data:any){
     return this.http.put(`${this.url}/tareasContrato`,data)
   }
+
+  getTareasContratoFilter(dataSend:any){
+    // var queryString = Object.keys(dataSend).map(key => key + '=' + dataSend[key]).join('&');
+ 
+     return this.http.get(`${this.url}/tareasContrato`,{params: dataSend})
+   }
 }

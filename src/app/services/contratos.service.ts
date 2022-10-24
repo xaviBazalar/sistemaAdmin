@@ -11,8 +11,8 @@ export class ContratosService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getContratos(){
-    return this.http.get(`${this.url}/contratos`) 
+  getContratos(page:any=1,extraParams:any){
+    return this.http.get(`${this.url}/contratos?page=${page}&${extraParams}`) 
   }
 
   getContratosActivos(){

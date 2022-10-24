@@ -21,18 +21,22 @@
         
 
     <div style="background: #eff7f9;height: 800px;" *ngIf="mostrarMenu">
-        <a (mouseover)='(item.submenu.length>0)? showSubmenu = true:showSubmenu = false'  [ngClass]="(item.submenu.length>0) ? 'linkMenu wsubmenu': 'linkMenu '"  class="" *ngFor="let item of itemMenu"   (click)="mostrarMenu = !mostrarMenu" routerLink="{{item.url}}">
-            <img src="assets/icons/{{ item.icon }}"/>
-            <small class="link-menu">{{ item.titulo }}</small>
-            <div class="submenu" *ngIf="showSubmenu">
-                
-                <a  *ngFor="let subitem of item.submenu" (mouseover) = 'showSubmenu = true'  (click)="mostrarMenu = !mostrarMenu" routerLink="{{subitem.url}}" >
-                    <img src="assets/icons/{{ subitem.icon }}"/>
-                    {{ subitem.titulo }}
-                </a>
-            </div>
+        <div *ngFor="let item of itemMenu" >
+            <a (mouseover)='(item.submenu.length>0)? showSubmenu = true:showSubmenu = false'  [ngClass]="(item.submenu.length>0) ? 'linkMenu wsubmenu': 'linkMenu '"  class=""    (click)="mostrarMenu = !mostrarMenu;goTo(item.url)" >
+                <img src="assets/icons/{{ item.icon }}"/>
+                <small class="link-menu">{{ item.titulo }}</small>
+                <div class="submenu" *ngIf="showSubmenu">
+                    
+                    <a  *ngFor="let subitem of item.submenu" (mouseover) = 'showSubmenu = true'  (click)="mostrarMenu = !mostrarMenu" routerLink="{{subitem.url}}" >
+                        <img src="assets/icons/{{ subitem.icon }}"/>
+                        {{ subitem.titulo }}
+                    </a>
+                </div>
 
-        </a>
+            </a>
+        </div>
+        
+        
         <a (click)="logout()" (mouseover)='showSubmenu = false' >
             <img src="assets/icons/icon-inbox.png"/>
             <small class="link-menu">SALIR</small>

@@ -25,6 +25,7 @@ export class TareasContratoComponent implements OnInit {
 
   listaUsuariosGST:any=[];
   listaUsuariosBKO:any=[];
+  listaUsuariosADC:any=[];
 
   usuario:{
     _id:string|null,
@@ -37,6 +38,19 @@ export class TareasContratoComponent implements OnInit {
   showUpdate:boolean=false
   showUpdateTarea:boolean=false
   showUpdateContrato:boolean=false
+  pagContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagTareas:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
 
   constructor(
     public solicitudService:SolicitudesService,
@@ -61,23 +75,36 @@ export class TareasContratoComponent implements OnInit {
         if(usuario.perfil.sigla=="BKO"){
           this.listaUsuariosBKO.push(usuario)
         }
+
+        if(usuario.perfil.sigla=="ADC"){
+          this.listaUsuariosADC.push(usuario)
+        }
       }
     })
 
-    this.tareaService.getTareas().subscribe((data:any)=>{
-      this.listaTareas=data.tareas
+    this.tareaService.getTareas(1,"").subscribe((data:any)=>{
+      this.listaTareas=data.tareas.docs
+      this.pagTareas.hasNextPage=data.tareas.hasNextPage
+      this.pagTareas.hasPrevPage=data.tareas.hasPrevPage
+      this.pagTareas.totalPages=new Array(data.tareas.totalPages)
+      this.pagTareas.page=data.tareas.page
       this.listaTareasActivas=[]
-      for (const tarea of data.tareas) {
+      for (const tarea of data.tareas.docs) {
         if(tarea.estado==true || tarea.estado==1){
           this.listaTareasActivas.push(tarea)
         }
       }
     })
 
-    this.contratosService.getContratos().subscribe((data:any)=>{
-      this.listaContrato=data.contratos
+    this.contratosService.getContratos(1,"").subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+
+      this.listaContrato=data.contratos.docs
       this.listaContratoActivas=[]
-      for (const contrato of data.contratos) {
+      for (const contrato of data.contratos.docs) {
         if(contrato.estado==true || contrato.estado==1){
           this.listaContratoActivas.push(contrato)
         }
@@ -89,11 +116,37 @@ export class TareasContratoComponent implements OnInit {
     })
   }
 
-  refreshListaTareas(){
-    this.tareaService.getTareas().subscribe((data:any)=>{
-      this.listaTareas=data.tareas
+  filterTareasContratos(){
+    let contrato:any=document.querySelector("#searchContrato")
+    let tarea:any=document.querySelector("#searchTarea")
+    let dataFilter={
+      contrato:"",
+      n_contrato:contrato.value,
+      tarea:tarea.value
+    }
+    this.tareasContratoService.getTareasContratoFilter(dataFilter).subscribe((data:any)=>{
+      this.listaTareasContrato=data.contratos
+    })
+  }
+
+  filterContratos(){
+    let contrato:any=document.querySelector("#searchContratoC")
+    let nroContrato:any=document.querySelector("#searchNroContratoC")
+    let dataFilter=`n_contrato=${contrato.value}&nro_contrato=${nroContrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
+  filterTareas(){
+    let nombre_tarea:any=document.querySelector("#searchTareaC")
+    let dataFilter=`nombre_tarea=${nombre_tarea.value}`
+    this.refreshListaTareas(1,dataFilter)
+  }
+
+  refreshListaTareas(pagina:any=1,extraParams:any=""){
+    this.tareaService.getTareas(pagina,extraParams).subscribe((data:any)=>{
+      this.listaTareas=data.tareas.docs
       this.listaTareasActivas=[]
-      for (const tarea of data.tareas) {
+      for (const tarea of data.tareas.docs) {
         if(tarea.estado==true || tarea.estado==1){
           this.listaTareasActivas.push(tarea)
         }
@@ -101,11 +154,16 @@ export class TareasContratoComponent implements OnInit {
     })
   }
 
-  refreshListaContratos(){
-    this.contratosService.getContratos().subscribe((data:any)=>{
-      this.listaContrato=data.contratos
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+
+      this.listaContrato=data.contratos.docs
       this.listaContratoActivas=[]
-      for (const contrato of data.contratos) {
+      for (const contrato of data.contratos.docs) {
         if(contrato.estado==true || contrato.estado==1){
           this.listaContratoActivas.push(contrato)
         }
@@ -142,14 +200,18 @@ export class TareasContratoComponent implements OnInit {
     let data=JSON.parse(info.target.getAttribute("data"))
     this.showUpdate=true
 
-    let tarea:any=document.querySelector("#tareaC")
-    let contrato:any=document.querySelector("#contratoC")
+    let tarea:any=document.querySelector("#NtareaC")
+    let contrato:any=document.querySelector("#NcontratoC")
+    let tareaI:any=document.querySelector("#tareaC")
+    let contratoI:any=document.querySelector("#contratoC")
     let gst:any=document.querySelector("#usuarioGST")
     let bko:any=document.querySelector("#usuarioBKO")
     let estado:any=document.querySelector("#estadoTC")
     let id:any=document.querySelector("#id_tarea_contrato")
-    tarea.value=data.tarea._id
-    contrato.value=data.contrato._id
+    tarea.value=data.tarea.nombre_tarea
+    tareaI.value=data.tarea._id
+    contrato.value=data.contrato.contrato+"-"+data.contrato.contradoid
+    contratoI.value=data.contrato._id
     gst.value=data.gst._id
     bko.value=data.bko._id
     estado.value=(data.estado)?"1":"0"
@@ -167,6 +229,7 @@ export class TareasContratoComponent implements OnInit {
     let sla_tarea:any=document.querySelector("#sla_tarea")
     let estado:any=document.querySelector("#estadoT")
     let id:any=document.querySelector("#id_tarea")
+    
     nombre_tarea.value=data.nombre_tarea
     frecuencia_tarea.value=data.frecuencia
     sla_tarea.value=data.SLA
@@ -183,10 +246,12 @@ export class TareasContratoComponent implements OnInit {
     let contrato:any=document.querySelector("#nombre_contrato")
     let contradoid:any=document.querySelector("#nro_contrato")
     let estado:any=document.querySelector("#estadoC")
+    let adc:any=document.querySelector("#usuarioADC")
     let id:any=document.querySelector("#id_contrato")
     contrato.value=data.contrato
     contradoid.value=data.contradoid
     estado.value=(data.estado)?"1":"0"
+    adc.value=data.adc._id
     id.value=data._id
     
     this.openModalContrato()
@@ -257,10 +322,12 @@ export class TareasContratoComponent implements OnInit {
   addContrato(){
     let contrato:any=document.querySelector("#nombre_contrato")
     let contradoid:any=document.querySelector("#nro_contrato")
-
+    let adc:any=document.querySelector("#usuarioADC")
+    
     let dataContrato:any={
       contradoid:contradoid.value,
       contrato:contrato.value,
+      adc:adc.value
     }
 
     this.contratosService.addContrato(dataContrato).subscribe((data:any)=>{
@@ -274,13 +341,15 @@ export class TareasContratoComponent implements OnInit {
     let id:any=document.querySelector("#id_contrato")
     let contrato:any=document.querySelector("#nombre_contrato")
     let contradoid:any=document.querySelector("#nro_contrato")
+    let adc:any=document.querySelector("#usuarioADC")
     let estado:any=document.querySelector("#estadoC")
 
     let dataContrato:any={
       id:id.value,
       contradoid:contradoid.value,
       contrato:contrato.value,
-      estado:estado.value
+      estado:estado.value,
+      adc:adc.value
     }
 
     this.contratosService.updateContrato(dataContrato).subscribe((data:any)=>{
@@ -321,13 +390,17 @@ export class TareasContratoComponent implements OnInit {
   }
 
   resetFormTareaContrato(){
-    let tarea:any=document.querySelector("#tareaC")
-    let contrato:any=document.querySelector("#contratoC")
+    let tarea:any=document.querySelector("#NtareaC")
+    let tareaI:any=document.querySelector("#tareaC")
+    let contrato:any=document.querySelector("#NcontratoC")
+    let contratoI:any=document.querySelector("#contratoC")
     let gst:any=document.querySelector("#usuarioGST")
     let bko:any=document.querySelector("#usuarioBKO")
     let id:any=document.querySelector("#id_tarea_contrato")
     tarea.value=""
     contrato.value=""
+    tareaI.value=""
+    contratoI.value=""
     gst.value=""
     bko.value=""
     id.value=""
@@ -353,6 +426,32 @@ export class TareasContratoComponent implements OnInit {
     contrato.value=""
     contradoid.value=""
     id.value=""
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContratoActivas){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
+  }
+
+  getTarea({ target }:any) {
+    let tareaI:any=document.querySelector("#tareaC")
+    let tareaTxt=target.value;
+    let idTarea:string=""
+    for(let tarea of this.listaTareasActivas){
+      if(tarea.nombre_tarea==tareaTxt){
+        idTarea=tarea._id
+      }
+    } 
+
+    tareaI.value=idTarea
   }
 
 }
