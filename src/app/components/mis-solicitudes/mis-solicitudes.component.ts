@@ -179,11 +179,13 @@ export class MisSolicitudesComponent implements OnInit {
     let perfilUser=this.usuario.perfil.sigla
     let dataFilterAsignado:any;
     if(perfilUser=="GST"){
+      dataFilter.solicitante=""
       dataFilter.ingresado=true
       dataFilter.gst=this.usuario._id
     }
 
     if(perfilUser=="BKO"){
+      dataFilter.solicitante=""
       dataFilter.ingresado=true
       dataFilter.bko=this.usuario._id
     }
