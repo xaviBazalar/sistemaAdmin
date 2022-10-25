@@ -170,6 +170,7 @@ export class MisSolicitudesComponent implements OnInit {
  
     dataFilter.ingresado=false
     dataFilter.solicitante=this.usuario._id
+
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudesPendiente=data.solicitudes;
     })
@@ -221,6 +222,35 @@ export class MisSolicitudesComponent implements OnInit {
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
+    })
+
+    let dataFilterPen:any={
+      ingresado:false,
+      solicitante:this.usuario._id
+    }
+    this.solicitudService.getSolicitudesFilter(dataFilterPen).subscribe((data:any)=>{
+      this.listaSolicitudesPendiente=data.solicitudes;
+    })
+
+
+    let perfilUser=this.usuario.perfil.sigla
+    let dataFilterAsignado:any;
+    if(perfilUser=="GST"){
+      dataFilterAsignado={
+        ingresado:true,
+        gst:this.usuario._id
+      }
+    }
+
+    if(perfilUser=="BKO"){
+      dataFilterAsignado={
+        ingresado:true,
+        bko:this.usuario._id
+      }
+    }
+    this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
+      this.listaSolicitudesAsignadas=data.solicitudes;
+
     })
   }
 
