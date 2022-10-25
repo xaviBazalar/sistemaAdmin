@@ -166,6 +166,62 @@ export class MisSolicitudesComponent implements OnInit {
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
     })
+
+ 
+    dataFilter.ingresado=false
+    dataFilter.solicitante=this.usuario._id
+    this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      this.listaSolicitudesPendiente=data.solicitudes;
+    })
+
+
+    let perfilUser=this.usuario.perfil.sigla
+    let dataFilterAsignado:any;
+    if(perfilUser=="GST"){
+      dataFilter.ingresado=true
+      dataFilter.gst=this.usuario._id
+    }
+
+    if(perfilUser=="BKO"){
+      dataFilter.ingresado=true
+      dataFilter.bko=this.usuario._id
+    }
+
+    
+    this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      this.listaSolicitudesAsignadas=data.solicitudes;
+
+    })
+  }
+
+  filterListReset(){
+    let form:any=document.querySelector("#filterSearchSolicitudes");
+    form.reset();
+    
+    let gerencia:any=document.querySelector("#gerencia")
+    let tarea:any=document.querySelector("#tarea")
+    let perfil:any=document.querySelector("#perfil")
+    let estado_solicitud:any=document.querySelector("#estado_solicitud")
+    let estado_resultado:any=document.querySelector("#estado_resultado")
+    let fecha_solicitud:any=document.querySelector("#fecha_solicitud")
+    let fecha_inicio:any=document.querySelector("#fecha_inicio")
+    let fecha_entrega:any=document.querySelector("#fecha_entrega")
+
+    let dataFilter:any={
+      gerencia:gerencia.value,
+      tarea:tarea.value,
+      perfil:perfil.value,
+      estado_solicitud:estado_solicitud.value,
+      estado_resultado:estado_resultado.value,
+      solicitante:this.usuario._id,
+      fecha_solicitud:fecha_solicitud.value,
+      fecha_inicio:fecha_inicio.value,
+      fecha_entrega:fecha_entrega.value
+    }
+
+    this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      this.listaSolicitudes=data.solicitudes;
+    })
   }
 
 }

@@ -407,8 +407,10 @@ export class NuevaSolicitudComponent implements OnInit {
     }
 
     let idContrato:string=""
+
     for(let contrato of this.listaContratos){
-      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid)==this.regForm.value.iContrato){
+      
+      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre)==this.regForm.value.iContrato){
       //if(contrato.contrato==this.regForm.value.iContrato){
         idContrato=contrato.contrato._id
       }

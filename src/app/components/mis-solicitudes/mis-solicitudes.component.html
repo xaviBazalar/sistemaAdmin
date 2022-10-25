@@ -8,7 +8,7 @@
         <div class="col-2">
            <!-- <button type="button" class="btn btn-sml  btn-primary px-5" disabled>Buscar</button>-->
         </div>
-        <form action="">
+        <form id="filterSearchSolicitudes" action="">
 
 
             <div class="row">
@@ -33,6 +33,7 @@
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-success px-5" (click)="filterList()">Filtrar</button>
+                    
                </div>
                
                    
@@ -67,8 +68,12 @@
                     <input type="date" class="form-select" id="fecha_inicio" />
                 </div>
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega                                       </label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega</label>
                     <input type="date" class="form-select" id="fecha_entrega" />
+                </div>
+                <div class="col-3 mt-3">
+                    
+                    <button type="button" class="btn btn-success px-5" (click)="filterListReset()">Limpiar</button>
                 </div>
                 
             </div>
