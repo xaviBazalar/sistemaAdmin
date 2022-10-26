@@ -136,6 +136,12 @@ export class TareasContratoComponent implements OnInit {
     this.refreshListaContratos(1,dataFilter)
   }
 
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
   filterTareas(){
     let nombre_tarea:any=document.querySelector("#searchTareaC")
     let dataFilter=`nombre_tarea=${nombre_tarea.value}`
