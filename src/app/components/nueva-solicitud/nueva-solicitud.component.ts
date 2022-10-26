@@ -182,10 +182,10 @@ export class NuevaSolicitudComponent implements OnInit {
     } 
 
     this.tareasContratoService.getTareasContrato(1,idContrato).subscribe((data:any)=>{
-      if(data.contratos.length>0 ){
+      if(data.contratos.docs.length>0 ){
         //this.listaTareasContrato=data.contratos;
         this.listaTareasContrato=[]
-        for (const contrato of data.contratos) {
+        for (const contrato of data.contratos.docs) {
           if(contrato.estado==true || contrato.estado==1){
             this.listaTareasContrato.push(contrato)
           }
@@ -202,7 +202,7 @@ export class NuevaSolicitudComponent implements OnInit {
     let gerencia=target.value;
     let contrato:any=document.querySelector("#iContrato")
     this.contratosGerenciaService.getContratosGerenciaActivos(gerencia).subscribe((data:any)=>{
-      this.listaContratos=data.contratos_gerencia
+      this.listaContratos=data.contratos_gerencia.docs
       contrato.value=""
     });
   }
