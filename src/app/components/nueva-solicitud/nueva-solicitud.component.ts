@@ -181,7 +181,7 @@ export class NuevaSolicitudComponent implements OnInit {
       }
     } 
 
-    this.tareasContratoService.getTareasContrato(idContrato).subscribe((data:any)=>{
+    this.tareasContratoService.getTareasContrato(1,idContrato).subscribe((data:any)=>{
       if(data.contratos.length>0 ){
         //this.listaTareasContrato=data.contratos;
         this.listaTareasContrato=[]

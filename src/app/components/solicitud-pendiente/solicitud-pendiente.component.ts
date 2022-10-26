@@ -197,7 +197,7 @@ export class SolicitudPendienteComponent implements OnInit {
       }
     } 
 
-    this.tareasContratoService.getTareasContrato(idContrato).subscribe((data:any)=>{
+    this.tareasContratoService.getTareasContrato(1,idContrato).subscribe((data:any)=>{
       if(data.tareas.length>0){
         this.listaTareasContrato=data.tareas;
         this.mostrarTareas=true;
@@ -208,7 +208,7 @@ export class SolicitudPendienteComponent implements OnInit {
   }
 
   getTareasContratoTemp(idcontrato:string){
-    this.tareasContratoService.getTareasContrato(idcontrato).subscribe((data:any)=>{
+    this.tareasContratoService.getTareasContrato(1,idcontrato).subscribe((data:any)=>{
       if(data.tareas.length>0){
         this.listaTareasContrato=data.tareas;
         this.mostrarTareas=true;

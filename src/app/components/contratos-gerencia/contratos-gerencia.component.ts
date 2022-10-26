@@ -32,6 +32,20 @@ export class ContratosGerenciaComponent implements OnInit {
     perfil:any
   }  =JSON.parse(localStorage.getItem("usuario") || '{}');
 
+  pagContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagContratosGerencia:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   showModalContrato:boolean=false
   showModalGerencia:boolean=false
   showModalContratoGerencia:boolean=false
@@ -51,16 +65,43 @@ export class ContratosGerenciaComponent implements OnInit {
     })
 
     this.contratosService.getContratos(1,"").subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
 
-    this.contratosGerenciaService.getContratosGerencia("").subscribe((data:any)=>{
-      this.listaContratosGerencia=data.contratos_gerencia
+    this.contratosGerenciaService.getContratosGerencia(1,"","").subscribe((data:any)=>{
+      this.pagContratosGerencia.hasNextPage=data.contratos_gerencia.hasNextPage
+      this.pagContratosGerencia.hasPrevPage=data.contratos_gerencia.hasPrevPage
+      this.pagContratosGerencia.totalPages=new Array(data.contratos_gerencia.totalPages)
+      this.pagContratosGerencia.page=data.contratos_gerencia.page
+      this.listaContratosGerencia=data.contratos_gerencia.docs
     })
 
     this.gerenciasService.getGerencias().subscribe((data:any)=>{
       this.listaGerencias=data.gerencias
     })
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContrato){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
+  }
+
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
   }
 
   refreshListaGerencia(){
@@ -69,15 +110,23 @@ export class ContratosGerenciaComponent implements OnInit {
     })
   }
 
-  refreshListaContratos(){
-    this.contratosService.getContratos(1,"").subscribe((data:any)=>{
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
   }
 
-  refreshListaContratosGerencia(){
-    this.contratosGerenciaService.getContratosGerencia("").subscribe((data:any)=>{
-      this.listaContratosGerencia=data.contratos_gerencia
+  refreshListaContratosGerencia(page:any=1,extraParams:any=""){
+    this.contratosGerenciaService.getContratosGerencia(page,"",extraParams).subscribe((data:any)=>{
+      this.pagContratosGerencia.hasNextPage=data.contratos_gerencia.hasNextPage
+      this.pagContratosGerencia.hasPrevPage=data.contratos_gerencia.hasPrevPage
+      this.pagContratosGerencia.totalPages=new Array(data.contratos_gerencia.totalPages)
+      this.pagContratosGerencia.page=data.contratos_gerencia.page
+      this.listaContratosGerencia=data.contratos_gerencia.docs
     })
   }
 
@@ -263,6 +312,7 @@ export class ContratosGerenciaComponent implements OnInit {
     contrato.value=""
     estado.value=""
     id.value=""
+    this.refreshListaContratos(1,"")
   }
 
   resetFormG(){

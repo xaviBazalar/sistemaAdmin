@@ -10,8 +10,8 @@ export class TareasContratoService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getTareasContrato(idcontrato:string){
-    return this.http.get(`${this.url}/tareasContrato?contrato=${idcontrato}`) 
+  getTareasContrato(pagina:string|number,idcontrato:string){
+    return this.http.get(`${this.url}/tareasContrato?page=${pagina}&contrato=${idcontrato}`) 
   }
 
   addTareaContrato(data:any){
@@ -25,6 +25,6 @@ export class TareasContratoService {
   getTareasContratoFilter(dataSend:any){
     // var queryString = Object.keys(dataSend).map(key => key + '=' + dataSend[key]).join('&');
  
-     return this.http.get(`${this.url}/tareasContrato`,{params: dataSend})
+     return this.http.get(`${this.url}/tareasContrato?page=1`,{params: dataSend})
    }
 }

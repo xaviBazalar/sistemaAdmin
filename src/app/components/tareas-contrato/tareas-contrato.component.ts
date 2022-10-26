@@ -52,6 +52,13 @@ export class TareasContratoComponent implements OnInit {
     page:0
   }
 
+  pagTareasContrato:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   constructor(
     public solicitudService:SolicitudesService,
     public solicitudUsuarioService:SolitudesUsuarioService,
@@ -111,8 +118,12 @@ export class TareasContratoComponent implements OnInit {
       }
     })
 
-    this.tareasContratoService.getTareasContrato("").subscribe((data:any)=>{
-      this.listaTareasContrato=data.contratos
+    this.tareasContratoService.getTareasContrato(1,"").subscribe((data:any)=>{
+      this.pagTareasContrato.hasNextPage=data.contratos.hasNextPage
+      this.pagTareasContrato.hasPrevPage=data.contratos.hasPrevPage
+      this.pagTareasContrato.totalPages=new Array(data.contratos.totalPages)
+      this.pagTareasContrato.page=data.contratos.page
+      this.listaTareasContrato=data.contratos.docs
     })
   }
 
@@ -125,7 +136,7 @@ export class TareasContratoComponent implements OnInit {
       tarea:tarea.value
     }
     this.tareasContratoService.getTareasContratoFilter(dataFilter).subscribe((data:any)=>{
-      this.listaTareasContrato=data.contratos
+      this.listaTareasContrato=data.contratos.docs
     })
   }
 
@@ -177,9 +188,13 @@ export class TareasContratoComponent implements OnInit {
     })
   }
 
-  refreshListaTareasContrato(){
-    this.tareasContratoService.getTareasContrato("").subscribe((data:any)=>{
-      this.listaTareasContrato=data.contratos
+  refreshListaTareasContrato(pagina:any=1){
+    this.tareasContratoService.getTareasContrato(pagina,"").subscribe((data:any)=>{
+      this.pagTareasContrato.hasNextPage=data.contratos.hasNextPage
+      this.pagTareasContrato.hasPrevPage=data.contratos.hasPrevPage
+      this.pagTareasContrato.totalPages=new Array(data.contratos.totalPages)
+      this.pagTareasContrato.page=data.contratos.page
+      this.listaTareasContrato=data.contratos.docs
     })
   }
 
@@ -198,7 +213,7 @@ export class TareasContratoComponent implements OnInit {
 
     this.tareasContratoService.addTareaContrato(dataContrato).subscribe((data:any)=>{
       this.closeModalTareaContrato()
-      this.refreshListaTareasContrato()
+      this.refreshListaTareasContrato(1)
     })
   }
 
@@ -282,7 +297,7 @@ export class TareasContratoComponent implements OnInit {
 
     this.tareasContratoService.updateTareaContrato(dataContrato).subscribe((data:any)=>{
       this.closeModalTareaContrato()
-      this.refreshListaTareasContrato()
+      this.refreshListaTareasContrato(1)
     })
   }
 

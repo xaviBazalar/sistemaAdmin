@@ -10,8 +10,8 @@ export class ContratosGerenciaService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getContratosGerencia(gerencia:string){
-    return this.http.get(`${this.url}/contratosGerencia?gerencia=${gerencia}`) 
+  getContratosGerencia(page:any,gerencia:string,extraParams:any){
+    return this.http.get(`${this.url}/contratosGerencia?page=${page}&gerencia=${gerencia}&${extraParams}`) 
   }
 
   getContratosGerenciaActivos(gerencia:string){

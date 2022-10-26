@@ -72,6 +72,23 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation nav-tarea-contrato">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="pagTareasContrato.hasPrevPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaTareasContrato(pagTareasContrato.page-1)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </span>
+                  </li>
+                  <li [ngClass]="((nro+1)==pagTareasContrato.page) ? 'page-item active': 'page-item '" (click)="refreshListaTareasContrato(nro+1)" *ngFor="let item of pagTareasContrato.totalPages;let nro = index"><span style="cursor: pointer;" class="page-link" >{{nro+1}}</span></li>
+                  <li class="page-item" *ngIf="pagTareasContrato.hasNextPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshListaTareasContrato(pagTareasContrato.page+1)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </span>
+                  </li>
+                </ul>
+            </nav>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTareaContrato()">Nueva</button>
             </div>
