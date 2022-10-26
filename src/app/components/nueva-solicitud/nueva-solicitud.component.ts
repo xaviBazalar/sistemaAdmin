@@ -48,6 +48,7 @@ export class NuevaSolicitudComponent implements OnInit {
   tokenTemp:number|string="";
   msjNoSucess:boolean=false
   contratoTemp:string|null=""
+  diasSLA:string=""
   constructor(
     public gerenciaService:GerenciasService,
     public estadosService:EstadosSolicitudService,
@@ -210,6 +211,7 @@ export class NuevaSolicitudComponent implements OnInit {
     
     for (const info of this.listaTareasContrato) {
       if(info.tarea._id==target.value){
+        this.diasSLA=info.tarea.SLA+" días"
         this.regForm.controls['iGst'].setValue(info.gst._id);
         this.regForm.controls['iBko'].setValue(info.bko._id);
         break
@@ -433,7 +435,8 @@ export class NuevaSolicitudComponent implements OnInit {
         fecha_inicio:this.regForm.value.iFechaInicio,
         randomId:this.tokenTemp,
         ingresado:true,
-        solicitante:this.usuarioLogin._id
+        solicitante:this.usuarioLogin._id,
+        sla:this.diasSLA
       }
 
 

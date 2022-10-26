@@ -5,7 +5,7 @@
 
     
     <h2>TABLERO</h2>
-    <form action="">
+    <form id="filterSearchTablero" action="">
 
 
         <div class="row">
@@ -66,7 +66,9 @@
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega                                       </label>
                 <input type="date" class="form-select" id="fecha_entrega" />
             </div>
-            
+            <div class="col-3 mt-3">
+                <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="filterListReset()">Limpiar</button>
+            </div>
         </div>
                
 

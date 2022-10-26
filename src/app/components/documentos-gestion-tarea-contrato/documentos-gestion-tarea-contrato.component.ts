@@ -59,11 +59,12 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     let nombre_documento:any=document.querySelector("#gestionC")
     let contrato:any=document.querySelector("#contratoC")
 
+
     let dataGestionTC:any={
       tarea:tarea.value,
       nombre_documento:nombre_documento.value,
       contrato:contrato.value,
-      estado:"",
+      estado:1,
       observacion:""
     }
 
@@ -134,7 +135,7 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     tarea.value=""
     nombre_documento.value=""
     contrato.value=""
-    estado.value=""
+    estado.value=1
     id.value=""
   }
 

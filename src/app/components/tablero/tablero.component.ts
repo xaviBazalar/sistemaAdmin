@@ -140,6 +140,34 @@ export class TableroComponent implements OnInit {
     })
   }
 
+  filterListReset(){
+    let form:any=document.querySelector("#filterSearchTablero");
+    form.reset();
+
+    let dataFilter:any={
+
+    }
+
+    this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      this.listaSolicitudes=data.solicitudes;
+      this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Proceso"
+      })
+
+      this.listaPorHacer=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Por Hacer"
+      })
+
+      this.listaEnTerminado=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="Terminada"
+      })
+
+      this.listaEnRevision=data.solicitudes.filter((solicitud:any) => {
+        return solicitud.estado_solicitud.nombre_estado=="En Revisión"
+      })
+    })
+  }
+
   goToSolicitud(solicitud:string){
     this.router.navigate(['solicitud/'+solicitud], { });
   }

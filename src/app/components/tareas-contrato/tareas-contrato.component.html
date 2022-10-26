@@ -287,7 +287,7 @@
                 </div>
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">SLA</label>
-                    <input class="form-control" id="sla_tarea" placeholder="Escribir SLA" />
+                    <input  class="form-control" id="sla_tarea" type="number" placeholder="SLA" step="1"  pattern="[0-9]*"/>
                 </div>
                 <div [ngStyle]="{'display':showUpdateTarea ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
