@@ -32,40 +32,7 @@
             </div>
         </div>
         <hr>
-        <div class="py-3 mb-3">
-            <h2>ESTADO SOLICITUD</h2>
-        </div>
-        <div class="row">
-            
-                    
         
-                <div class="col-3 input-group mb-3" style="width: 35%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
-                    <input [min]="minDay" class="form-control" type="date" id="iFechaSolicitud"  formControlName="iFechaSolicitud"  value="{{minDay}}">
-                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaSolicitud.errors?.required">*La fecha solicitud es requerida</span>
-                </div>
-                <div class="col-3 input-group mb-3" style="width: 60%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
-                    <select class="form-select" id="iEstadoSolicitud"  disabled>
-                        <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
-                        {{estado.nombre_estado}}
-                        </option>
-
-                    </select>
-                </div>
-        </div>
-        <div class="row">
-                <div class="col-3 input-group mb-3" style="width: 35%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
-                    <input [min]="minDay" class="form-control" type="date" id="iFechaInicio"  formControlName="iFechaInicio"  value="{{minDay}}">
-                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaInicio.errors?.required">*La fecha inicio es requerida</span>
-                </div>
-                <div class="col-3 input-group mb-3" style="width: 60%;">
-                    <p>Tiempo estimado : {{diasSLA}}</p>
-                </div>
-        </div>
-    
-        <hr>
         <div class="py-3 mb-3" *ngIf="mostrarTareas">
             <h2>TAREA SOLICITADA</h2>
         </div>
@@ -116,6 +83,40 @@
             <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
             <span class="error" *ngIf="isSubmitted && errorControl.iMensaje.errors?.required">*El campo mensaje es requerido</span>
         </div>
+        <hr *ngIf="mostrarTareas">
+        <div class="py-3 mb-3" *ngIf="mostrarTareas">
+            <h2>ESTADO SOLICITUD</h2>
+        </div>
+        <div class="row" *ngIf="mostrarTareas">
+            
+                    
+        
+                <div class="col-3 input-group mb-3" style="width: 35%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                    <input [min]="minDay" class="form-control" type="date" id="iFechaSolicitud"  formControlName="iFechaSolicitud"  value="{{minDay}}">
+                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaSolicitud.errors?.required">*La fecha solicitud es requerida</span>
+                </div>
+                <div class="col-3 input-group mb-3" style="width: 60%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
+                    <select class="form-select" id="iEstadoSolicitud"  disabled>
+                        <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
+                        {{estado.nombre_estado}}
+                        </option>
+
+                    </select>
+                </div>
+        </div>
+        <div class="row" *ngIf="mostrarTareas">
+                <div class="col-3 input-group mb-3" style="width: 35%;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                    <input [min]="minDay" class="form-control" type="date" id="iFechaInicio"  formControlName="iFechaInicio"  value="{{minDay}}">
+                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaInicio.errors?.required">*La fecha inicio es requerida</span>
+                </div>
+                <div class="col-3 input-group mb-3" style="width: 60%;">
+                    <p>Tiempo estimado : {{diasSLA}}</p>
+                </div>
+        </div>
+    
         <hr *ngIf="mostrarTareas">
         <div class="py-3 mb-3" *ngIf="mostrarTareas">
             <h2>INFORMACION REQUERIDA</h2>
