@@ -14,8 +14,8 @@ export class ContratosGerenciaService {
     return this.http.get(`${this.url}/contratosGerencia?page=${page}&gerencia=${gerencia}&${extraParams}`) 
   }
 
-  getContratosGerenciaActivos(gerencia:string){
-    return this.http.get(`${this.url}/contratosGerencia?gerencia=${gerencia}&estado=true`) 
+  getContratosGerenciaActivos(gerencia:string,options:any=1){
+    return this.http.get(`${this.url}/contratosGerencia?gerencia=${gerencia}&estado=true&options=${options}`) 
   }
 
   addContratoGerencia(data:any){

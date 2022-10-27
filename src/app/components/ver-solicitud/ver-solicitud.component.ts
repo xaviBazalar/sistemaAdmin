@@ -75,7 +75,7 @@ export class VerSolicitudComponent implements OnInit {
     const dataHistoria:any = await this.historialSolicitudService.getHistorialResultadoSolicitud(idSolicitud).toPromise();
     this.listaHistorialResultadoSolicitud=dataHistoria.historial_resultado_solicitud;
 
-    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id).toPromise();
+    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id,1,"").toPromise();
     this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes;
     this.loaded=true;
 

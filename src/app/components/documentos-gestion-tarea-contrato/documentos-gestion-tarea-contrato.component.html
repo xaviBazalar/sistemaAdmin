@@ -49,6 +49,24 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation nav-gestion-contrato" class="navigation">
+                <ul class="pagination">
+                  <li class="page-item" *ngIf="pagGestionContratos.hasPrevPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshDocumentosGestion(pagGestionContratos.page-1)" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </span>
+                  </li>
+                  <li [ngClass]="((nro+1)==pagGestionContratos.page) ? 'page-item active': 'page-item '" (click)="refreshDocumentosGestion(nro+1)" *ngFor="let item of pagGestionContratos.totalPages;let nro = index"><span style="cursor: pointer;" class="page-link" >{{nro+1}}</span></li>
+                  <li class="page-item" *ngIf="pagGestionContratos.hasNextPage">
+                    <span class="page-link" style="cursor: pointer;" (click)="refreshDocumentosGestion(pagGestionContratos.page+1)" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </span>
+                  </li>
+                </ul>
+            </nav>
+            
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoGestionCT()">Nueva</button>
             </div>
@@ -71,12 +89,11 @@
                 
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
-                    <select class="form-select" id="contratoC" >
-                        <option value="">..seleccionar contrato</option>
-                        <option value="{{contrato._id}}" *ngFor="let contrato of listaContrato">
-                            {{contrato.contrato}}-{{contrato.contradoid}}
-                        </option>
-                    </select>
+                    <input autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                    <datalist id="listaContrato"  >
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="contratoC" />
                 </div>
                 <div class="col-12 input-group mb-3" >
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>

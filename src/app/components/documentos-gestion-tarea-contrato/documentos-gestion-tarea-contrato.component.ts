@@ -19,6 +19,13 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
 
   listaGestionCT:any=[]
 
+  pagGestionContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   usuario:{
     _id:string|null,
     perfil:any
@@ -43,15 +50,52 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
       this.listaContrato=data.contratos.docs
     })
 
-    this.documentacionSolicitudedService.getDocumentacionSolicitud("","").subscribe((data:any)=>{
-      this.listaGestionCT=data.documentacion_solicitudes
+    this.documentacionSolicitudedService.getDocumentacionSolicitud("","",1,"").subscribe((data:any)=>{
+      this.pagGestionContratos.hasNextPage=data.documentacion_solicitudes.hasNextPage
+      this.pagGestionContratos.hasPrevPage=data.documentacion_solicitudes.hasPrevPage
+      this.pagGestionContratos.totalPages=new Array(data.documentacion_solicitudes.totalPages)
+      this.pagGestionContratos.page=data.documentacion_solicitudes.page
+      this.listaGestionCT=data.documentacion_solicitudes.docs
     })
   }
 
-  refreshDocumentosGestion(){
-    this.documentacionSolicitudedService.getDocumentacionSolicitud("","").subscribe((data:any)=>{
-      this.listaGestionCT=data.documentacion_solicitudes
+  refreshDocumentosGestion(page:any=1,extraData:any=""){
+    this.documentacionSolicitudedService.getDocumentacionSolicitud("","",page,extraData).subscribe((data:any)=>{
+      this.pagGestionContratos.hasNextPage=data.documentacion_solicitudes.hasNextPage
+      this.pagGestionContratos.hasPrevPage=data.documentacion_solicitudes.hasPrevPage
+      this.pagGestionContratos.totalPages=new Array(data.documentacion_solicitudes.totalPages)
+      this.pagGestionContratos.page=data.documentacion_solicitudes.page
+      this.listaGestionCT=data.documentacion_solicitudes.docs
     })
+  }
+
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagGestionContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagGestionContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagGestionContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagGestionContratos.page=data.contratos.page
+      this.listaContrato=data.contratos.docs
+    })
+  }
+
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContrato){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
   }
 
   addDocumentoGestionTC(){

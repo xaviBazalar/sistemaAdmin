@@ -201,8 +201,8 @@ export class NuevaSolicitudComponent implements OnInit {
   getContratosGerencia({ target }:any){
     let gerencia=target.value;
     let contrato:any=document.querySelector("#iContrato")
-    this.contratosGerenciaService.getContratosGerenciaActivos(gerencia).subscribe((data:any)=>{
-      this.listaContratos=data.contratos_gerencia.docs
+    this.contratosGerenciaService.getContratosGerenciaActivos(gerencia,0).subscribe((data:any)=>{
+      this.listaContratos=data.contratos_gerencia
       contrato.value=""
     });
   }

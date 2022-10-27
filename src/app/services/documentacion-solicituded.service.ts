@@ -10,8 +10,8 @@ export class DocumentacionSolicitudedService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getDocumentacionSolicitud(tarea:string|null,contrato:string|null){
-    return this.http.get(`${this.url}/documentacionSolicitudes?tarea=${tarea}&contrato=${contrato}`) 
+  getDocumentacionSolicitud(tarea:string|null,contrato:string|null,page:any=1,extraParams:any){
+    return this.http.get(`${this.url}/documentacionSolicitudes?tarea=${tarea}&contrato=${contrato}&page=${page}&${extraParams}`) 
   }
 
   addDocumentacionSolicitud(data:any){

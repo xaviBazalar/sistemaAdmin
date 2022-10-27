@@ -116,7 +116,7 @@ export class VerSolicitudGstComponent implements OnInit {
 
     const dataEstadoResultado:any = await this.estadoResultadoService.getSolicitudes().toPromise();
     this.listEstadosResultado=dataEstadoResultado.estadoResultados
-    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id).toPromise();
+    const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id,1,"").toPromise();
     this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes;
     console.log(this.solicitud.contrato)
     const dataBitacora:any = await this.bitacoraSolicitudService.getBitacoraSolicitud(idSolicitud).toPromise();
