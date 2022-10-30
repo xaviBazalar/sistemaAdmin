@@ -56,6 +56,8 @@
                     </tr>
                 </tbody>
             </table>
+            <app-paginador #pagTDS (pagParams)="pagTareDocumentosSalida" (refreshLista)="refreshLista($event,'TareaDSalida')"></app-paginador>
+
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoSalidaCT()">Nueva</button>
             </div>
@@ -86,6 +88,8 @@
                     </tr>
                 </tbody>
             </table>
+            <app-paginador #pagDS (pagParams)="pagDocumentosSalida" (refreshLista)="refreshLista($event,'DSalida')"></app-paginador>
+
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoSalida()">Nueva</button>
             </div>

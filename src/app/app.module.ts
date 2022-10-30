@@ -26,6 +26,7 @@ import { DocumentosSalidaTareaContratoComponent } from './components/documentos-
 import { DocumentosGestionTareaContratoComponent } from './components/documentos-gestion-tarea-contrato/documentos-gestion-tarea-contrato.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ContratosGerenciaComponent } from './components/contratos-gerencia/contratos-gerencia.component';
+import { PaginadorComponent } from './components/paginador/paginador.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ContratosGerenciaComponent } from './components/contratos-gerencia/cont
     DocumentosSalidaTareaContratoComponent,
     DocumentosGestionTareaContratoComponent,
     UsuariosComponent,
-    ContratosGerenciaComponent
+    ContratosGerenciaComponent,
+    PaginadorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SolicitudesService } from '../../services/solicitudes.service';
-import { SolitudesUsuarioService } from '../../services/solitudes-usuario.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TareasService } from '../../services/tareas.service';
 import { ContratosService } from '../../services/contratos.service';
-import { TareasContratoService } from '../../services/tareas-contrato.service';
-import { DocumentacionSolicitudedService } from '../../services/documentacion-solicituded.service';
 import { DocumentosEntradaService } from '../../services/documentos-entrada.service';
 import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
+import { PaginadorComponent } from '../paginador/paginador.component';
 
 @Component({
   selector: 'app-documentos-entrada-tarea-contrato',
@@ -31,13 +28,33 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
   showUpdateDocumentoETC:boolean=false
   showUpdateDocumentoE:boolean=false
 
+  pagTareDocumentosEntrada:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagDocumentosEntrada:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+  
+
+  @ViewChild("pagTDE") paginator:any;
+  @ViewChild("pagDE") paginatorDE:any;
+
   constructor(
     public tareaService:TareasService,
     public contratosService:ContratosService,
     public documentosEntradaService:DocumentosEntradaService,
-    public tareaDocumentosEntradaService:TareaDocumentosEntradaService) { }
+    public tareaDocumentosEntradaService:TareaDocumentosEntradaService) { 
+ 
+    }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.tareaService.getTareas(1,"").subscribe((data:any)=>{
       this.listaTareas=data.tareas.docs
     })
@@ -46,24 +63,50 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
       this.listaContrato=data.contratos.docs
     })
 
-    this.documentosEntradaService.getDocumentosEntrada().subscribe((data:any)=>{
-      this.listaDocumentosEntrada= data.documentos_entrada
+    this.documentosEntradaService.getDocumentosEntrada(1,1).subscribe((data:any)=>{
+      this.pagDocumentosEntrada.hasNextPage=data.documentos_entrada.hasNextPage
+      this.pagDocumentosEntrada.hasPrevPage=data.documentos_entrada.hasPrevPage
+      this.pagDocumentosEntrada.totalPages=new Array(data.documentos_entrada.totalPages)
+      this.pagDocumentosEntrada.page=data.documentos_entrada.page
+      this.listaDocumentosEntrada= data.documentos_entrada.docs
+      this.paginatorDE.pagParams=this.pagDocumentosEntrada
+      
     })
 
-    this.tareaDocumentosEntradaService.getTareaDocumentosEntrada("","").subscribe((data:any)=>{
-      this.listaTareaDocumentosEntrada=data.tarea_documentos_entrada
+    let resultsTDE:any = await this.tareaDocumentosEntradaService.getTareaDocumentosEntrada("","",1,1).toPromise();
+    this.pagTareDocumentosEntrada.hasNextPage=resultsTDE.tarea_documentos_entrada.hasNextPage
+    this.pagTareDocumentosEntrada.hasPrevPage=resultsTDE.tarea_documentos_entrada.hasPrevPage
+    this.pagTareDocumentosEntrada.totalPages=new Array(resultsTDE.tarea_documentos_entrada.totalPages)
+    this.pagTareDocumentosEntrada.page=resultsTDE.tarea_documentos_entrada.page
+    this.listaTareaDocumentosEntrada=resultsTDE.tarea_documentos_entrada.docs
+    this.paginator.pagParams=this.pagTareDocumentosEntrada
+  }
+
+  refreshLista(info:any,tipo:string){
+    if(tipo=="TareaDEntrada"){
+      this.refreshTareaDocumentosEntrada(info)
+    }else if(tipo=="DEntrada"){
+      this.refreshDocumentosEntrada(info);
+    }
+  }
+
+  refreshDocumentosEntrada(page:string|number){
+    this.documentosEntradaService.getDocumentosEntrada(page,1).subscribe((data:any)=>{
+      this.pagDocumentosEntrada.hasNextPage=data.documentos_entrada.hasNextPage
+      this.pagDocumentosEntrada.hasPrevPage=data.documentos_entrada.hasPrevPage
+      this.pagDocumentosEntrada.totalPages=new Array(data.documentos_entrada.totalPages)
+      this.pagDocumentosEntrada.page=data.documentos_entrada.page
+      this.listaDocumentosEntrada= data.documentos_entrada.docs
     })
   }
 
-  refreshDocumentosEntrada(){
-    this.documentosEntradaService.getDocumentosEntrada().subscribe((data:any)=>{
-      this.listaDocumentosEntrada= data.documentos_entrada
-    })
-  }
-
-  refreshTareaDocumentosEntrada(){
-    this.tareaDocumentosEntradaService.getTareaDocumentosEntrada("","").subscribe((data:any)=>{
-      this.listaTareaDocumentosEntrada=data.tarea_documentos_entrada
+  refreshTareaDocumentosEntrada(page:string|number){
+    this.tareaDocumentosEntradaService.getTareaDocumentosEntrada("","",page,1).subscribe((data:any)=>{
+      this.pagTareDocumentosEntrada.hasNextPage=data.tarea_documentos_entrada.hasNextPage
+      this.pagTareDocumentosEntrada.hasPrevPage=data.tarea_documentos_entrada.hasPrevPage
+      this.pagTareDocumentosEntrada.totalPages=new Array(data.tarea_documentos_entrada.totalPages)
+      this.pagTareDocumentosEntrada.page=data.tarea_documentos_entrada.page
+      this.listaTareaDocumentosEntrada=data.tarea_documentos_entrada.docs
     })
   }
 
@@ -79,7 +122,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     }
 
     this.tareaDocumentosEntradaService.addTareaDocumentosEntrada(dataDocumentoTC).subscribe((data:any)=>{
-      this.refreshTareaDocumentosEntrada()
+      this.refreshTareaDocumentosEntrada(1)
       this.closeModalDocumentoEntradaCT()
     })
 
@@ -118,7 +161,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     }
 
     this.tareaDocumentosEntradaService.updateTareaDocumentosEntrada(dataDocumentoTC).subscribe((data:any)=>{
-      this.refreshTareaDocumentosEntrada()
+      this.refreshTareaDocumentosEntrada(1)
       this.closeModalDocumentoEntradaCT()
     })
   }
@@ -134,7 +177,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     }
 
     this.documentosEntradaService.addDocumentoEntrada(dataDocumentoEntrada).subscribe((data:any)=>{
-      this.refreshDocumentosEntrada()
+      this.refreshDocumentosEntrada(1)
       this.closeModalDocumentoEntrada()
     })
 
@@ -169,7 +212,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     }
 
     this.documentosEntradaService.updateDocumentoEntrada(dataDocumentoEntrada).subscribe((data:any)=>{
-      this.refreshDocumentosEntrada()
+      this.refreshDocumentosEntrada(1)
       this.closeModalDocumentoEntrada()
     })
   }

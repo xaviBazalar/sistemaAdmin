@@ -179,7 +179,7 @@ export class VerSolicitudComponent implements OnInit {
   }
 
   getTareaDocumentosEntrada(tarea:string) {
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.solicitud.contrato._id).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.solicitud.contrato._id,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -199,7 +199,7 @@ export class VerSolicitudComponent implements OnInit {
   }
 
   getTareaDocumentosSalida(tarea:string) {
-    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea,this.solicitud.contrato._id).subscribe((data:any)=>{
+    this.tareaDocumentosSalidaService.getTareaDocumentosSalida(tarea,this.solicitud.contrato._id,1,"").subscribe((data:any)=>{
       this.listaTareaDocumentosSalida=data.tarea_documentos_salida;
     })
   }

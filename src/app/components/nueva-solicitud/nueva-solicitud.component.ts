@@ -220,7 +220,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
     this.tareaSelected=target.value
     let tarea=target.value;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -233,7 +233,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
   refreshTareaDocumentosEntrada(){
     let tarea=this.tareaSelected;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.contratoTemp,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }

@@ -1,0 +1,17 @@
+<nav aria-label="Page navigation nav" class="navigation">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="pagParams.hasPrevPage">
+        <span class="page-link" style="cursor: pointer;" (click)="refreshPagination(pagParams.page-1)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </span>
+      </li>
+      <li [ngClass]="((nro+1)==pagParams.page) ? 'page-item active': 'page-item '" (click)="refreshPagination(nro+1)" *ngFor="let item of pagParams.totalPages;let nro = index"><span style="cursor: pointer;" class="page-link" >{{nro+1}}</span></li>
+      <li class="page-item" *ngIf="pagParams.hasNextPage">
+        <span class="page-link" style="cursor: pointer;" (click)="refreshPagination(pagParams.page+1)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </span>
+      </li>
+    </ul>
+</nav>

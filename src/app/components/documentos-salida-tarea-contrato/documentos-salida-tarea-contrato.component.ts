@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TareasService } from '../../services/tareas.service';
 import { DocumentosEntradaService } from '../../services/documentos-entrada.service';
 import { ContratosService } from '../../services/contratos.service';
-import { TareaDocumentosEntradaService } from '../../services/tarea-documentos-entrada.service';
 import { TareaDocumentosSalidaService } from '../../services/tarea-documentos-salida.service';
 import { DocumentosSalidaService } from '../../services/documentos-salida.service';
+import { PaginadorComponent } from '../paginador/paginador.component';
 
 @Component({
   selector: 'app-documentos-salida-tarea-contrato',
@@ -27,13 +27,31 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   showUpdateDocumentoSTC:boolean=false
   showUpdateDocumentoS:boolean=false
+
+  pagTareDocumentosSalida:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagDocumentosSalida:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  @ViewChild("pagTDS",{static:false}) paginator:any;
+  @ViewChild("pagDS",{static:false}) paginatorDS:any;
+
   constructor(public tareaService:TareasService,
     public contratosService:ContratosService,
     public documentosEntradaService:DocumentosEntradaService,
     public documentosSalidaService:DocumentosSalidaService,
     public tareaDocumentosSalidaService:TareaDocumentosSalidaService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.tareaService.getTareas(1,"").subscribe((data:any)=>{
       this.listaTareas=data.tareas.docs
     })
@@ -42,24 +60,61 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
       this.listaContrato=data.contratos.docs
     })
 
-    this.documentosSalidaService.getDocumentosSalida().subscribe((data:any)=>{
-      this.listaDocumentosSalida= data.documentos_salida
+    this.documentosSalidaService.getDocumentosSalida(1,1).subscribe((data:any)=>{
+      this.pagDocumentosSalida.hasNextPage=data.documentos_salida.hasNextPage
+      this.pagDocumentosSalida.hasPrevPage=data.documentos_salida.hasPrevPage
+      this.pagDocumentosSalida.totalPages=new Array(data.documentos_salida.totalPages)
+      this.pagDocumentosSalida.page=data.documentos_salida.page
+      this.listaDocumentosSalida= data.documentos_salida.docs
+      this.paginatorDS.pagParams=this.pagDocumentosSalida
     })
 
-    this.tareaDocumentosSalidaService.getTareaDocumentosSalida("","").subscribe((data:any)=>{
-      this.listaTareaDocumentosSalida=data.tarea_documentos_salida
+    let dataTDS:any =await this.tareaDocumentosSalidaService.getTareaDocumentosSalida("","",1,1).toPromise()
+    this.pagTareDocumentosSalida.hasNextPage=dataTDS.tarea_documentos_salida.hasNextPage
+    this.pagTareDocumentosSalida.hasPrevPage=dataTDS.tarea_documentos_salida.hasPrevPage
+    this.pagTareDocumentosSalida.totalPages=new Array(dataTDS.tarea_documentos_salida.totalPages)
+    this.pagTareDocumentosSalida.page=dataTDS.tarea_documentos_salida.page
+    this.listaTareaDocumentosSalida=dataTDS.tarea_documentos_salida.docs
+    this.paginator.pagParams=this.pagTareDocumentosSalida
+
+    /*this.tareaDocumentosSalidaService.getTareaDocumentosSalida("","",1,1).subscribe((data:any)=>{
+      this.pagTareDocumentosSalida.hasNextPage=data.tarea_documentos_salida.hasNextPage
+      this.pagTareDocumentosSalida.hasPrevPage=data.tarea_documentos_salida.hasPrevPage
+      this.pagTareDocumentosSalida.totalPages=new Array(data.tarea_documentos_salida.totalPages)
+      this.pagTareDocumentosSalida.page=data.tarea_documentos_salida.page
+      this.listaTareaDocumentosSalida=data.tarea_documentos_salida.docs
+      this.paginator=this.pagTareDocumentosSalida
+    })*/
+  }
+
+
+  refreshLista(info:any,tipo:string){
+    if(tipo=="TareaDSalida"){
+      this.refreshTareaDocumentosSalida(info)
+    }else if(tipo=="DSalida"){
+      this.refreshDocumentosSalida(info);
+    }
+  }
+
+  refreshDocumentosSalida(page:string|number){
+    this.documentosSalidaService.getDocumentosSalida(page,1).subscribe((data:any)=>{
+      this.pagDocumentosSalida.hasNextPage=data.documentos_salida.hasNextPage
+      this.pagDocumentosSalida.hasPrevPage=data.documentos_salida.hasPrevPage
+      this.pagDocumentosSalida.totalPages=new Array(data.documentos_salida.totalPages)
+      this.pagDocumentosSalida.page=data.documentos_salida.page
+      this.listaDocumentosSalida= data.documentos_salida.docs
+      this.paginatorDS.pagParams=this.pagDocumentosSalida
     })
   }
 
-  refreshDocumentosSalida(){
-    this.documentosSalidaService.getDocumentosSalida().subscribe((data:any)=>{
-      this.listaDocumentosSalida= data.documentos_salida
-    })
-  }
-
-  refreshTareaDocumentosSalida(){
-    this.tareaDocumentosSalidaService.getTareaDocumentosSalida("","").subscribe((data:any)=>{
-      this.listaTareaDocumentosSalida=data.tarea_documentos_salida
+  refreshTareaDocumentosSalida(page:string|number){
+    this.tareaDocumentosSalidaService.getTareaDocumentosSalida("","",page,1).subscribe((data:any)=>{
+      this.pagTareDocumentosSalida.hasNextPage=data.tarea_documentos_salida.hasNextPage
+      this.pagTareDocumentosSalida.hasPrevPage=data.tarea_documentos_salida.hasPrevPage
+      this.pagTareDocumentosSalida.totalPages=new Array(data.tarea_documentos_salida.totalPages)
+      this.pagTareDocumentosSalida.page=data.tarea_documentos_salida.page
+      this.listaTareaDocumentosSalida=data.tarea_documentos_salida.docs
+      this.paginator.pagParams=this.pagTareDocumentosSalida
     })
   }
 
@@ -75,7 +130,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     }
 
     this.tareaDocumentosSalidaService.addTareaDocumentosSalida(dataDocumentoTC).subscribe((data:any)=>{
-      this.refreshTareaDocumentosSalida()
+      this.refreshTareaDocumentosSalida(1)
       this.closeModalDocumentoSalidaCT()
     })
 
@@ -114,7 +169,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     }
 
     this.tareaDocumentosSalidaService.updateTareaDocumentosSalida(dataDocumentoSTC).subscribe((data:any)=>{
-      this.refreshTareaDocumentosSalida()
+      this.refreshTareaDocumentosSalida(1)
       this.closeModalDocumentoSalidaCT()
     })
   }
@@ -132,7 +187,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     console.log(dataDocumentoSalida)
 
     this.documentosSalidaService.addDocumentoSalida(dataDocumentoSalida).subscribe((data:any)=>{
-      this.refreshDocumentosSalida()
+      this.refreshDocumentosSalida(1)
       this.closeModalDocumentoSalida()
     })
 
@@ -166,7 +221,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     }
 
     this.documentosSalidaService.updateDocumentoSalida(dataDocumentoSalida).subscribe((data:any)=>{
-      this.refreshDocumentosSalida()
+      this.refreshDocumentosSalida(1)
       this.closeModalDocumentoSalida()
     })
   }

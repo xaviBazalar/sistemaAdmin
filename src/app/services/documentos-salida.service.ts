@@ -10,8 +10,8 @@ export class DocumentosSalidaService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getDocumentosSalida(){
-    return this.http.get(`${this.url}/documentosSalida`) 
+  getDocumentosSalida(page:string|number,options:string|number){
+    return this.http.get(`${this.url}/documentosSalida?page=${page}&options=${options}`) 
   }
 
   addDocumentoSalida(data:any){

@@ -55,6 +55,8 @@
                     </tr>
                 </tbody>
             </table>
+            <app-paginador #pagTDE (pagParams)="pagTareDocumentosEntrada" (refreshLista)="refreshLista($event,'TareaDEntrada')"></app-paginador>
+
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoEntradaCT()">Nueva</button>
             </div>
@@ -85,6 +87,8 @@
                     </tr>
                 </tbody>
             </table>
+            <app-paginador #pagDE (pagParams)="pagDocumentosEntrada" (refreshLista)="refreshLista($event,'DEntrada')"></app-paginador>
+
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalDocumentoEntrada()">Nueva</button>
             </div>

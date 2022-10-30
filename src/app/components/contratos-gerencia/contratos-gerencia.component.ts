@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { SolitudesUsuarioService } from '../../services/solitudes-usuario.service';
 import { TareasService } from '../../services/tareas.service';
@@ -6,6 +6,7 @@ import { ContratosService } from '../../services/contratos.service';
 import { TareasContratoService } from '../../services/tareas-contrato.service';
 import { ContratosGerenciaService } from '../../services/contratos-gerencia.service';
 import { GerenciasService } from '../../services/gerencias.service';
+import { PaginadorComponent } from '../paginador/paginador.component';
 
 @Component({
   selector: 'app-contratos-gerencia',
@@ -46,6 +47,8 @@ export class ContratosGerenciaComponent implements OnInit {
     page:0
   }
 
+  @ViewChild(PaginadorComponent) child:any;
+
   showModalContrato:boolean=false
   showModalGerencia:boolean=false
   showModalContratoGerencia:boolean=false
@@ -57,12 +60,16 @@ export class ContratosGerenciaComponent implements OnInit {
     public tareasContratoService:TareasContratoService,
     public contratosGerenciaService:ContratosGerenciaService,
     public gerenciasService:GerenciasService
-    ) { }
+    ) { 
+      
+    }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.tareaService.getTareas(1,"").subscribe((data:any)=>{
       this.listaTareas=data.tareas.docs
     })
+
+    
 
     this.contratosService.getContratos(1,"").subscribe((data:any)=>{
       this.pagContratos.hasNextPage=data.contratos.hasNextPage
@@ -71,18 +78,28 @@ export class ContratosGerenciaComponent implements OnInit {
       this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
+    
 
-    this.contratosGerenciaService.getContratosGerencia(1,"","").subscribe((data:any)=>{
-      this.pagContratosGerencia.hasNextPage=data.contratos_gerencia.hasNextPage
-      this.pagContratosGerencia.hasPrevPage=data.contratos_gerencia.hasPrevPage
-      this.pagContratosGerencia.totalPages=new Array(data.contratos_gerencia.totalPages)
-      this.pagContratosGerencia.page=data.contratos_gerencia.page
-      this.listaContratosGerencia=data.contratos_gerencia.docs
-    })
+    let resultsCG:any = await this.contratosGerenciaService.getContratosGerencia(1,"","").toPromise();
+    this.pagContratosGerencia.hasNextPage=resultsCG.contratos_gerencia.hasNextPage
+    this.pagContratosGerencia.hasPrevPage=resultsCG.contratos_gerencia.hasPrevPage
+    this.pagContratosGerencia.totalPages=new Array(resultsCG.contratos_gerencia.totalPages)
+    this.pagContratosGerencia.page=resultsCG.contratos_gerencia.page
+    this.listaContratosGerencia=resultsCG.contratos_gerencia.docs
 
+    this.child.pagParams=this.pagContratosGerencia
+    
     this.gerenciasService.getGerencias().subscribe((data:any)=>{
       this.listaGerencias=data.gerencias
     })
+  }
+
+  refreshLista(info:any,tipo:string){
+    console.log(info)
+    console.log(tipo)
+    if(tipo=="ContratosGerencia"){
+      this.refreshListaContratosGerencia(info)
+    }
   }
 
   getTareasContrato({ target }:any) {

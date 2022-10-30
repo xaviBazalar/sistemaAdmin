@@ -10,8 +10,8 @@ export class TareaDocumentosSalidaService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getTareaDocumentosSalida(tarea:string|null,contrato:string|null){
-    return this.http.get(`${this.url}/tareaDocumentosSalida?tarea=${tarea}&contrato=${contrato}`) 
+  getTareaDocumentosSalida(tarea:string|null,contrato:string|null,page:string|number,options:string|number){
+    return this.http.get(`${this.url}/tareaDocumentosSalida?tarea=${tarea}&contrato=${contrato}&page=${page}&options=${options}`) 
   }
 
   addTareaDocumentosSalida(data:any){
