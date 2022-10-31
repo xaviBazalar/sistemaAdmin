@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TareasService } from '../../services/tareas.service';
 import { ContratosService } from '../../services/contratos.service';
 import { DocumentosEntradaService } from '../../services/documentos-entrada.service';
@@ -27,6 +27,16 @@ export class UsuariosComponent implements OnInit {
 
   showModalUsuario:boolean=false
   showUpdateU:boolean=false
+
+  pagUsuario:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  @ViewChild("pagUsuario",{static:false}) paginadorUsuario:any;
+
   constructor(
     public tareaService:TareasService,
     public contratosService:ContratosService,
@@ -39,8 +49,13 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.usuariosService.getUsuarios().subscribe((data:any)=>{
-      this.listaUsuarios=data.usuarios
+    this.usuariosService.getUsuarios(1,1).subscribe((data:any)=>{
+      this.pagUsuario.hasNextPage=data.usuarios.hasNextPage
+      this.pagUsuario.hasPrevPage=data.usuarios.hasPrevPage
+      this.pagUsuario.totalPages=new Array(data.usuarios.totalPages)
+      this.pagUsuario.page=data.usuarios.page
+      this.listaUsuarios=data.usuarios.docs
+      this.paginadorUsuario.pagParams=this.pagUsuario
     })
 
     this.perfilesService.getPerfiles().subscribe((data:any)=>{
@@ -48,9 +63,20 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  refreshUsuarios(){
-    this.usuariosService.getUsuarios().subscribe((data:any)=>{
-      this.listaUsuarios=data.usuarios
+  refreshLista(info:any,tipo:string){
+    if(tipo=="Usuario"){
+      this.refreshUsuarios(info)
+    }
+  }
+
+  refreshUsuarios(page:1){
+    this.usuariosService.getUsuarios(page,1).subscribe((data:any)=>{
+      this.pagUsuario.hasNextPage=data.usuarios.hasNextPage
+      this.pagUsuario.hasPrevPage=data.usuarios.hasPrevPage
+      this.pagUsuario.totalPages=new Array(data.usuarios.totalPages)
+      this.pagUsuario.page=data.usuarios.page
+      this.listaUsuarios=data.usuarios.docs
+      this.paginadorUsuario.pagParams=this.pagUsuario
     })
   }
 
@@ -73,7 +99,7 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.usuariosService.addUsuario(dataUsuario).subscribe((data:any)=>{
-      this.refreshUsuarios()
+      this.refreshUsuarios(1)
       this.closeModalUsuario()
     })
 
@@ -128,7 +154,7 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.usuariosService.updateUsuario(dataUpdate).subscribe((data:any)=>{
-      this.refreshUsuarios()
+      this.refreshUsuarios(1)
       this.closeModalUsuario()
     })
   }

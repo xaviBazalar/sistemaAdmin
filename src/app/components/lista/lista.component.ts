@@ -13,8 +13,8 @@ export class ListaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.solicitudService.getSolicitudes().subscribe((data:any)=>{
-      this.listaSolicitudes=data.solicitudes;
+    this.solicitudService.getSolicitudes(1,0).subscribe((data:any)=>{
+      this.listaSolicitudes=data.solicitudes.docs;
     })
   }
 

@@ -14,4 +14,8 @@ export class LoginService {
   validate(body:any){
     return this.http.post(`${this.url}/login`,body)
   }
+
+  recoveryAccount(email:string){
+    return this.http.get(`${this.url}/login?emailS=${email}`)
+  }
 }

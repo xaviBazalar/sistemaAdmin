@@ -40,6 +40,13 @@ export class ContratosGerenciaComponent implements OnInit {
     page:0
   }
 
+  pagGerencia:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   pagContratosGerencia:any={
     hasNextPage:false,
     hasPrevPage:false,
@@ -47,7 +54,8 @@ export class ContratosGerenciaComponent implements OnInit {
     page:0
   }
 
-  @ViewChild(PaginadorComponent) child:any;
+  @ViewChild("pagContratosGerencia") child:any;
+  @ViewChild("pagGerencia",{static:false}) paginadorGerencia:any;
 
   showModalContrato:boolean=false
   showModalGerencia:boolean=false
@@ -89,16 +97,21 @@ export class ContratosGerenciaComponent implements OnInit {
 
     this.child.pagParams=this.pagContratosGerencia
     
-    this.gerenciasService.getGerencias().subscribe((data:any)=>{
-      this.listaGerencias=data.gerencias
+    this.gerenciasService.getGerencias(1,1).subscribe((data:any)=>{
+      this.pagGerencia.hasNextPage=data.gerencias.hasNextPage
+      this.pagGerencia.hasPrevPage=data.gerencias.hasPrevPage
+      this.pagGerencia.totalPages=new Array(data.gerencias.totalPages)
+      this.pagGerencia.page=data.gerencias.page
+      this.listaGerencias=data.gerencias.docs
+      this.paginadorGerencia.pagParams=this.pagGerencia
     })
   }
 
   refreshLista(info:any,tipo:string){
-    console.log(info)
-    console.log(tipo)
     if(tipo=="ContratosGerencia"){
       this.refreshListaContratosGerencia(info)
+    }else if(tipo=="Gerencia"){
+      this.refreshListaGerencia(info)
     }
   }
 
@@ -121,9 +134,14 @@ export class ContratosGerenciaComponent implements OnInit {
     this.refreshListaContratos(1,dataFilter)
   }
 
-  refreshListaGerencia(){
-    this.gerenciasService.getGerencias().subscribe((data:any)=>{
-      this.listaGerencias=data.gerencias
+  refreshListaGerencia(page:string|number){
+    this.gerenciasService.getGerencias(page,1).subscribe((data:any)=>{
+      this.pagGerencia.hasNextPage=data.gerencias.hasNextPage
+      this.pagGerencia.hasPrevPage=data.gerencias.hasPrevPage
+      this.pagGerencia.totalPages=new Array(data.gerencias.totalPages)
+      this.pagGerencia.page=data.gerencias.page
+      this.listaGerencias=data.gerencias.docs
+      this.paginadorGerencia.pagParams=this.pagGerencia
     })
   }
 
@@ -206,7 +224,7 @@ export class ContratosGerenciaComponent implements OnInit {
 
     this.gerenciasService.addGerencia(dataGerencia).subscribe((data:any)=>{
       this.closeModalGerencia()
-      this.refreshListaGerencia()
+      this.refreshListaGerencia(1)
     })
   }
 
@@ -236,7 +254,7 @@ export class ContratosGerenciaComponent implements OnInit {
 
     this.gerenciasService.updateGerencia(dataUpdate).subscribe((data:any)=>{
       this.closeModalGerencia()
-      this.refreshListaGerencia()
+      this.refreshListaGerencia(1)
     })
   }
 

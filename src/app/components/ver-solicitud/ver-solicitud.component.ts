@@ -76,7 +76,7 @@ export class VerSolicitudComponent implements OnInit {
     this.listaHistorialResultadoSolicitud=dataHistoria.historial_resultado_solicitud;
 
     const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id,1,"").toPromise();
-    this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes;
+    this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes.docs;
     this.loaded=true;
 
     const dataBitacora:any = await this.bitacoraSolicitudService.getBitacoraSolicitud(idSolicitud).toPromise();

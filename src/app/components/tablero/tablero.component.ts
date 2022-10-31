@@ -41,7 +41,7 @@ export class TableroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.solicitudService.getSolicitudes().subscribe((data:any)=>{
+    this.solicitudService.getSolicitudes(1,0).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
       this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
         return solicitud.estado_solicitud.nombre_estado=="En Proceso"
@@ -76,11 +76,11 @@ export class TableroComponent implements OnInit {
       }
     })
 
-    this.gerenciaService.getGerencias().subscribe((data:any)=>{
+    this.gerenciaService.getGerencias(1,0).subscribe((data:any)=>{
       this.listaGerencias=data.gerencias;
     })
 
-    this.tareasServicio.getTareas(1,"").subscribe((data:any)=>{
+    this.tareasServicio.getTareas(1,"options=0").subscribe((data:any)=>{
       this.listatareas=data.tareas;
     })
 

@@ -12,8 +12,8 @@ export class UsuariosService {
 
   constructor(private http:HttpClient) { }
 
-  getUsuarios(){
-    return this.http.get(`${this.url}/usuarios`)
+  getUsuarios(page:string|number=1,options:string|number=0){
+    return this.http.get(`${this.url}/usuarios?page=${page}&options=${options}`)
   }
   
   addUsuario(data:any){

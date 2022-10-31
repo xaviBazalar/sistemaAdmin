@@ -1,0 +1,8 @@
+{
+    "/mailing/*": {
+        "target": "https://mailingperu.intico.com.pe",
+        "secure": false
+        
+    },
+    "changeOrigin": true
+}

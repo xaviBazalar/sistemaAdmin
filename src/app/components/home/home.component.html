@@ -10,7 +10,7 @@
             <input type="password" class="form-control" name="password" id="password" formControlName="password" placeholder="Contraseña" required>
         </div>
         <button type="submit" class="btn btn-primary form-control" value="ok" name="btnRegistrar">INICIAR </button>
-        <div class="text-center mb-3" (click)="openRecoveryP()">
+        <div class="text-center mb-3 link-recovery" (click)="openRecoveryP()">
             Olvido su contraseña?
         </div>
         <div class="alert alert-danger" role="alert" *ngIf="errorLogin">
@@ -20,13 +20,13 @@
     <div *ngIf="recoveryPassword" class="col-4 m-auto" >
         <H3 class="text-center p-3 text-secondary">RESTABLECER CONTRASEÑA</H3>
         <div class="mb-3">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Ingrese su correo registrado" required>
+            <input type="email" class="form-control" name="emailV" id="emailV" placeholder="Ingrese su correo registrado" required>
         </div>
-        <button type="button" class="btn btn-primary form-control" name="btnEnviar">ENVIAR </button>
-        <div class="text-center mb-3" (click)="closeRecoveryP()">
+        <button type="button" class="btn btn-primary form-control" name="btnEnviar" (click)="validateUserEmail()">ENVIAR </button>
+        <div class="text-center mb-3 link-recovery" (click)="closeRecoveryP()">
             Regresar
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="errorLogin">
+        <div class="alert alert-success" role="alert" *ngIf="errorLogin">
             Se envio un mensaje al correo registrado
         </div>
     </div>

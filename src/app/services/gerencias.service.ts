@@ -10,12 +10,12 @@ export class GerenciasService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getGerencias(){
-    return this.http.get(`${this.url}/gerencia`) 
+  getGerencias(page:string|number,options:string|number){
+    return this.http.get(`${this.url}/gerencia?page=${page}&options=${options}`) 
   }
 
   getGerenciasActivas(){
-    return this.http.get(`${this.url}/gerencia?estado=true`) 
+    return this.http.get(`${this.url}/gerencia?estado=true&options=0`) 
   }
 
   addGerencia(data:any){

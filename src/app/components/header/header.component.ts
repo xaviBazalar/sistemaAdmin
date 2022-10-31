@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit {
   logout(){
     localStorage.setItem("usuario","")
     setTimeout(()=>{
-      this.router.navigate(['/', { }]);
+      this.router.navigate(['/home', { }]);
     },500)
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { SolitudesUsuarioService } from '../../services/solitudes-usuario.service';
 import { GerenciasService } from '../../services/gerencias.service';
@@ -13,6 +13,9 @@ import { UsuariosService } from '../../services/usuarios.service';
   templateUrl: './mis-solicitudes.component.html',
   styleUrls: ['./mis-solicitudes.component.css']
 })
+
+
+
 export class MisSolicitudesComponent implements OnInit {
 
   listaSolicitudes:any;
@@ -24,13 +27,43 @@ export class MisSolicitudesComponent implements OnInit {
   listaEstadoSolicitud:any;
   listaEstadoResultado:any;
   listaPerfiles:any;
-  listaUsuariosGST:any=[];
+  listaUsuariosGST:any=[{
+    perfil:{
+      sigla:""
+    }
+  }];
   listaUsuariosBKO:any=[];
   listaUsuarios:any;
   usuario:{
     _id:string|null,
     perfil:any
   }  =JSON.parse(localStorage.getItem("usuario") || '{}');
+
+  pagSolicitudes:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagSolicitudesA:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  pagSolicitudesG:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
+  @ViewChild("pagSolicitudesA",{static:false}) paginadorSolicitudesA:any;
+  @ViewChild("pagSolicitudes",{static:false}) paginadorSolicitudes:any;
+  @ViewChild("pagSolicitudesG",{static:false}) paginadorSolicitudesG:any;
+
   constructor(
     public solicitudService:SolicitudesService,
     public solicitudUsuarioService:SolitudesUsuarioService,
@@ -46,18 +79,32 @@ export class MisSolicitudesComponent implements OnInit {
     if(this.usuario.perfil.sigla=="ADC"){
       let dataFilterIngresadas:any={
         ingresado:true,
-        solicitante:this.usuario._id
+        solicitante:this.usuario._id,
+        page:1,
+        options:1
       }
       this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
-        this.listaSolicitudes=data.solicitudes;
+        this.pagSolicitudes.hasNextPage=data.solicitudes.hasNextPage
+        this.pagSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
+        this.pagSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
+        this.pagSolicitudes.page=data.solicitudes.page
+        this.listaSolicitudes=data.solicitudes.docs;
+        this.paginadorSolicitudes.pagParams=this.pagSolicitudes
       })
 
       let dataFilter:any={
         ingresado:false,
-        solicitante:this.usuario._id
+        solicitante:this.usuario._id,
+        page:1,
+        options:1
       }
       this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-        this.listaSolicitudesPendiente=data.solicitudes;
+        this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
+        this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
+        this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
+        this.pagSolicitudesG.page=data.solicitudes.page
+        this.listaSolicitudesPendiente=data.solicitudes.docs;
+        this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
       })
 
       
@@ -69,18 +116,32 @@ export class MisSolicitudesComponent implements OnInit {
 
       let dataFilterIngresadas:any={
         ingresado:true,
-        solicitante:this.usuario._id
+        solicitante:this.usuario._id,
+        page:1,
+        options:1
       }
       this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
-        this.listaSolicitudes=data.solicitudes;
+        this.pagSolicitudes.hasNextPage=data.solicitudes.hasNextPage
+        this.pagSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
+        this.pagSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
+        this.pagSolicitudes.page=data.solicitudes.page
+        this.listaSolicitudes=data.solicitudes.docs;
+        this.paginadorSolicitudes.pagParams=this.pagSolicitudes
       })
 
       let dataFilter:any={
         ingresado:false,
-        solicitante:this.usuario._id
+        solicitante:this.usuario._id,
+        page:1,
+        options:1
       }
       this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-        this.listaSolicitudesPendiente=data.solicitudes;
+        this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
+        this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
+        this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
+        this.pagSolicitudesG.page=data.solicitudes.page
+        this.listaSolicitudesPendiente=data.solicitudes.docs;
+        this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
       })
 
  
@@ -100,13 +161,17 @@ export class MisSolicitudesComponent implements OnInit {
         }
       }
       this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
-        this.listaSolicitudesAsignadas=data.solicitudes;
-
+        this.paginadorSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
+        this.paginadorSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
+        this.paginadorSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)
+        this.paginadorSolicitudesA.page=data.solicitudes.page
+        this.listaSolicitudesAsignadas=data.solicitudes.docs;
+        this.paginadorSolicitudesA.pagParams=this.paginadorSolicitudesA
       })
     }
     
 
-    this.usuariosService.getUsuarios().subscribe((data:any)=>{
+    this.usuariosService.getUsuarios(1,0).subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
       for (const usuario of data.usuarios) {
         if(usuario.perfil.sigla=="GST"){
@@ -119,7 +184,7 @@ export class MisSolicitudesComponent implements OnInit {
       }
     })
 
-    this.gerenciaService.getGerencias().subscribe((data:any)=>{
+    this.gerenciaService.getGerencias(1,0).subscribe((data:any)=>{
       this.listaGerencias=data.gerencias;
     })
 
@@ -141,6 +206,14 @@ export class MisSolicitudesComponent implements OnInit {
     
   }
 
+  refreshLista(info:any,tipo:string){
+    if(tipo=="Solicitudes"){
+      this.filterListReset(info)
+    }else if(tipo=="SolicitudesA"){
+      this.refreshListSA(info)
+    }
+  }
+
   filterList(){
     let gerencia:any=document.querySelector("#gerencia")
     let tarea:any=document.querySelector("#tarea")
@@ -160,11 +233,18 @@ export class MisSolicitudesComponent implements OnInit {
       solicitante:this.usuario._id,
       fecha_solicitud:fecha_solicitud.value,
       fecha_inicio:fecha_inicio.value,
-      fecha_entrega:fecha_entrega.value
+      fecha_entrega:fecha_entrega.value,
+      page:1,
+      options:1
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-      this.listaSolicitudes=data.solicitudes;
+      this.paginadorSolicitudes.hasNextPage=data.solicitudes.hasNextPage
+      this.paginadorSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
+      this.paginadorSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
+      this.paginadorSolicitudes.page=data.solicitudes.page
+      this.listaSolicitudes=data.solicitudes.docs;
+      this.paginadorSolicitudes.pagParams=this.paginadorSolicitudes
     })
 
  
@@ -172,7 +252,12 @@ export class MisSolicitudesComponent implements OnInit {
     dataFilter.solicitante=this.usuario._id
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-      this.listaSolicitudesPendiente=data.solicitudes;
+      this.paginadorSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
+      this.paginadorSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
+      this.paginadorSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
+      this.paginadorSolicitudesG.page=data.solicitudes.page
+      this.listaSolicitudesPendiente=data.solicitudes.docs;
+      this.paginadorSolicitudesG.pagParams=this.paginadorSolicitudesG
     })
 
 
@@ -192,12 +277,17 @@ export class MisSolicitudesComponent implements OnInit {
 
     
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-      this.listaSolicitudesAsignadas=data.solicitudes;
+      this.paginadorSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
+      this.paginadorSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
+      this.paginadorSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)
+      this.paginadorSolicitudesA.page=data.solicitudes.page
+      this.listaSolicitudesAsignadas=data.solicitudes.docs;
+      this.paginadorSolicitudesA.pagParams=this.paginadorSolicitudesA
 
     })
   }
 
-  filterListReset(){
+  filterListReset(page:string|number){
     let form:any=document.querySelector("#filterSearchSolicitudes");
     form.reset();
     
@@ -219,19 +309,34 @@ export class MisSolicitudesComponent implements OnInit {
       solicitante:this.usuario._id,
       fecha_solicitud:fecha_solicitud.value,
       fecha_inicio:fecha_inicio.value,
-      fecha_entrega:fecha_entrega.value
+      fecha_entrega:fecha_entrega.value,
+      page:page,
+      options:1
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-      this.listaSolicitudes=data.solicitudes;
+      this.pagSolicitudes.hasNextPage=data.solicitudes.hasNextPage
+      this.pagSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
+      this.pagSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
+      this.pagSolicitudes.page=data.solicitudes.page
+      this.listaSolicitudes=data.solicitudes.docs;
+      this.paginadorSolicitudes.pagParams=this.pagSolicitudes
     })
 
     let dataFilterPen:any={
       ingresado:false,
-      solicitante:this.usuario._id
+      solicitante:this.usuario._id,
+      page:page,
+      options:1
     }
+
     this.solicitudService.getSolicitudesFilter(dataFilterPen).subscribe((data:any)=>{
-      this.listaSolicitudesPendiente=data.solicitudes;
+      this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
+      this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
+      this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
+      this.pagSolicitudesG.page=data.solicitudes.page
+      this.listaSolicitudesPendiente=data.solicitudes.docs;
+      this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
     })
 
 
@@ -240,19 +345,57 @@ export class MisSolicitudesComponent implements OnInit {
     if(perfilUser=="GST"){
       dataFilterAsignado={
         ingresado:true,
-        gst:this.usuario._id
+        gst:this.usuario._id,
+        page:page,
+        options:1
       }
     }
 
     if(perfilUser=="BKO"){
       dataFilterAsignado={
         ingresado:true,
-        bko:this.usuario._id
+        bko:this.usuario._id,
+        page:page,
+        options:1
       }
     }
     this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
-      this.listaSolicitudesAsignadas=data.solicitudes;
+      this.pagSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
+      this.pagSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
+      this.pagSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)
+      this.pagSolicitudesA.page=data.solicitudes.page
+      this.listaSolicitudesAsignadas=data.solicitudes.docs;
+      this.paginadorSolicitudesA.pagParams=this.pagSolicitudesA
+    })
+  }
 
+  refreshListSA(page:string|number){
+    let perfilUser=this.usuario.perfil.sigla
+    let dataFilterAsignado:any;
+    if(perfilUser=="GST"){
+      dataFilterAsignado={
+        ingresado:true,
+        gst:this.usuario._id,
+        page:page,
+        options:1
+      }
+    }
+
+    if(perfilUser=="BKO"){
+      dataFilterAsignado={
+        ingresado:true,
+        bko:this.usuario._id,
+        page:page,
+        options:1
+      }
+    }
+    this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
+      this.pagSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
+      this.pagSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
+      this.pagSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)
+      this.pagSolicitudesA.page=data.solicitudes.page
+      this.listaSolicitudesAsignadas=data.solicitudes.docs;
+      this.paginadorSolicitudesA.pagParams=this.pagSolicitudesA
     })
   }
 

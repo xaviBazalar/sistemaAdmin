@@ -64,10 +64,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "sisadmin:build:production"
+              "browserTarget": "sisadmin:build:production",
+              "proxyConfig": "proxy.conf.json"
             },
             "development": {
-              "browserTarget": "sisadmin:build:development"
+              "browserTarget": "sisadmin:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -76,6 +78,7 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "sisadmin:build"
+            
           }
         },
         "test": {
@@ -93,6 +96,7 @@
               "src/styles.css"
             ],
             "scripts": []
+            
           }
         }
       }

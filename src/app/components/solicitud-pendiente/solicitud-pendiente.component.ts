@@ -112,7 +112,7 @@ export class SolicitudPendienteComponent implements OnInit {
     
 
      //this.regForm.controls['iGst'].setValue(this.default, {onlySelf: true});
-    this.gerenciaService.getGerencias().subscribe((data:any)=>{
+    this.gerenciaService.getGerencias(1,0).subscribe((data:any)=>{
       this.listaGerencias=data.gerencias;
     })
 

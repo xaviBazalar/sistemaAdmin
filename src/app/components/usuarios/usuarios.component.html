@@ -52,6 +52,7 @@
                     </tr>
                 </tbody>
             </table>
+            <app-paginador #pagUsuario (pagParams)="pagUsuario" (refreshLista)="refreshLista($event,'Usuario')"></app-paginador>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalUsuario()">Nueva</button>
             </div>

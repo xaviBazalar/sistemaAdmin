@@ -11,8 +11,8 @@ export class SolicitudesService {
 
   constructor(private http:HttpClient) { }
 
-  getSolicitudes(){
-    return this.http.get(`${this.url}/solicitudes`)
+  getSolicitudes(page:string|number,options:string|number){
+    return this.http.get(`${this.url}/solicitudes?page=${page}&options=${options}`)
   }
 
   getSolicitudesFilter(dataSend:any){
@@ -22,7 +22,7 @@ export class SolicitudesService {
   }
 
   getSolicitud(id:string|null){
-    return this.http.get(`${this.url}/solicitudes?id=${id}`)
+    return this.http.get(`${this.url}/solicitudes?page=1&options=0&id=${id}`)
   }
 
   updateSolicitud(id:string|null,data:any){
