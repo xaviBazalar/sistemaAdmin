@@ -36,30 +36,8 @@ export class HomeComponent implements OnInit {
     }
 
     this.loginService.recoveryAccount(email.value).subscribe((data:any)=>{
-      let dataSend={
-        "data":
-          {
-          "name_campaign" : "Envio desde app sisadmin",
-          "subject" : "Reestablecimiento de contraseña",
-          "html": "Haga click en el enlace para la reestablecer su contraseña",
-          "email": 
-            {
-              "correo":data.validation[0].correo,
-              "nombre":data.validation[0].nombre
-            },
-          "remitente": 
-            {
-              "correo":"platforms@inticousa.com",
-              "nombre":"App SisAdmin"
-            }
-          }  
-      }
-
       if(data.total===1){
         this.errorLogin=true;
-        this.apiEmailService.sendEmail(dataSend).subscribe((data:any)=>{
-          console.log(data)
-        })
       }
     });
   }
@@ -70,6 +48,7 @@ export class HomeComponent implements OnInit {
 
   closeRecoveryP(){
     this.recoveryPassword=false
+    this.errorLogin=false;
   }
 
   async validatelogin(){

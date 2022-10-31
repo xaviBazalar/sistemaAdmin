@@ -60,6 +60,8 @@ export class MisSolicitudesComponent implements OnInit {
     page:0
   }
 
+  diasPorVencer:string|number=0
+
   @ViewChild("pagSolicitudesA",{static:false}) paginadorSolicitudesA:any;
   @ViewChild("pagSolicitudes",{static:false}) paginadorSolicitudes:any;
   @ViewChild("pagSolicitudesG",{static:false}) paginadorSolicitudesG:any;
@@ -73,7 +75,41 @@ export class MisSolicitudesComponent implements OnInit {
     public estadoResultadoService:EstadoResultadoService,
     public perfilesService:PerfilesService,
     public usuariosService:UsuariosService,
-  ) { }
+  ) { 
+    let hoy:any = new Date();
+   
+    let mes:any=((hoy.getMonth())+1);
+    mes=(mes.toString().length==1)?"0"+mes:mes;
+    let dia:any=hoy.getDate();
+    dia=(dia.toString().length==1)?"0"+dia:dia;
+
+    let hoyWithFormat:string=hoy.getFullYear()+"-"+mes+"-"+dia
+    let i:number=0;
+    while (i<1) { // 1 días habiles
+      hoy.setTime(hoy.getTime()+24*60*60*1000); // añadimos 1 día
+      if (hoy.getDay() != 6 && hoy.getDay() != 0)
+          i++;  
+    }
+
+    mes=(((hoy.getMonth())+1).toString().length==1)?"0"+((hoy.getMonth())+1):((hoy.getMonth())+1);
+    dia=(hoy.getDate().toString().length==1)?"0"+hoy.getDate():hoy.getDate();
+    
+    let fechaVenc:any = hoy.getFullYear()+"-"+mes+"-"+dia
+    let dataFilterIngresadas:any={
+      ingresado:true,
+      solicitante:this.usuario._id,
+      page:1,
+      options:0,
+      por_vencer:1,
+      fec_hoy:hoyWithFormat,
+      fec_ven:fechaVenc
+    }
+
+    this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
+      this.diasPorVencer=data.total;
+      //this.listaSolicitudes=data.solicitudes;
+    })
+  }
 //getSolicitudes
   ngOnInit(): void {
     if(this.usuario.perfil.sigla=="ADC"){

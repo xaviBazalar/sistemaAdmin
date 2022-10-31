@@ -88,7 +88,7 @@
     
         </form>
     </div>
-
+    <div *ngIf="diasPorVencer>0" class="alert alert-danger">Tiene {{diasPorVencer}} tareas por vencer</div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">Asignadas</button>
@@ -100,6 +100,7 @@
           <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Guardadas</button>
         </li>
       </ul>
+      
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
             <table class="table table-light table-striped border border-1">
