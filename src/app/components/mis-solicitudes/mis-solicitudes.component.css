@@ -28,3 +28,15 @@
     display: block;
     text-align: center;
 }
+
+.link-reporte{
+    font-size: 14px;
+    color: #077036;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.link-reporte img{
+    width: 28px;
+    margin-left: 6px;
+}

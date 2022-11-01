@@ -77,18 +77,32 @@
                 </div>
                 
             </div>
-                   
+            <hr/> 
+            <div class="row my-3">
     
-    
-    
-            
-            
-    
-    
-    
+                <div class="col-3 mt-3">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Desde</label>
+                    <input type="date" class="form-select" id="fecha_desde" />
+                </div>
+                <div class="col-3 mt-3">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Hasta</label>
+                    <input type="date" class="form-select" id="fecha_hasta" />
+                </div>
+                <div class="col-6 mt-3">       
+                    <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="generarReporteExcel()">Generar Reporte</button>
+                </div>
+                <div class="col-6 mt-3 link-reporte" *ngIf="linkReporteExcel!=''">
+                    <span  (click)="openReporteExcel(linkReporteExcel)">Haga click para descargar el reporte</span>
+                    <img src="assets/icons/icon-excel.png" />
+                </div>
+            </div>
+            <hr/>  
+  
         </form>
     </div>
-    <div *ngIf="diasPorVencer>0" class="alert alert-danger">Tiene {{diasPorVencer}} tareas por vencer</div>
+    <div *ngIf="PorVencer>0" class="alert alert-warning">Tienes {{PorVencer}} tareas por vencer</div>
+    <div *ngIf="Vencidos>0" class="alert alert-danger">Tienes {{Vencidos}} tareas vencidas</div>
+    
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">Asignadas</button>

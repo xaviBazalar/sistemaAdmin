@@ -7,6 +7,7 @@ import { EstadosSolicitudService } from '../../services/estados-solicitud.servic
 import { EstadoResultadoService } from '../../services/estado-resultado.service';
 import { PerfilesService } from '../../services/perfiles.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import { ReportesService } from '../../services/reportes.service';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -60,7 +61,9 @@ export class MisSolicitudesComponent implements OnInit {
     page:0
   }
 
-  diasPorVencer:string|number=0
+  PorVencer:string|number=0
+  Vencidos:string|number=0
+  linkReporteExcel:string=""
 
   @ViewChild("pagSolicitudesA",{static:false}) paginadorSolicitudesA:any;
   @ViewChild("pagSolicitudes",{static:false}) paginadorSolicitudes:any;
@@ -75,6 +78,7 @@ export class MisSolicitudesComponent implements OnInit {
     public estadoResultadoService:EstadoResultadoService,
     public perfilesService:PerfilesService,
     public usuariosService:UsuariosService,
+    public reporteService:ReportesService
   ) { 
     let hoy:any = new Date();
    
@@ -95,7 +99,7 @@ export class MisSolicitudesComponent implements OnInit {
     dia=(hoy.getDate().toString().length==1)?"0"+hoy.getDate():hoy.getDate();
     
     let fechaVenc:any = hoy.getFullYear()+"-"+mes+"-"+dia
-    let dataFilterIngresadas:any={
+    let dataFilterPorVencer:any={
       ingresado:true,
       solicitante:this.usuario._id,
       page:1,
@@ -105,8 +109,22 @@ export class MisSolicitudesComponent implements OnInit {
       fec_ven:fechaVenc
     }
 
-    this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
-      this.diasPorVencer=data.total;
+    this.solicitudService.getSolicitudesFilter(dataFilterPorVencer).subscribe((data:any)=>{
+      this.PorVencer=data.total;
+      //this.listaSolicitudes=data.solicitudes;
+    })
+
+    let dataFilterVencidas:any={
+      ingresado:true,
+      solicitante:this.usuario._id,
+      page:1,
+      options:0,
+      vencido:1,
+      fec_hoy:hoyWithFormat,
+    }
+
+    this.solicitudService.getSolicitudesFilter(dataFilterVencidas).subscribe((data:any)=>{
+      this.Vencidos=data.total;
       //this.listaSolicitudes=data.solicitudes;
     })
   }
@@ -240,6 +258,23 @@ export class MisSolicitudesComponent implements OnInit {
       this.listaPerfiles=data.perfiles;
     })
     
+  }
+
+  generarReporteExcel(){
+
+    let desde:any = document.querySelector("#fecha_desde")
+    let hasta:any = document.querySelector("#fecha_hasta")
+    let dataPost={
+      desde:desde.value,
+      hasta:hasta.value
+    }
+    this.reporteService.generateExcel(dataPost).subscribe((data:any)=>{
+      this.linkReporteExcel=data.archivo;
+    })
+  }
+
+  openReporteExcel(archivo:string){
+    window.open(`http://localhost:8080/api/reporteExcel?archivo=${archivo}`,'_blank');
   }
 
   refreshLista(info:any,tipo:string){
