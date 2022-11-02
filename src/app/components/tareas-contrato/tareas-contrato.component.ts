@@ -133,7 +133,7 @@ export class TareasContratoComponent implements OnInit {
     let dataFilter={
       contrato:"",
       n_contrato:contrato.value,
-      tarea:tarea.value
+      n_tarea:tarea.value
     }
     this.tareasContratoService.getTareasContratoFilter(dataFilter).subscribe((data:any)=>{
       this.listaTareasContrato=data.contratos.docs

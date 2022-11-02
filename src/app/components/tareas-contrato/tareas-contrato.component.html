@@ -36,10 +36,10 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">
-                            <input type="text" class="form-input" id="searchContrato" (keypress)="filterTareasContratos()" />
+                            <input type="text" class="form-input" id="searchContrato" (keyup)="filterTareasContratos()" />
                         </th>
                         <th scope="col">
-                            <input type="text" class="form-input" id="searchTarea"/>
+                            <input type="text" class="form-input" id="searchTarea" (keyup)="filterTareasContratos()"/>
                         </th>
                         <th scope="col"></th>
                         <th scope="col"></th>
