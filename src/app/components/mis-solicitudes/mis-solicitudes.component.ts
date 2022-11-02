@@ -8,6 +8,7 @@ import { EstadoResultadoService } from '../../services/estado-resultado.service'
 import { PerfilesService } from '../../services/perfiles.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { ReportesService } from '../../services/reportes.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -274,7 +275,9 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   openReporteExcel(archivo:string){
-    window.open(`http://localhost:8080/api/reporteExcel?archivo=${archivo}`,'_blank');
+    //http://34.172.89.68/
+    let baseUrlGet=environment.baseUrlGet
+    window.open(`${baseUrlGet}/api/reporteExcel?archivo=${archivo}`,'_blank');
   }
 
   refreshLista(info:any,tipo:string){
