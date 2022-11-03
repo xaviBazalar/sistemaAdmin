@@ -85,6 +85,12 @@ export class HeaderComponent implements OnInit {
                 icon:"icon-dash.png"
               },
               {
+                titulo:"Carga de Trabajo",
+                url:"/dashboard/carga-de-trabajo",
+                submenu:[],
+                icon:"icon-list.png"
+              },
+              {
                 titulo:"Administración Sistema",
                 url:"#",
                 submenu:[
