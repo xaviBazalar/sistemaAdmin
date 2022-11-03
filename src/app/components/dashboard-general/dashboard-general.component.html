@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row my-5 justify-content-md-end">
+        <div class="col-12">
+            <h2>DASHBOARD </h2>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 48px;">
+        <div class="col-10">
+            <h5>Tareas</h5>
+            <section class="section-tareas">
+                <div class="box-tarea" *ngFor="let tarea of listaTareas" [ngStyle]="{
+                    'background-color':tarea.name === 'Por Hacer' ? 
+                    '#bad2d9' : tarea.name === 'En Proceso'? 
+                    '#2f7d94': tarea.name === 'Terminada'?'#d69524':'#b92d29'}">
+                    <span>+{{tarea.y}}</span>
+                    <span>{{tarea.name}}</span>
+                </div>
+            </section>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <div id="container-chart" style="width:100%; height:400px;"></div>
+        </div>
+        <div class="col-6">
+            <div id="container-chart-persona" style="width:100%; height:400px;"></div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 .box{
     padding: 10px;
-    border: 1px solid;
+    border: 0.8px solid;
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -8,6 +8,15 @@
 .box span{
     display: block;
     font-weight: 300;
+    color: #fff;
+    text-shadow: 1px 1px black;
+}
+
+.lista-box section{
+    height: 320px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
 }
 
 .lista-box h6{

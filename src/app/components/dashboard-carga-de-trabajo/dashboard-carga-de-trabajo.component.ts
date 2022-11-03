@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 
+import * as Highcharts from 'highcharts';
+import * as Exporting from 'highcharts/modules/exporting';
+
+//Exporting(Highcharts);
+
 @Component({
   selector: 'app-dashboard-carga-de-trabajo',
   templateUrl: './dashboard-carga-de-trabajo.component.html',
@@ -10,8 +15,9 @@ export class DashboardCargaDeTrabajoComponent implements OnInit {
 
   constructor(public dashboardService:DashboardService) { }
   listaCargaDeTrabajo:any=[]
-
+  
   ngOnInit(): void {
+    
     this.dashboardService.getCargaDeTrabajoMasVencidos().subscribe((data:any)=>{
       let listaUsuarios:any=[]
       for(let info of data.carga_trabajo){
@@ -48,9 +54,8 @@ export class DashboardCargaDeTrabajoComponent implements OnInit {
         this.listaCargaDeTrabajo[indice].nombre=info._id.nombre
       }
 
-
-  
     })
+
   }
 
   mostrarTotal(data:any){
@@ -60,5 +65,7 @@ export class DashboardCargaDeTrabajoComponent implements OnInit {
     }
     return total
   }
+
+  
 
 }

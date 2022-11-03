@@ -1,15 +1,20 @@
 <div class="container">
     <div class="row my-5 justify-content-md-end">
-        <div class="col-10">
+        <div class="col-12">
             <h2>DASHBOARD - CARGA DE TRABAJO </h2>
         </div>
     </div>
     <div class="row">
         <div class="col-2 lista-box" *ngFor="let lista of listaCargaDeTrabajo">
-            <div class="box" *ngFor="let item of lista.carga_de_trabajo">
-                    <span>+{{item.total}}</span>
-                    <span>{{item.estado_solicitud}}</span>
-            </div>
+            <section>
+                <div class="box" *ngFor="let item of lista.carga_de_trabajo" [ngStyle]="{
+                    'background-color':item.estado_solicitud === 'Por Hacer' ? 
+                    '#bad2d9' : item.estado_solicitud === 'En Proceso'? 
+                    '#2f7d94': item.estado_solicitud === 'Terminada'?'#d69524':'#b92d29'}">
+                        <span>+{{item.total}}</span>
+                        <span>{{item.estado_solicitud}}</span>
+                </div>
+            </section>
             <h6>{{lista.nombre}}</h6>
             <span>+{{mostrarTotal(lista)}}</span>
             <hr>
@@ -21,3 +26,4 @@
     
     </div>
 </div>
+

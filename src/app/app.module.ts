@@ -28,6 +28,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ContratosGerenciaComponent } from './components/contratos-gerencia/contratos-gerencia.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
 import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-de-trabajo/dashboard-carga-de-trabajo.component';
+import { DashboardGeneralComponent } from './components/dashboard-general/dashboard-general.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-d
     UsuariosComponent,
     ContratosGerenciaComponent,
     PaginadorComponent,
-    DashboardCargaDeTrabajoComponent
+    DashboardCargaDeTrabajoComponent,
+    DashboardGeneralComponent
   ],
   imports: [
     BrowserModule,
