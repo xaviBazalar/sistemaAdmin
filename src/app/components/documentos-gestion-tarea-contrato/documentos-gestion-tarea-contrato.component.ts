@@ -59,6 +59,20 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     })
   }
 
+  filterDGTareasContratos(){
+    let contrato:any=document.querySelector("#searchContrato")
+    let tarea:any=document.querySelector("#searchTarea")
+    let gestion:any=document.querySelector("#searchGestion")
+    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value+"&n_gestion="+gestion.value
+    this.documentacionSolicitudedService.getDocumentacionSolicitud("","",1,dataFilter).subscribe((data:any)=>{
+      this.pagGestionContratos.hasNextPage=data.documentacion_solicitudes.hasNextPage
+      this.pagGestionContratos.hasPrevPage=data.documentacion_solicitudes.hasPrevPage
+      this.pagGestionContratos.totalPages=new Array(data.documentacion_solicitudes.totalPages)
+      this.pagGestionContratos.page=data.documentacion_solicitudes.page
+      this.listaGestionCT=data.documentacion_solicitudes.docs
+    })
+  }
+
   refreshDocumentosGestion(page:any=1,extraData:any=""){
     this.documentacionSolicitudedService.getDocumentacionSolicitud("","",page,extraData).subscribe((data:any)=>{
       this.pagGestionContratos.hasNextPage=data.documentacion_solicitudes.hasNextPage

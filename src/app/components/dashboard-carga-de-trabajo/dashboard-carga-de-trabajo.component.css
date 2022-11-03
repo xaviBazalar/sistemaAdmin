@@ -1,0 +1,37 @@
+.box{
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.box span{
+    display: block;
+    font-weight: 300;
+}
+
+.lista-box h6{
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.lista-box>span{
+    display: block;
+    text-align: center;
+}
+
+.vencido{
+    border: 1px solid #9c7b7b;
+    padding: 6px 6px;
+    width: 70px;
+    border-radius: 10px;
+    margin: auto;
+    background: #ffcbcb;
+}
+
+.vencido span{
+    display: block;
+    text-align: center;
+}

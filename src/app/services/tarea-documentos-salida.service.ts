@@ -14,6 +14,10 @@ export class TareaDocumentosSalidaService {
     return this.http.get(`${this.url}/tareaDocumentosSalida?tarea=${tarea}&contrato=${contrato}&page=${page}&options=${options}`) 
   }
 
+  getTareaDocumentosSalidaFilter(tarea:string|null,contrato:string,dataFilter:string){
+    return this.http.get(`${this.url}/tareaDocumentosSalida?tarea=${tarea}&contrato=${contrato}&page=1&options=1&${dataFilter}`) 
+  }
+
   addTareaDocumentosSalida(data:any){
     return this.http.post(`${this.url}/tareaDocumentosSalida`,data)
   }

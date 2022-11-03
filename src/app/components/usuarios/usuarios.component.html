@@ -25,6 +25,31 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchUsuario" (keyup)="filterUsuario()" />
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <select class="form-select" id="searchPerfil" (change)="filterUsuario()" >
+                                <option value="">...</option>
+                                <option value="{{perfil._id}}" *ngFor="let perfil of listaPerfiles">
+                                    {{perfil.sigla}}
+                                </option>
+                            </select>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <select class="form-select" id="searchEstado" (change)="filterUsuario()">
+                                <option value="">...</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Correo</th>

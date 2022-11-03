@@ -34,6 +34,19 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchContrato" (keyup)="filterContratosGerencia()" />
+                        </th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchGerencia" (keyup)="filterContratosGerencia()"/>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col-3"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Gerencia</th>
@@ -68,6 +81,14 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchGerenciaG" (keyup)="filterGerencia()"/>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Gerencia</th>
                         <th scope="col">Estado</th>
@@ -97,6 +118,14 @@
 
 
                 <thead class="bg-#F53621">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchContratoG" (keyup)="filterContrato()"/>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
                     <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>

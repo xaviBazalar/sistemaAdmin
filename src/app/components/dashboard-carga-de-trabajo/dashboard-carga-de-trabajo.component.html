@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row my-5 justify-content-md-end">
+        <div class="col-10">
+            <h2>DASHBOARD - CARGA DE TRABAJO </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 lista-box" *ngFor="let lista of listaCargaDeTrabajo">
+            <div class="box" *ngFor="let item of lista.carga_de_trabajo">
+                    <span>+{{item.total}}</span>
+                    <span>{{item.estado_solicitud}}</span>
+            </div>
+            <h6>{{lista.nombre}}</h6>
+            <span>+{{mostrarTotal(lista)}}</span>
+            <hr>
+            <div class="vencido">
+                <span>Vcto</span>
+                <span>{{lista.vencidos}}</span>
+            </div>
+        </div>
+    
+    </div>
+</div>

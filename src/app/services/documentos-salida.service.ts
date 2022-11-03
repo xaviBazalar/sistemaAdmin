@@ -14,6 +14,10 @@ export class DocumentosSalidaService {
     return this.http.get(`${this.url}/documentosSalida?page=${page}&options=${options}`) 
   }
 
+  getDocumentosSalidaFilter(page:string|number,options:string|number,dataFilter:string){
+    return this.http.get(`${this.url}/documentosSalida?page=${page}&options=${options}&${dataFilter}`) 
+  }
+
   addDocumentoSalida(data:any){
     return this.http.post(`${this.url}/documentosSalida`,data)
   }

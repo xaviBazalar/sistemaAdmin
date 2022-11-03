@@ -14,6 +14,10 @@ export class GerenciasService {
     return this.http.get(`${this.url}/gerencia?page=${page}&options=${options}`) 
   }
 
+  getGerenciasFilter(page:string|number,options:string|number,dataFilter:string){
+    return this.http.get(`${this.url}/gerencia?page=${page}&options=${options}&${dataFilter}`) 
+  }
+
   getGerenciasActivas(){
     return this.http.get(`${this.url}/gerencia?estado=true&options=0`) 
   }

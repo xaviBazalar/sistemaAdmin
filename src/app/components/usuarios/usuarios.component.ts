@@ -63,6 +63,22 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
+  filterUsuario(){
+    let n_usuario:any=document.querySelector("#searchUsuario")
+    let perfil:any=document.querySelector("#searchPerfil")
+    let estado:any=document.querySelector("#searchEstado")
+    let dataFilter="n_usuario="+n_usuario.value+"&perfil="+perfil.value+"&estado="+estado.value
+
+    this.usuariosService.getUsuariosFilter(1,1,dataFilter).subscribe((data:any)=>{
+      this.pagUsuario.hasNextPage=data.usuarios.hasNextPage
+      this.pagUsuario.hasPrevPage=data.usuarios.hasPrevPage
+      this.pagUsuario.totalPages=new Array(data.usuarios.totalPages)
+      this.pagUsuario.page=data.usuarios.page
+      this.listaUsuarios=data.usuarios.docs
+      this.paginadorUsuario.pagParams=this.pagUsuario
+    })
+  }
+
   refreshLista(info:any,tipo:string){
     if(tipo=="Usuario"){
       this.refreshUsuarios(info)

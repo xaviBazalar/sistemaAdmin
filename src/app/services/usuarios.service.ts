@@ -15,6 +15,10 @@ export class UsuariosService {
   getUsuarios(page:string|number=1,options:string|number=0){
     return this.http.get(`${this.url}/usuarios?page=${page}&options=${options}`)
   }
+
+  getUsuariosFilter(page:string|number=1,options:string|number=0,dataFilter:string){
+    return this.http.get(`${this.url}/usuarios?page=${page}&options=${options}&${dataFilter}`)
+  }
   
   addUsuario(data:any){
     return this.http.post(`${this.url}/usuarios`,data)

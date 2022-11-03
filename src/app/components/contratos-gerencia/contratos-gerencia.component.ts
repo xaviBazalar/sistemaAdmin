@@ -107,6 +107,45 @@ export class ContratosGerenciaComponent implements OnInit {
     })
   }
 
+  filterContratosGerencia(){
+    let contrato:any=document.querySelector("#searchContrato")
+    let gerencia:any=document.querySelector("#searchGerencia")
+    let dataFilter="n_contrato="+contrato.value+"&n_gerencia="+gerencia.value
+
+    this.contratosGerenciaService.getContratosGerencia(1,"",dataFilter).subscribe((data:any)=>{
+      this.pagContratosGerencia.hasNextPage=data.contratos_gerencia.hasNextPage
+      this.pagContratosGerencia.hasPrevPage=data.contratos_gerencia.hasPrevPage
+      this.pagContratosGerencia.totalPages=new Array(data.contratos_gerencia.totalPages)
+      this.pagContratosGerencia.page=data.contratos_gerencia.page
+      this.listaContratosGerencia=data.contratos_gerencia.docs
+    })
+  }
+
+  filterGerencia(){
+    let gerencia:any=document.querySelector("#searchGerenciaG")
+    let dataFilter="n_gerencia="+gerencia.value
+    this.gerenciasService.getGerenciasFilter(1,1,dataFilter).subscribe((data:any)=>{
+      this.pagGerencia.hasNextPage=data.gerencias.hasNextPage
+      this.pagGerencia.hasPrevPage=data.gerencias.hasPrevPage
+      this.pagGerencia.totalPages=new Array(data.gerencias.totalPages)
+      this.pagGerencia.page=data.gerencias.page
+      this.listaGerencias=data.gerencias.docs
+      this.paginadorGerencia.pagParams=this.pagGerencia
+    })
+  }
+
+  filterContrato(){
+    let contrato:any=document.querySelector("#searchContratoG")
+    let dataFilter="n_contrato="+contrato.value
+    this.contratosService.getContratos(1,dataFilter).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+      this.listaContrato=data.contratos.docs
+    })
+  }
+
   refreshLista(info:any,tipo:string){
     if(tipo=="ContratosGerencia"){
       this.refreshListaContratosGerencia(info)

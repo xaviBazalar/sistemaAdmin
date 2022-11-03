@@ -87,6 +87,32 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     })*/
   }
 
+  filterDSTareasContratos(){
+    let contrato:any=document.querySelector("#searchContrato")
+    let tarea:any=document.querySelector("#searchTarea")
+    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value
+    this.tareaDocumentosSalidaService.getTareaDocumentosSalidaFilter("","",dataFilter).subscribe((data:any)=>{
+      this.pagTareDocumentosSalida.hasNextPage=data.tarea_documentos_salida.hasNextPage
+      this.pagTareDocumentosSalida.hasPrevPage=data.tarea_documentos_salida.hasPrevPage
+      this.pagTareDocumentosSalida.totalPages=new Array(data.tarea_documentos_salida.totalPages)
+      this.pagTareDocumentosSalida.page=data.tarea_documentos_salida.page
+      this.listaTareaDocumentosSalida=data.tarea_documentos_salida.docs
+      this.paginator.pagParams=this.pagTareDocumentosSalida
+    })
+  }
+
+  filterDE(){
+    let documento_salida:any=document.querySelector("#searchDocumentoSalida")
+    let dataFilter="n_documento_salida="+documento_salida.value
+    this.documentosSalidaService.getDocumentosSalidaFilter(1,1,dataFilter).subscribe((data:any)=>{
+      this.pagDocumentosSalida.hasNextPage=data.documentos_salida.hasNextPage
+      this.pagDocumentosSalida.hasPrevPage=data.documentos_salida.hasPrevPage
+      this.pagDocumentosSalida.totalPages=new Array(data.documentos_salida.totalPages)
+      this.pagDocumentosSalida.page=data.documentos_salida.page
+      this.listaDocumentosSalida= data.documentos_salida.docs
+      this.paginatorDS.pagParams=this.pagDocumentosSalida
+    })
+  }
 
   refreshLista(info:any,tipo:string){
     if(tipo=="TareaDSalida"){

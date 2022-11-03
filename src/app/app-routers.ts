@@ -14,6 +14,7 @@ import { DocumentosSalidaTareaContratoComponent } from './components/documentos-
 import { DocumentosGestionTareaContratoComponent } from './components/documentos-gestion-tarea-contrato/documentos-gestion-tarea-contrato.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ContratosGerenciaComponent } from './components/contratos-gerencia/contratos-gerencia.component';
+import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-de-trabajo/dashboard-carga-de-trabajo.component';
 
 const APP_ROUTES:Routes = [
 
@@ -32,6 +33,7 @@ const APP_ROUTES:Routes = [
   {path:'tableroEstadoSolicitudes',component: TableroComponent},
   {path:'solicitud/:id',component: VerSolicitudComponent},
   {path:'solicitudB/:id',component: VerSolicitudGstComponent},
+  {path:'dashboard/carga-de-trabajo',component: DashboardCargaDeTrabajoComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}
   
   // {path:'about',componet:HomeComponent},

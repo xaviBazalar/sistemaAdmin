@@ -26,6 +26,21 @@
 
                 <thead class="bg-#F53621">
                     <tr>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchContrato" (keyup)="filterDGTareasContratos()" />
+                        </th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchTarea"  (keyup)="filterDGTareasContratos()"/>
+                        </th>
+                        <th scope="col">
+                            <input type="text" class="form-input" id="searchGestion"  (keyup)="filterDGTareasContratos()"/>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col-3"></th>
+                    </tr>
+                    <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Contrato</th>
                         <th scope="col">Tarea</th>

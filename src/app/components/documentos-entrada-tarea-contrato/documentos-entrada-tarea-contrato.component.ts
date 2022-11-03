@@ -82,6 +82,38 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     this.paginator.pagParams=this.pagTareDocumentosEntrada
   }
 
+  filterDETareasContratos(){
+    let contrato:any=document.querySelector("#searchContrato")
+    let tarea:any=document.querySelector("#searchTarea")
+    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value
+    
+
+    this.tareaDocumentosEntradaService.getTareaDocumentosEntradaFilter("","",dataFilter).subscribe((data:any)=>{
+      this.pagTareDocumentosEntrada.hasNextPage=data.tarea_documentos_entrada.hasNextPage
+      this.pagTareDocumentosEntrada.hasPrevPage=data.tarea_documentos_entrada.hasPrevPage
+      this.pagTareDocumentosEntrada.totalPages=new Array(data.tarea_documentos_entrada.totalPages)
+      this.pagTareDocumentosEntrada.page=data.tarea_documentos_entrada.page
+      this.listaTareaDocumentosEntrada=data.tarea_documentos_entrada.docs
+    })
+    /*this.tareasContratoService.getTareasContratoFilter(dataFilter).subscribe((data:any)=>{
+      this.listaTareasContrato=data.contratos.docs
+    })*/
+  }
+
+  filterDE(){
+    let documento_entrada:any=document.querySelector("#searchDocumentoEntrada")
+    let dataFilter="n_documento_entrada="+documento_entrada.value
+    
+
+    this.documentosEntradaService.getDocumentosEntradaFilter(1,1,dataFilter).subscribe((data:any)=>{
+      this.pagDocumentosEntrada.hasNextPage=data.documentos_entrada.hasNextPage
+      this.pagDocumentosEntrada.hasPrevPage=data.documentos_entrada.hasPrevPage
+      this.pagDocumentosEntrada.totalPages=new Array(data.documentos_entrada.totalPages)
+      this.pagDocumentosEntrada.page=data.documentos_entrada.page
+      this.listaDocumentosEntrada= data.documentos_entrada.docs
+    })
+  }
+
   refreshLista(info:any,tipo:string){
     if(tipo=="TareaDEntrada"){
       this.refreshTareaDocumentosEntrada(info)

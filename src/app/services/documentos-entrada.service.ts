@@ -14,6 +14,10 @@ export class DocumentosEntradaService {
     return this.http.get(`${this.url}/documentosEntrada?page=${page}&options=${options}`) 
   }
 
+  getDocumentosEntradaFilter(page:string|number,options:string|number,dataFilter:string){
+    return this.http.get(`${this.url}/documentosEntrada?page=${page}&options=${options}&${dataFilter}`) 
+  }
+
   addDocumentoEntrada(data:any){
     return this.http.post(`${this.url}/documentosEntrada`,data)
   }
