@@ -38,15 +38,20 @@ export class DashboardCargaDeTrabajoComponent implements OnInit {
         if(this.listaCargaDeTrabajo[indice]===undefined){
           this.listaCargaDeTrabajo[indice]={"carga_de_trabajo":[]};
         }
+
         
         this.listaCargaDeTrabajo[indice].carga_de_trabajo.push({
           "nombre":info._id.bko,
           "estado_solicitud":info._id.estado_solicitud,
           "total":info.total
         })
+
+        this.listaCargaDeTrabajo[indice].vencidos=0
+        this.listaCargaDeTrabajo[indice].nombre=info._id.bko
       }
 
       for(let info of data.vencidos){
+
         let indice=result.findIndex(function(value) {
           return value==info._id.id
         });
