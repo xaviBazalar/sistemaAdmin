@@ -22,7 +22,7 @@
                 <div class="col-3">
                     <select id="tarea" class="form-select" aria-label="Default select example">
                         <option value="">..Seleccionar Tarea</option>
-                        <option value="{{item._id}}" *ngFor="let item of listatareas">{{item.nombre_tarea}}</option>
+                        <option value="{{item._id}}" *ngFor="let item of listatareas.docs">{{item.nombre_tarea}}</option>
                     </select>
                 </div>
                 <div class="col-3">

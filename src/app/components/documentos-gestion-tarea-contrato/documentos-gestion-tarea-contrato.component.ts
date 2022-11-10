@@ -136,15 +136,17 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
   editDocumentoGestionTC(info:any){
     let data=JSON.parse(info.target.getAttribute("data"))
     this.showUpdateDS=true
-
+    console.log(data)
     let tarea:any=document.querySelector("#tareaC")
     let nombre_documento:any=document.querySelector("#gestionC")
-    let contrato:any=document.querySelector("#contratoC")
+    let contrato:any=document.querySelector("#NcontratoC")
+    let contratoID:any=document.querySelector("#contratoC")
     let estado:any=document.querySelector("#estadoDS")
     let id:any=document.querySelector("#id_ds")
     tarea.value=data.tarea._id
     nombre_documento.value=data.nombre_documento
-    contrato.value=data.contrato._id
+    contrato.value=data.contrato.contrato+"-"+data.contrato.contradoid//data.contrato._id
+    contratoID.value=data.contrato._id
     estado.value=(data.estado)?"1":"0"
     id.value=data._id
     this.openModalDocumentoGestionCT()
@@ -188,11 +190,13 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     let tarea:any=document.querySelector("#tareaC")
     let nombre_documento:any=document.querySelector("#gestionC")
     let contrato:any=document.querySelector("#contratoC")
+    let contratoID:any=document.querySelector("#NcontratoC")
     let estado:any=document.querySelector("#estadoDS")
     let id:any=document.querySelector("#id_ds")
     tarea.value=""
     nombre_documento.value=""
     contrato.value=""
+    contratoID.value=""
     estado.value=1
     id.value=""
   }

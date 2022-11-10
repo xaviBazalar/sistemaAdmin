@@ -10,8 +10,8 @@ export class DashboardService {
   url:string=environment.baseUrl;
   constructor(private http:HttpClient) { }
 
-  getCargaDeTrabajoMasVencidos(){
-    return this.http.get(`${this.url}/dashboard?reporte=carga-de-trabajo`) 
+  getCargaDeTrabajoMasVencidos(dataExtra:string=""){
+    return this.http.get(`${this.url}/dashboard?reporte=carga-de-trabajo&${dataExtra}`) 
   }
   //http://localhost:8080/api/dashboard
 }

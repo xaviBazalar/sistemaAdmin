@@ -224,11 +224,13 @@ export class ContratosGerenciaComponent implements OnInit {
     this.showUpdateCG=true
 
     let gerencia:any=document.querySelector("#gerenciaC")
-    let contrato:any=document.querySelector("#contratoC")
+    let contrato:any=document.querySelector("#NcontratoC")
+    let contratoID:any=document.querySelector("#contratoC")
     let estado:any=document.querySelector("#estadoCG")
     let id:any=document.querySelector("#id_cg")
     gerencia.value=data.gerencia._id
-    contrato.value=data.contrato._id
+    contrato.value=data.contrato.contrato+"-"+data.contrato.contradoid//data.contrato._id
+    contratoID.value=data.contrato._id
     estado.value=(data.estado)?"1":"0"
     id.value=data._id
     this.openModalContratoGerencia()
@@ -379,11 +381,13 @@ export class ContratosGerenciaComponent implements OnInit {
   resetFormCG(){
     let gerencia:any=document.querySelector("#gerenciaC")
     let contrato:any=document.querySelector("#contratoC")
+    let contratoID:any=document.querySelector("#NcontratoC")
     let estado:any=document.querySelector("#estadoCG")
     let id:any=document.querySelector("#id_cg")
 
     gerencia.value=""
     contrato.value=""
+    contratoID.value=""
     estado.value=""
     id.value=""
     this.refreshListaContratos(1,"")

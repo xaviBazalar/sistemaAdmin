@@ -1,12 +1,13 @@
 .section-tareas{
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .box-tarea{
     border: 0.8px solid;
     border-radius: 10px;
     padding: 20px 40px;
+    margin-right: 20px;
 }
 
 .box-tarea span{

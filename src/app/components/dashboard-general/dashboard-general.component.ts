@@ -184,8 +184,15 @@ export class DashboardGeneralComponent implements OnInit {
     this.chartSolicitudesNuevas(desdeIni,hastaFin)
   }
 
+  filterDashboard(){
+    let desdeIni:any=document.querySelector("#fecIni")
+    let hastaFin:any=document.querySelector("#fecFin")
+    this.chartSolicitudesNuevas(desdeIni.value,hastaFin.value)
+  }
+
   chartSolicitudesNuevas(desde:string,hasta:string){
-    this.dashboardService.getCargaDeTrabajoMasVencidos().subscribe((data:any)=>{
+    let dataExtra="fec_desde="+desde+"&fec_hasta="+hasta
+    this.dashboardService.getCargaDeTrabajoMasVencidos(dataExtra).subscribe((data:any)=>{
       let dataShowIngresosTitle:any=[]
       let dataShowIngresosTotal:any=[]
       for(let info of data.solicitudes_nuevas_semana){

@@ -25,7 +25,9 @@ export class MisSolicitudesComponent implements OnInit {
   listaSolicitudesAsignadas:any;
 
   listaGerencias:any;
-  listatareas:any;
+  listatareas:any={
+    docs:[]
+  };
   listaEstadoSolicitud:any;
   listaEstadoResultado:any;
   listaPerfiles:any;
@@ -228,6 +230,7 @@ export class MisSolicitudesComponent implements OnInit {
 
     this.usuariosService.getUsuarios(1,0).subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
+      this.listaUsuariosGST=[]
       for (const usuario of data.usuarios) {
         if(usuario.perfil.sigla=="GST"){
           this.listaUsuariosGST.push(usuario)
@@ -243,7 +246,7 @@ export class MisSolicitudesComponent implements OnInit {
       this.listaGerencias=data.gerencias;
     })
 
-    this.tareasServicio.getTareas(1,"").subscribe((data:any)=>{
+    this.tareasServicio.getTareas(1,0).subscribe((data:any)=>{
       this.listatareas=data.tareas;
     })
 

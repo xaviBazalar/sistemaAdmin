@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
                 icon:"icon-list.png"
               },
               {
-                titulo:"Tablero Solicitudes",
+                titulo:"Estado de Solicitudes",
                 url:"/tableroEstadoSolicitudes",
                 submenu:[],
                 icon:"icon-dash.png"
@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit {
                 submenu:[],
                 icon:"icon-dash.png"
               },{
-                titulo:"Dashboard",
+                titulo:"Resumen de Tareas",
                 url:"/dashboard",
                 submenu:[],
                 icon:"icon-dash.png"

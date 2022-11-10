@@ -42,6 +42,13 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     page:0
   }
 
+  pagContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   @ViewChild("pagTDS",{static:false}) paginator:any;
   @ViewChild("pagDS",{static:false}) paginatorDS:any;
 
@@ -168,12 +175,14 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
     let tarea:any=document.querySelector("#tareaC")
     let documento_salida:any=document.querySelector("#documentoSalidaC")
-    let contrato:any=document.querySelector("#contratoC")
+    let contrato:any=document.querySelector("#NcontratoC")
+    let contratoID:any=document.querySelector("#contratoC")
     let estado:any=document.querySelector("#estadoDSTC")
     let id:any=document.querySelector("#id_documento_s_tc")
     tarea.value=data.tarea._id
     documento_salida.value=data.documento_salida._id
-    contrato.value=data.contrato._id
+    contrato.value=data.contrato.contrato+"-"+data.contrato.contradoid//data.contrato._id
+    contratoID.value=data.contrato._id
     estado.value=(data.estado)?"1":"0"
     id.value=data._id
     this.openModalDocumentoSalidaCT()
@@ -276,11 +285,13 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     let tarea:any=document.querySelector("#tareaC")
     let documento_salida:any=document.querySelector("#documentoSalidaC")
     let contrato:any=document.querySelector("#contratoC")
+    let contratoID:any=document.querySelector("#NcontratoC")
     let estado:any=document.querySelector("#estadoDETC")
     let id:any=document.querySelector("#id_documento_e_tc")
     tarea.value=""
     documento_salida.value=""
     contrato.value=""
+    contratoID.value=""
     estado.value=""
     id.value=""
   }
@@ -294,6 +305,35 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
     tipo_documento.value=""
     estado.value=""
     id.value=""
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContrato){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
+  }
+
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+      this.listaContrato=data.contratos.docs
+    })
   }
 
 }
