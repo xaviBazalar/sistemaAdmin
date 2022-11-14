@@ -4,7 +4,7 @@
 <div class="container mt-5">
 
     
-    <h2>TABLERO</h2>
+    <h2>{{ 'title.requests_status' | translate }}</h2>
     <form id="filterSearchTablero" action="">
 
 
@@ -12,24 +12,24 @@
 
             <div class="col-3">
                 <select id="gerencia" class="form-select" aria-label="Default select example">
-                    <option value="">..Seleccionar Gerencia</option>
+                    <option value="">{{ 'input.select.management' | translate }}</option>
                     <option value="{{item._id}}" *ngFor="let item of listaGerencias">{{item.nombre_gerencia}}</option>
                 </select>
             </div>
             <div class="col-3">
                 <select id="tarea" class="form-select" aria-label="Default select example">
-                    <option value="">..Seleccionar Tarea</option>
+                    <option value="">.{{ 'input.select.task' | translate }}</option>
                     <option value="{{item._id}}" *ngFor="let item of listatareas">{{item.nombre_tarea}}</option>
                 </select>
             </div>
             <div class="col-3">
                 <select id="perfil" class="form-select" aria-label="Default select example">
-                    <option value="">..Seleccionar Persona</option>
+                    <option value="">{{ 'input.select.gst' | translate }}</option>
                     <option value="{{item._id}}" *ngFor="let item of listaUsuariosGST">{{item.nombre}}</option>
                 </select>
             </div>
             <div class="col-3">
-                <button type="button" class="btn btn-success px-5" (click)="filterList()">Filtrar</button>
+                <button type="button" class="btn btn-success px-5" (click)="filterList()">{{ 'button.filter' | translate }}</button>
            </div>
                
         </div>
@@ -40,34 +40,41 @@
 
             <div class="col-3">
                 <select id="estado_solicitud" class="form-select" aria-label="Default select example">
-                    <option value="">..Seleccionar Estado Solicitud</option>
+                    <option value="">{{ 'input.select.request_status' | translate }}</option>
                     <option value="{{item._id}}" *ngFor="let item of listaEstadoSolicitud">{{item.nombre_estado}}</option>
                 </select>
             </div>
             <div class="col-3">
                 <select id="estado_resultado" class="form-select" aria-label="Default select example">
-                    <option value="">..Seleccionar Estado Resultado</option>
+                    <option value="">{{ 'input.select.request_result' | translate }}</option>
                     <option value="{{item._id}}" *ngFor="let item of listaEstadoResultado">{{item.nombre_resultado}}</option>
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-3">
+                <input placeholder="{{ 'input.select.contract' | translate }}" autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                <datalist id="listaContrato"  >
+                    <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                </datalist>
+                <input type="hidden" class="form-select" id="contratoC" />
+            </div>
+            <div class="col-3">
 
             </div>
 
             <div class="col-3 mt-3">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_request' | translate }}</label>
                 <input type="date" class="form-select" id="fecha_solicitud" />
             </div>
             <div class="col-3 mt-3">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_start' | translate }}</label>
                 <input type="date" class="form-select" id="fecha_inicio" />
             </div>
             <div class="col-3 mt-3">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega                                       </label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_delivery' | translate }}</label>
                 <input type="date" class="form-select" id="fecha_entrega" />
             </div>
             <div class="col-3 mt-3">
-                <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="filterListReset()">Limpiar</button>
+                <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="filterListReset()">{{ 'button.clean' | translate }}</button>
             </div>
         </div>
                
@@ -101,12 +108,12 @@
                     </div>
                     <div class="card-body" >
                         <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">{{'title.card.without_observations' | translate}}</p>
                         <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
                         <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
                     </div>
                     <div class="card-tablero card-body card-resultado">
-                        <p>RESULTADO</p>
+                        <p>{{'title.card.result' | translate}}</p>
                         <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
                     </div>
                 </div>
@@ -127,12 +134,12 @@
                     </div>
                     <div class="card-body" >
                         <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                        <p class="card-text text-muted" *ngIf="solicitud.observacion==''">{{'title.card.without_observations' | translate}}</p>
                         <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
                         <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
                     </div>
                     <div class="card-tablero card-body card-resultado">
-                        <p>RESULTADO</p>
+                        <p>{{'title.card.result' | translate}}</p>
                         <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
                     </div>
                 </div>
@@ -153,12 +160,12 @@
                 </div>
                 <div class="card-body" >
                     <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">{{'title.card.without_observations' | translate}}</p>
                     <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
                     <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
                 </div>
                 <div class="card-tablero card-body card-resultado">
-                    <p>RESULTADO</p>
+                    <p>{{'title.card.result' | translate}}</p>
                     <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
                 </div>
             </div>
@@ -179,12 +186,12 @@
                 </div>
                 <div class="card-body" >
                     <p class="card-text text-muted ">{{solicitud.fecha_inicio}} @ {{solicitud.fecha_entrega}}</p>
-                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">Sin Observaciones</p>
+                    <p class="card-text text-muted" *ngIf="solicitud.observacion==''">{{'title.card.without_observations' | translate}}</p>
                     <p class="card-text text-muted" *ngIf="solicitud.observacion!=''">{{solicitud.observacion}}</p>
                     <p class="card-text text-muted">{{solicitud.gst.nombre}}</p>
                 </div>
                 <div class="card-tablero card-body card-resultado">
-                    <p>RESULTADO</p>
+                    <p>{{'title.card.result' | translate}}</p>
                     <button [ngStyle]="{'color':'#000','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}"  type="button" class="btn btn-warning mx-auto">{{solicitud.estado_resultado.nombre_resultado}}</button>
                 </div>
             </div>

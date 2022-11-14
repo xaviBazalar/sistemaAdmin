@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 
 //  Rutas//
@@ -29,7 +29,12 @@ import { ContratosGerenciaComponent } from './components/contratos-gerencia/cont
 import { PaginadorComponent } from './components/paginador/paginador.component';
 import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-de-trabajo/dashboard-carga-de-trabajo.component';
 import { DashboardGeneralComponent } from './components/dashboard-general/dashboard-general.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http:HttpClient){
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [
@@ -59,7 +64,16 @@ import { DashboardGeneralComponent } from './components/dashboard-general/dashbo
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    APP_ROUTING
+    APP_ROUTING,
+    TranslateModule.forRoot(
+      {
+        loader:{
+          provide:TranslateLoader,
+          useFactory:HttpLoaderFactory,
+          deps:[HttpClient]
+        }
+      }
+    )
     // AppRoutingModule
   ],
   providers: [],

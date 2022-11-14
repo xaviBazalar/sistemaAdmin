@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row my-5 justify-content-md-end">
         <div class="col-10">
-            <h2>TAREAS CONTRATO</h2>
+            <h2>{{'title.tasks_contract' | translate}}</h2>
         </div>
 
         <div class="col-2">
@@ -13,17 +13,17 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">
-                Lista
+                {{'title.tab.list' | translate}}
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                Tareas
+                {{'title.tab.tasks' | translate}}
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                Contratos
+                {{'title.tab.contracts' | translate}}
             </button>
         </li>
       </ul>
@@ -48,11 +48,11 @@
                     </tr>
                     <tr>
                         <th scope="col">N°</th>
-                        <th scope="col">Contrato</th>
-                        <th scope="col">Tarea</th>
-                        <th scope="col">GST</th>
-                        <th scope="col">BKO</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">{{'table.task_contract.contract' | translate}}</th>
+                        <th scope="col">{{'table.task_contract.task' | translate}}</th>
+                        <th scope="col">{{'table.task_contract.gst' | translate}}</th>
+                        <th scope="col">{{'table.task_contract.bko' | translate}}</th>
+                        <th scope="col">{{'table.task_contract.status' | translate}}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -66,7 +66,7 @@
                         <td>{{tareaContrato.bko.nombre}}</td>
                         <td>{{tareaContrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
-                            <button id="{{tareaContrato._id}}" type="button" class="btn btn-primary btn-sm" attr.data='{{tareaContrato| json}}' (click)='editTareaContrato($event)'>Editar</button>
+                            <button id="{{tareaContrato._id}}" type="button" class="btn btn-primary btn-sm" attr.data='{{tareaContrato| json}}' (click)='editTareaContrato($event)'>{{'button.edit' | translate }}</button>
                         </td>
         
                     </tr>
@@ -90,7 +90,7 @@
                 </ul>
             </nav>
             <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTareaContrato()">Nueva</button>
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTareaContrato()">{{'button.new' | translate }}</button>
             </div>
         </div>
         <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -106,12 +106,13 @@
                         <th scope="col"></th>
                         <th scope="col-3"></th>
                     </tr>
+
                     <tr>
                         <th scope="col">N°</th>
-                        <th scope="col">Tarea</th>
-                        <th scope="col">Frecuencia</th>
-                        <th scope="col">SLA</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">{{'table.task.name' | translate}}</th>
+                        <th scope="col">{{'table.task.frequency' | translate}}</th>
+                        <th scope="col">{{'table.task.sla' | translate}}</th>
+                        <th scope="col">{{'table.task.status' | translate}}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -124,7 +125,7 @@
                         <td>{{tarea.SLA}}</td>
                         <td>{{tarea.estado?'Activo':'Inactivo'}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tarea| json}}' (click)='editTarea($event)'>Editar</button>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tarea| json}}' (click)='editTarea($event)'>{{'button.edit' | translate }}</button>
                         </td>
                     </tr>
                 </tbody>
@@ -147,7 +148,7 @@
                 </ul>
             </nav>
             <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTarea()">Nueva</button>
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalTarea()">{{'button.new' | translate }}</button>
             </div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -163,12 +164,13 @@
                         <th scope="col"></th>
                         <th scope="col-3"></th>
                     </tr>
+
                     <tr>
                         <th scope="col">N°</th>
-                        <th scope="col">Contrato</th>
-                        <th scope="col">Nro Contrato</th>
-                        <th scope="col">ADC</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">{{'table.contract.name'| translate}}</th>
+                        <th scope="col">{{'table.contract.number_contract'| translate }}</th>
+                        <th scope="col">{{'table.contract.adc'| translate }}</th>
+                        <th scope="col">{{'table.contract.status'| translate }}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -181,7 +183,7 @@
                         <td>{{contrato.adc.nombre}}</td>
                         <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>Editar</button>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>{{'button.edit' | translate }}</button>
                         </td>
         
                     </tr>
@@ -205,7 +207,7 @@
                 </ul>
             </nav>
             <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalContrato()">Nueva</button>
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalContrato()">{{'button.new' | translate }}</button>
             </div>
         </div>
       </div>
@@ -224,7 +226,9 @@
             <div class="row">
                 
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">
+                        {{'label.contract' | translate }}
+                    </label>
                     
                     <input autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
                     <datalist id="listaContrato"  >
@@ -233,7 +237,9 @@
                     <input type="hidden" class="form-select" id="contratoC" />
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">
+                        {{'label.task' | translate }}
+                    </label>
                     <input autocomplete="off" (change)="getTarea($event)" class="form-select" id="NtareaC" list="listaTareas">
                     <datalist id="listaTareas"  >
                         <option *ngFor="let tarea of listaTareasActivas" >{{tarea.nombre_tarea}}</option>
@@ -241,27 +247,27 @@
                     <input type="hidden" class="form-select" id="tareaC" />
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GST</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.gst' | translate }}</label>
                     <select class="form-select" id="usuarioGST" >
-                        <option value="">..seleccionar usuario</option>
+                        <option value="">{{'input.select.user_default' | translate }}</option>
                         <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST">
                             {{usuario.nombre}}
                         </option>
                     </select>
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">BKO</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.bko' | translate }}</label>
                     <select class="form-select" id="usuarioBKO" >
-                        <option value="">..seleccionar usuario</option>
+                        <option value="">{{'input.select.user_default' | translate }}</option>
                         <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">
                             {{usuario.nombre}}
                         </option>
                     </select>
                 </div>
                 <div [ngStyle]="{'display':showUpdate ? 'flex' : 'none' }" class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.status' | translate }}</label>
                     <select class="form-select" id="estadoTC" >
-                        <option value="">..seleccionar estado</option>
+                        <option value="">{{'input.select.status' | translate}}</option>
                         <option value="1">Activo</option>
                         <option value="0">Inactivo</option>
                     </select>
@@ -270,9 +276,9 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="showUpdate" type="button" class="btn btn-primary" (click)="updateTareaContrato()">Actualizar</button>
-          <button *ngIf="!showUpdate" type="button" class="btn btn-primary" (click)="addTareaContrato()">Registrar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTareaContrato()">Cerrar</button>
+          <button *ngIf="showUpdate" type="button" class="btn btn-primary" (click)="updateTareaContrato()">{{'button.update' | translate}}</button>
+          <button *ngIf="!showUpdate" type="button" class="btn btn-primary" (click)="addTareaContrato()">{{'button.register' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTareaContrato()">{{'button.close' | translate}}</button>
         </div>
       </div>
     </div>
@@ -282,8 +288,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 *ngIf="!showUpdateTarea" class="modal-title">Registro Tarea</h5>
-          <h5 *ngIf="showUpdateTarea" class="modal-title">Update Tarea</h5>
+          <h5 *ngIf="!showUpdateTarea" class="modal-title">{{'title.modal.register_task' | translate }}</h5>
+          <h5 *ngIf="showUpdateTarea" class="modal-title">{{'title.modal.update_task' | translate }}</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -291,13 +297,13 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre Tarea</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.modal.task_name' |translate }}</label>
                     <input class="form-control" id="nombre_tarea" placeholder="Escribir Nombre Tarea" />
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Frecuencia</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.modal.frequency' |translate }}</label>
                     <select class="form-select" id="frecuencia_tarea" >
-                        <option value="">..seleccionar frecuencia</option>
+                        <option value="">{{'input.select.frequency' | translate}}</option>
                         <option value="Mensual" >Mensual</option>
                         <option value="Anual" >Anual</option>
                     </select>
@@ -307,9 +313,9 @@
                     <input  class="form-control" id="sla_tarea" type="number" placeholder="SLA" step="1"  pattern="[0-9]*"/>
                 </div>
                 <div [ngStyle]="{'display':showUpdateTarea ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.status' | translate }}</label>
                     <select class="form-select" id="estadoT" >
-                        <option value="">..seleccionar estado</option>
+                        <option value="">{{'input.select.status' | translate}}</option>
                         <option value="1">Activo</option>
                         <option value="0">Inactivo</option>
                     </select>
@@ -318,9 +324,9 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="showUpdateTarea" type="button" class="btn btn-primary" (click)="updateTarea()">Actualizar</button>
-          <button *ngIf="!showUpdateTarea" ype="button" class="btn btn-primary" (click)="addTarea()">Registrar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTarea()">Cerrar</button>
+          <button *ngIf="showUpdateTarea" type="button" class="btn btn-primary" (click)="updateTarea()">{{'button.update' | translate}}</button>
+          <button *ngIf="!showUpdateTarea" ype="button" class="btn btn-primary" (click)="addTarea()">{{'button.register' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTarea()">{{'button.close' | translate}}</button>
         </div>
       </div>
     </div>
@@ -330,8 +336,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 *ngIf="!showUpdateContrato"class="modal-title">Registro Contrato</h5>
-          <h5 *ngIf="showUpdateContrato" class="modal-title">Update Contrato</h5>
+          <h5 *ngIf="!showUpdateContrato"class="modal-title">{{'title.modal.register_contract' | translate }}</h5>
+          <h5 *ngIf="showUpdateContrato" class="modal-title">{{'title.modal.update_contract' | translate }}</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -339,26 +345,26 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre Contrato</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.modal.contract_name' |translate }}</label>
                     <input class="form-control" id="nombre_contrato" placeholder="Escribir Nombre Contrato" />
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nro Contrato</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.modal.number_contract' |translate}}</label>
                     <input class="form-control" id="nro_contrato" placeholder="Escribir Nro Contrato" />
                 </div>
                 <div class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">ADC</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.modal.adc' |translate}}</label>
                     <select class="form-select" id="usuarioADC" >
-                        <option value="">..seleccionar usuario</option>
+                        <option value="">{{'input.select.user_default' | translate }}</option>
                         <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosADC">
                             {{usuario.nombre}}
                         </option>
                     </select>
                 </div>
                 <div [ngStyle]="{'display':showUpdateContrato ? 'flex' : 'none' }"  class="col-12 input-group mb-3" >
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{'label.status' | translate }}</label>
                     <select class="form-select" id="estadoC" >
-                        <option value="">..seleccionar estado</option>
+                        <option value="">{{'input.select.status' | translate}}</option>
                         <option value="1">Activo</option>
                         <option value="0">Inactivo</option>
                     </select>
@@ -368,9 +374,9 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="showUpdateContrato" type="button" class="btn btn-primary" (click)="updateContrato()">Actualizar</button>
-          <button *ngIf="!showUpdateContrato" type="button" class="btn btn-primary" (click)="addContrato()">Registrar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContrato()">Cerrar</button>
+          <button *ngIf="showUpdateContrato" type="button" class="btn btn-primary" (click)="updateContrato()">{{'button.update' | translate}}</button>
+          <button *ngIf="!showUpdateContrato" type="button" class="btn btn-primary" (click)="addContrato()">{{'button.register' | translate}}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContrato()">{{'button.close' | translate}}</button>
         </div>
       </div>
     </div>

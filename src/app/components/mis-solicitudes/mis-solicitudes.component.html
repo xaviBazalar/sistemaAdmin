@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row my-5 justify-content-md-end">
         <div class="col-10">
-            <h2>MIS SOLICITUDES</h2>
+            <h2>{{ 'title.requests' | translate }}</h2>
         </div>
 
         <div class="col-2">
@@ -15,24 +15,24 @@
     
                 <div class="col-3">
                     <select id="gerencia" class="form-select" aria-label="Default select example">
-                        <option value="">..Seleccionar Gerencia</option>
+                        <option value="">{{ 'input.select.management' | translate }}</option>
                         <option value="{{item._id}}" *ngFor="let item of listaGerencias">{{item.nombre_gerencia}}</option>
                     </select>
                 </div>
                 <div class="col-3">
                     <select id="tarea" class="form-select" aria-label="Default select example">
-                        <option value="">..Seleccionar Tarea</option>
+                        <option value="">{{ 'input.select.task' | translate }}</option>
                         <option value="{{item._id}}" *ngFor="let item of listatareas.docs">{{item.nombre_tarea}}</option>
                     </select>
                 </div>
                 <div class="col-3">
                     <select id="perfil" class="form-select" aria-label="Default select example">
-                        <option value="">..Seleccionar Persona</option>
+                        <option value="">{{ 'input.select.gst' | translate }}</option>
                         <option value="{{item._id}}" *ngFor="let item of listaUsuariosGST">{{item.nombre}}</option>
                     </select>
                 </div>
                 <div class="col-3">
-                    <button type="button" class="btn btn-success px-5" (click)="filterList()">Filtrar</button>
+                    <button type="button" class="btn btn-success px-5" (click)="filterList()">{{ 'button.filter' | translate }}</button>
                     
                </div>
                
@@ -45,35 +45,42 @@
     
                 <div class="col-3">
                     <select id="estado_solicitud" class="form-select" aria-label="Default select example">
-                        <option value="">..Seleccionar Estado Solicitud</option>
+                        <option value="">{{ 'input.select.request_status' | translate }}</option>
                         <option value="{{item._id}}" *ngFor="let item of listaEstadoSolicitud">{{item.nombre_estado}}</option>
                     </select>
                 </div>
                 <div class="col-3">
                     <select id="estado_resultado" class="form-select" aria-label="Default select example">
-                        <option value="">..Seleccionar Estado Resultado</option>
+                        <option value="">{{ 'input.select.request_result' | translate }}</option>
                         <option value="{{item._id}}" *ngFor="let item of listaEstadoResultado">{{item.nombre_resultado}}</option>
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-3">
+                    <input placeholder="{{ 'input.select.contract' | translate }}" autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                    <datalist id="listaContrato"  >
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="contratoC" />
+                </div>
+                <div class="col-3">
 
                 </div>
     
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_request' | translate }}</label>
                     <input type="date" class="form-select" id="fecha_solicitud" />
                 </div>
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_start' | translate }}</label>
                     <input type="date" class="form-select" id="fecha_inicio" />
                 </div>
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Entrega</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_delivery' | translate }}</label>
                     <input type="date" class="form-select" id="fecha_entrega" />
                 </div>
                 <div class="col-3 mt-3">
                     
-                    <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="filterListReset(1)">Limpiar</button>
+                    <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="filterListReset(1)">{{ 'button.clean' | translate }}</button>
                 </div>
                 
             </div>
@@ -81,18 +88,18 @@
             <div class="row my-3">
     
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Desde</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_from' | translate }}</label>
                     <input type="date" class="form-select" id="fecha_desde" />
                 </div>
                 <div class="col-3 mt-3">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Hasta</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_to' | translate }}</label>
                     <input type="date" class="form-select" id="fecha_hasta" />
                 </div>
                 <div class="col-6 mt-3">       
-                    <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="generarReporteExcel()">Generar Reporte</button>
+                    <button style="margin-top: 40px;" type="button" class="btn btn-success px-5" (click)="generarReporteExcel()">{{ 'button.generate_report' | translate }}</button>
                 </div>
                 <div class="col-6 mt-3 link-reporte" *ngIf="linkReporteExcel!=''">
-                    <span  (click)="openReporteExcel(linkReporteExcel)">Haga click para descargar el reporte</span>
+                    <span  (click)="openReporteExcel(linkReporteExcel)">{{ 'message.download_report' | translate }}</span>
                     <img src="assets/icons/icon-excel.png" />
                 </div>
             </div>
@@ -100,18 +107,24 @@
   
         </form>
     </div>
-    <div *ngIf="PorVencer>0" class="alert alert-warning">Tienes {{PorVencer}} tareas por vencer</div>
-    <div *ngIf="Vencidos>0" class="alert alert-danger">Tienes {{Vencidos}} tareas vencidas</div>
+    <div *ngIf="PorVencer>0" class="alert alert-warning">{{ 'message.task_due_to_expire' | translate: { value: PorVencer } }}</div>
+    <div *ngIf="Vencidos>0" class="alert alert-danger">{{ 'message.task_expired' | translate: { value: Vencidos } }}</div>
     
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">Asignadas</button>
+            <button class="nav-link active" id="asignadas-tab" data-bs-toggle="tab" data-bs-target="#asignadas" type="button" role="tab" aria-controls="asignadas" aria-selected="true">
+                {{ 'title.tab.assigned' | translate }}
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Ingresadas</button>
+            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                {{ 'title.tab.entered' | translate }}
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Guardadas</button>
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                {{ 'title.tab.saved' | translate }}
+            </button>
         </li>
       </ul>
       
@@ -119,20 +132,19 @@
         <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
             <table class="table table-light table-striped border border-1">
 
-
                 <thead class="bg-#F53621">
                     <tr>
-                        <th scope="col">Sol.N°</th>
-                        <th scope="col">Solicitante</th>
-                        <th scope="col">Situacion</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Tarea</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">N°</th>
+                        <th scope="col">{{ 'table.request.applicant' | translate }}</th>
+                        <th scope="col">{{ 'table.request.situation' | translate }}</th>
+                        <th scope="col">{{ 'table.request.contract' | translate }}</th>
+                        <th scope="col">{{ 'table.request.task' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_request' | translate }}</th>
+                        <th scope="col">{{ 'table.request.status' | translate }}</th>
                         
-                        <th scope="col">Asignada</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Resultado</th>
+                        <th scope="col">{{ 'table.request.assigned' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_start' | translate }}</th>
+                        <th scope="col">{{ 'table.request.result' | translate }}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -153,7 +165,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_solicitud}}</p>
-                            <p>Solicitado</p>
+                            <!--<p>Solicitado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{
@@ -171,7 +183,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_inicio}}</p>
-                            <p>Iniciado</p>
+                            <!--<p>Iniciado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
@@ -179,7 +191,7 @@
                             </a>
                         </td>
                         <td>
-                            <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
+                            <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
                         </td>
         
                     </tr>
@@ -194,16 +206,17 @@
 
                 <thead class="bg-#F53621">
                     <tr>
-                        <th scope="col">Sol.N°</th>
-                        <th scope="col">Solicitante</th>
-                        <th scope="col">Situacion</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Tarea</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Asignada</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Resultado</th>
+                        <th scope="col">N°</th>
+                        <th scope="col">{{ 'table.request.applicant' | translate }}</th>
+                        <th scope="col">{{ 'table.request.situation' | translate }}</th>
+                        <th scope="col">{{ 'table.request.contract' | translate }}</th>
+                        <th scope="col">{{ 'table.request.task' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_request' | translate }}</th>
+                        <th scope="col">{{ 'table.request.status' | translate }}</th>
+                        
+                        <th scope="col">{{ 'table.request.assigned' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_start' | translate }}</th>
+                        <th scope="col">{{ 'table.request.result' | translate }}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -223,7 +236,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_solicitud}}</p>
-                            <p>Solicitado</p>
+                            <!--<p>Solicitado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{
@@ -239,7 +252,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_inicio}}</p>
-                            <p>Iniciado</p>
+                            <!--<p>Iniciado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
@@ -247,7 +260,7 @@
                             </a>
                         </td>
                         <td>
-                            <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Ver</button></a>
+                            <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
                         </td>
         
                     </tr>
@@ -255,7 +268,7 @@
             </table>
             <app-paginador #pagSolicitudes (pagParams)="pagSolicitudes" (refreshLista)="refreshLista($event,'Solicitudes')"></app-paginador>
             <div class="d-flex flex-row-reverse">
-                <a routerLink="/nuevaSolicitud"><button type="button" class="btn btn-primary btn-sml px-5 ">Nueva</button></a>
+                <a routerLink="/nuevaSolicitud"><button type="button" class="btn btn-primary btn-sml px-5 ">{{ 'button.new' | translate }}</button></a>
             </div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -264,17 +277,17 @@
 
                 <thead class="bg-#F53621">
                     <tr>
-                        <th scope="col">Sol.N°</th>
-                        <th scope="col">Solicitante</th>
-                        <th scope="col">Situacion</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Tarea</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Frecuencia</th>
-                        <th scope="col">Asignada</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Resultado</th>
+                        <th scope="col">N°</th>
+                        <th scope="col">{{ 'table.request.applicant' | translate }}</th>
+                        <th scope="col">{{ 'table.request.situation' | translate }}</th>
+                        <th scope="col">{{ 'table.request.contract' | translate }}</th>
+                        <th scope="col">{{ 'table.request.task' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_request' | translate }}</th>
+                        <th scope="col">{{ 'table.request.status' | translate }}</th>
+                        
+                        <th scope="col">{{ 'table.request.assigned' | translate }}</th>
+                        <th scope="col">{{ 'table.request.date_start' | translate }}</th>
+                        <th scope="col">{{ 'table.request.result' | translate }}</th>
                         <th scope="col-3"></th>
                     </tr>
         
@@ -294,7 +307,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_solicitud}}</p>
-                            <p>Solicitado</p>
+                            <!--<p>Solicitado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{
@@ -315,7 +328,7 @@
                         </td>
                         <td>
                             <p>{{solicitud.fecha_inicio}}</p>
-                            <p>Iniciado</p>
+                            <!--<p>Iniciado</p>-->
                         </td>
                         <td>
                             <a class="estado" [ngStyle]="{'backgorund-color':'#fff','border':'none','font-weight':'300','background-color':solicitud.estado_resultado.nombre_resultado === 'En Espera' ? '#bad2d9' : solicitud.estado_resultado.nombre_resultado === 'Pendiente'? '#e06666ff': '#ffd966ff'}" href="#">
@@ -323,7 +336,7 @@
                             </a>
                         </td>
                         <td>
-                            <a [routerLink]="['/solicitudPendiente/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >Finalizar Solicitud</button></a>
+                            <a [routerLink]="['/solicitudPendiente/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.finish_request' | translate }}</button></a>
                         </td>
         
                     </tr>

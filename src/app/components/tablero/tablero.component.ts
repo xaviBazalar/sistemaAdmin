@@ -7,6 +7,7 @@ import { EstadoResultadoService } from '../../services/estado-resultado.service'
 import { PerfilesService } from '../../services/perfiles.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Router } from '@angular/router';
+import { ContratosService } from '../../services/contratos.service';
 
 @Component({
   selector: 'app-tablero',
@@ -22,6 +23,7 @@ export class TableroComponent implements OnInit {
   listaPerfiles:any;
   listaUsuariosGST:any=[];
   listaUsuariosBKO:any=[];
+  listaContrato:any=[]
   listaUsuarios:any;
 
   listaPorHacer:any=[]
@@ -29,7 +31,15 @@ export class TableroComponent implements OnInit {
   listaEnTerminado:any=[]
   listaEnRevision:any=[]
 
+  pagContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   constructor(
+    public contratosService:ContratosService,
     public solicitudService:SolicitudesService,
     public gerenciaService:GerenciasService,
     public tareasServicio:TareasService,
@@ -107,8 +117,10 @@ export class TableroComponent implements OnInit {
     let fecha_solicitud:any=document.querySelector("#fecha_solicitud")
     let fecha_inicio:any=document.querySelector("#fecha_inicio")
     let fecha_entrega:any=document.querySelector("#fecha_entrega")
+    let contrato:any=document.querySelector("#contratoC")
 
     let dataFilter:any={
+      contrato:contrato.value,
       gerencia:gerencia.value,
       tarea:tarea.value,
       perfil:perfil.value,
@@ -116,8 +128,8 @@ export class TableroComponent implements OnInit {
       estado_resultado:estado_resultado.value,
       fecha_solicitud:fecha_solicitud.value,
       fecha_inicio:fecha_inicio.value,
-      fecha_entrega:fecha_entrega.value
-
+      fecha_entrega:fecha_entrega.value,
+      options:0
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
@@ -145,7 +157,7 @@ export class TableroComponent implements OnInit {
     form.reset();
 
     let dataFilter:any={
-
+      options:0
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
@@ -170,6 +182,36 @@ export class TableroComponent implements OnInit {
 
   goToSolicitud(solicitud:string){
     this.router.navigate(['solicitud/'+solicitud], { });
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContrato){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
+  }
+
+
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+      this.listaContrato=data.contratos.docs
+    })
   }
 
 }

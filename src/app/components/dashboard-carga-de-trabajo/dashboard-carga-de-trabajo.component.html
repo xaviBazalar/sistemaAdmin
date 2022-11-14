@@ -1,7 +1,18 @@
 <div class="container">
     <div class="row my-5 justify-content-md-end">
         <div class="col-12">
-            <h2>DASHBOARD - CARGA DE TRABAJO </h2>
+            <h2>{{ 'title.dashboard.workload' | translate }}</h2>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-3">
+            <input type="date" class="form-control" value="" id="fecIni" />
+        </div>
+        <div class="col-3">
+            <input type="date" class="form-control" value="" id="fecFin" />
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-success px-5" (click)="filterDashboard()">{{'button.filter' | translate}}</button>
         </div>
     </div>
     <div class="row">

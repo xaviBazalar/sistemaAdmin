@@ -9,6 +9,7 @@ import { PerfilesService } from '../../services/perfiles.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { ReportesService } from '../../services/reportes.service';
 import { environment } from '../../../environments/environment.prod';
+import { ContratosService } from '../../services/contratos.service';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -23,7 +24,7 @@ export class MisSolicitudesComponent implements OnInit {
   listaSolicitudes:any;
   listaSolicitudesPendiente:any;
   listaSolicitudesAsignadas:any;
-
+  listaContrato:any=[];
   listaGerencias:any;
   listatareas:any={
     docs:[]
@@ -64,6 +65,13 @@ export class MisSolicitudesComponent implements OnInit {
     page:0
   }
 
+  pagContratos:any={
+    hasNextPage:false,
+    hasPrevPage:false,
+    totalPages:[],
+    page:0
+  }
+
   PorVencer:string|number=0
   Vencidos:string|number=0
   linkReporteExcel:string=""
@@ -81,7 +89,8 @@ export class MisSolicitudesComponent implements OnInit {
     public estadoResultadoService:EstadoResultadoService,
     public perfilesService:PerfilesService,
     public usuariosService:UsuariosService,
-    public reporteService:ReportesService
+    public reporteService:ReportesService,
+    public contratosService:ContratosService
   ) { 
     let hoy:any = new Date();
    
@@ -300,8 +309,10 @@ export class MisSolicitudesComponent implements OnInit {
     let fecha_solicitud:any=document.querySelector("#fecha_solicitud")
     let fecha_inicio:any=document.querySelector("#fecha_inicio")
     let fecha_entrega:any=document.querySelector("#fecha_entrega")
+    let contrato:any=document.querySelector("#contratoC")
 
     let dataFilter:any={
+      contrato:contrato.value,
       gerencia:gerencia.value,
       tarea:tarea.value,
       perfil:perfil.value,
@@ -473,6 +484,35 @@ export class MisSolicitudesComponent implements OnInit {
       this.pagSolicitudesA.page=data.solicitudes.page
       this.listaSolicitudesAsignadas=data.solicitudes.docs;
       this.paginadorSolicitudesA.pagParams=this.pagSolicitudesA
+    })
+  }
+
+  getTareasContrato({ target }:any) {
+    let contratoI:any=document.querySelector("#contratoC")
+    let contratoTxt=target.value;
+    let idContrato:string=""
+    for(let contrato of this.listaContrato){
+      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+        idContrato=contrato._id
+      }
+    } 
+
+    contratoI.value=idContrato
+  }
+
+  filterContratosFromTC(){
+    let contrato:any=document.querySelector("#NcontratoC")
+    let dataFilter=`n_contrato=${contrato.value}`
+    this.refreshListaContratos(1,dataFilter)
+  }
+
+  refreshListaContratos(pagina:any=1,extraParams:any=""){
+    this.contratosService.getContratos(pagina,extraParams).subscribe((data:any)=>{
+      this.pagContratos.hasNextPage=data.contratos.hasNextPage
+      this.pagContratos.hasPrevPage=data.contratos.hasPrevPage
+      this.pagContratos.totalPages=new Array(data.contratos.totalPages)
+      this.pagContratos.page=data.contratos.page
+      this.listaContrato=data.contratos.docs
     })
   }
 

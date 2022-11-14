@@ -6,6 +6,7 @@ import { DocumentosSalidaService } from '../../services/documentos-salida.servic
 import { TareaDocumentosSalidaService } from '../../services/tarea-documentos-salida.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { PerfilesService } from '../../services/perfiles.service';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-usuarios',
@@ -57,9 +58,20 @@ export class UsuariosComponent implements OnInit {
       this.listaUsuarios=data.usuarios.docs
       this.paginadorUsuario.pagParams=this.pagUsuario
     })
-
+    
     this.perfilesService.getPerfiles().subscribe((data:any)=>{
-      this.listaPerfiles=data.perfiles
+      let tempPerfiles:any=[]
+      if(this.usuario.perfil._id!="63719e786138680cfa534eba") { //no-ss
+        for(let perfil of data.perfiles){
+          if(perfil._id!="63719e786138680cfa534eba"){
+            tempPerfiles.push(perfil)
+          }
+        }
+      }else{
+        tempPerfiles=data.perfiles
+      }
+      
+      this.listaPerfiles=tempPerfiles
     })
   }
 

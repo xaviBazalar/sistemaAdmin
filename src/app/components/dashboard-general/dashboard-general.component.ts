@@ -3,6 +3,7 @@ import { DashboardService } from '../../services/dashboard.service';
 
 import * as Highcharts from 'highcharts';
 import * as Exporting from 'highcharts/modules/exporting';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard-general',
@@ -14,110 +15,14 @@ export class DashboardGeneralComponent implements OnInit {
   listaCargaDeTrabajo:any=[]
   listaTareas:any=[]
 
-  constructor(public dashboardService:DashboardService) { }
+  constructor(public dashboardService:DashboardService,
+    public translate:TranslateService) { 
+    
+  }
 
-  ngOnInit(): void {
-    this.dashboardService.getCargaDeTrabajoMasVencidos().subscribe((data:any)=>{
-      
-      let dataShowTareas:any=[]
-      for(let info of data.carga_trabajo_total){
-        dataShowTareas.push({
-          name:info._id.estado_solicitud,
-          y:info.total
-        })
-      }
-
-      this.listaTareas=dataShowTareas
-
-
-      let dataShowPersonas:any=[]
-      for(let info of data.tareas_por_persona){
-        dataShowPersonas.push({
-          name:info._id.nombre,
-          y:info.total
-        })
-      }
-
-      // @ts-ignore
-      Highcharts.chart('container-chart', {
-        colors: ['#e99e7f', '#f7c973', '#dafafe', '#9dcacf' ],
-        chart: {
-          type: 'pie'
-        },
-        title: {
-          text: 'Carga de trabajo por tarea'
-        },
-        tooltip: {
-          valueSuffix: '%'
-        },
-        /*subtitle: {
-          text:
-          'Subtitle'
-        },*/
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '{point.name}: {point.y}'//{point.name}: {point.percentage:.1f}%
-            },
-            showInLegend: true
-          }
-        },
-        series: [
-          {
-            name: 'Percentage',
-            colorByPoint: true,
-            data: dataShowTareas
-          }
-        ]
-      });
-
-       // @ts-ignore
-       Highcharts.chart('container-chart-persona', {
-        colors: ['#334ca9', '#4d9ba7', '#a52654', '#6a29a2', '#f201ba'],
-        chart: {
-          type: 'pie'
-        },
-        title: {
-          text: 'Tarea por persona asignada'
-        },
-        tooltip: {
-          valueSuffix: '%'
-        },
-        /*subtitle: {
-          text:
-          'Subtitle'
-        },*/
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '{point.name}: {point.y}'
-            },
-            showInLegend: true
-          }
-        },
-        series: [
-          {
-            name: 'Percentage',
-            colorByPoint: true,
-            data: dataShowPersonas
-          }
-        ]
-      });
-
-    })
-
-    let hoy:any = new Date();
-   
-    let mes:any=((hoy.getMonth())+1);
-    mes=(mes.toString().length==1)?"0"+mes:mes;
-    let dia:any=hoy.getDate();
-    dia=(dia.toString().length==1)?"0"+dia:dia;
+  async ngOnInit(): Promise<void> {
+    
+    let lbl_news_tasks:string= await this.translate.get('label.dashboard.news_tasks').toPromise()
 
     let diaLunes:any = new Date();
     let diaMartes:any = new Date();
@@ -126,7 +31,7 @@ export class DashboardGeneralComponent implements OnInit {
     let diaViernes:any = new Date();
     let diaSabado:any = new Date();
     let diaDomingo:any = new Date();
-    let hoyWithFormat:string=hoy.getFullYear()+"-"+mes+"-"+dia
+    let hoyWithFormat:string=this.getDateNow();
 
     const numeroDia = new Date(hoyWithFormat).getDay();
     let desdeIni:string=""
@@ -181,7 +86,7 @@ export class DashboardGeneralComponent implements OnInit {
       }
 
     }
-    this.chartSolicitudesNuevas(desdeIni,hastaFin)
+    this.chartSolicitudesNuevas(desdeIni,hastaFin,lbl_news_tasks)
   }
 
   filterDashboard(){
@@ -190,8 +95,24 @@ export class DashboardGeneralComponent implements OnInit {
     this.chartSolicitudesNuevas(desdeIni.value,hastaFin.value)
   }
 
-  chartSolicitudesNuevas(desde:string,hasta:string){
-    let dataExtra="fec_desde="+desde+"&fec_hasta="+hasta
+  getDateNow(){
+    let hoy:any = new Date();
+   
+    let mes:any=((hoy.getMonth())+1);
+    mes=(mes.toString().length==1)?"0"+mes:mes;
+    let dia:any=hoy.getDate();
+    dia=(dia.toString().length==1)?"0"+dia:dia;
+
+    let hoyWithFormat:string=hoy.getFullYear()+"-"+mes+"-"+dia
+
+    return hoyWithFormat;
+  }
+
+ 
+  async chartSolicitudesNuevas(desde:string,hasta:string,lbl_news_tasks:string="-"){
+    let lbl_workload_for_taks:string= await this.translate.get('label.dashboard.workload_for_taks').toPromise()
+    let lbl_task_per_assigned_person:string= await this.translate.get('label.dashboard.task_per_assigned_person').toPromise()
+    let dataExtra="fec_desde="+desde+"&fec_hasta="+hasta+"&hoy="+this.getDateNow()
     this.dashboardService.getCargaDeTrabajoMasVencidos(dataExtra).subscribe((data:any)=>{
       let dataShowIngresosTitle:any=[]
       let dataShowIngresosTotal:any=[]
@@ -201,67 +122,157 @@ export class DashboardGeneralComponent implements OnInit {
       }
 
       // @ts-ignore
-    Highcharts.chart("container-nuevas-solicitudes", {
-      colors:['#83b860'],
-      chart: {
-        type: "column",
-        zoomType: "y"
-      },
-      title: {
-        text: "Nuevas Tareas"
-      },
-      subtitle: {
-        text: ''
-      },
-      xAxis: {
-        categories: dataShowIngresosTitle,
-        title: {
-          text: null
+      Highcharts.chart("container-nuevas-solicitudes", {
+        colors:['#83b860'],
+        chart: {
+          type: "column",
+          zoomType: "y"
         },
-        accessibility: {
-          description: "Countries"
-        }
-      },
-      yAxis: {
-        min: 0,
-        tickInterval: 2,
         title: {
-          text: `Ingresos del ${desde} al ${hasta}`
+          text: lbl_news_tasks
         },
-        labels: {
-          overflow: "justify",
-          format: "{value}"
-        }
-      },
-      plotOptions: {
-        column: {
-          dataLabels: {
-            enabled: true,
-            format: "{y}",
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: dataShowIngresosTitle,
+          title: {
+            text: null
+          },
+          accessibility: {
+            description: "Countries"
+          }
+        },
+        yAxis: {
+          min: 0,
+          tickInterval: 2,
+          title: {
+            text: `Ingresos del ${desde} al ${hasta}`
+          },
+          labels: {
+            overflow: "justify",
+            format: "{value}"
+          }
+        },
+        plotOptions: {
+          column: {
+            dataLabels: {
+              enabled: true,
+              format: "{y}",
+              
+            }
+          }
+          
+        },
+        tooltip: {
+          valueSuffix: " Ingreso(s)",
+          stickOnContact: true,
+          backgroundColor: "#fff"
+        },
+        legend: {
+          enabled: false
+        },
+        series: [
+          {
+            name: "",
+            data: dataShowIngresosTotal,
+            borderColor: "#83b860",
             
           }
-        }
-        
-      },
-      tooltip: {
-        valueSuffix: " Ingreso(s)",
-        stickOnContact: true,
-        backgroundColor: "#fff"
-      },
-      legend: {
-        enabled: false
-      },
-      series: [
-        {
-          name: "",
-          data: dataShowIngresosTotal,
-          borderColor: "#83b860",
-          
-        }
-      ]
-    });
+        ]
+      });
 
 
+      let dataShowTareas:any=[]
+      for(let info of data.carga_trabajo_total){
+        dataShowTareas.push({
+          name:info._id.estado_solicitud,
+          y:info.total
+        })
+      }
+
+      this.listaTareas=dataShowTareas
+
+
+      let dataShowPersonas:any=[]
+      for(let info of data.tareas_por_persona){
+        dataShowPersonas.push({
+          name:info._id.nombre,
+          y:info.total
+        })
+      }
+
+      // @ts-ignore
+      Highcharts.chart('container-chart', {
+        colors: ['#e99e7f', '#f7c973', '#dafafe', '#9dcacf' ],
+        chart: {
+          type: 'pie'
+        },
+        title: {
+          text: lbl_workload_for_taks
+        },
+        tooltip: {
+          valueSuffix: '%'
+        },
+        /*subtitle: {
+          text:
+          'Subtitle'
+        },*/
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '{point.name}: {point.y}'//{point.name}: {point.percentage:.1f}%
+            },
+            showInLegend: true
+          }
+        },
+        series: [
+          {
+            name: 'Percentage',
+            colorByPoint: true,
+            data: dataShowTareas
+          }
+        ]
+      });
+
+       // @ts-ignore
+       Highcharts.chart('container-chart-persona', {
+        colors: ['#334ca9', '#4d9ba7', '#a52654', '#6a29a2', '#f201ba'],
+        chart: {
+          type: 'pie'
+        },
+        title: {
+          text: lbl_task_per_assigned_person
+        },
+        tooltip: {
+          valueSuffix: '%'
+        },
+        /*subtitle: {
+          text:
+          'Subtitle'
+        },*/
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '{point.name}: {point.y}'
+            },
+            showInLegend: true
+          }
+        },
+        series: [
+          {
+            name: 'Percentage',
+            colorByPoint: true,
+            data: dataShowPersonas
+          }
+        ]
+      });
     })
 
     

@@ -1,27 +1,27 @@
 <div class="container">
     <form [formGroup]="regForm" (submit)="addSolicitud()" >
         <div class="py-3 mb-3">
-            <h2>NUEVA SOLICITUD DE REQUERIMIENTO</h2>
+            <h2>{{ 'title.new_request' | translate }}</h2>
         </div>
         <div class="row">
             <div class="col-3 input-group mb-3" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Gerencia</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.management' | translate }}</label>
                 <select (change)="getContratosGerencia($event)" class="form-select" id="iGerencia"  formControlName="iGerencia" >
                     <option value="{{gerencia._id}}" *ngFor="let gerencia of listaGerencias">
                         {{gerencia.nombre_gerencia}}
                     </option>
                 </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iGerencia.errors?.required">*El campo gerencia es requerido</span>
+                <span class="error" *ngIf="isSubmitted && errorControl.iGerencia.errors?.required">{{ 'message.error.management' | translate }}</span>
             </div>
         </div>
         <div class="row mb-5">
             <div class="col-3 input-group mb-3" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.contract' | translate }}</label>
                 <input autocomplete="off" (change)="getTareasContrato($event)" class="form-select" id="iContrato" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
                     <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}-{{contrato.contrato.adc.nombre}}</option>
                 </datalist>
-                <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">*El campo contrato es requerido</span>
+                <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">{{ 'message.error.contract' | translate }}</span>
             </div>
             <div class="input-group mb-3 form-check box-check" style="width: 25%;">
                 <!--<input type="checkbox" class="form-check-input"id="exampleCheck1">
@@ -34,18 +34,18 @@
         <hr>
         
         <div class="py-3 mb-3" *ngIf="mostrarTareas">
-            <h2>TAREA SOLICITADA</h2>
+            <h2>{{ 'title.task_requested' | translate }}</h2>
         </div>
         <div class="row mb-3" *ngIf="mostrarTareas" >
             <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Tarea</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.task' | translate }}</label>
                 <select class="form-select" id="iTarea"  formControlName="iTarea" (change)="getTareaDocumentosEntrada($event)" >
                     <option  value="{{tareas.tarea._id}}" *ngFor="let tareas of listaTareasContrato">
                         {{tareas.tarea.nombre_tarea}}
                     </option>
                 
                 </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iTarea.errors?.required">*El campo tarea es requerido</span>
+                <span class="error" *ngIf="isSubmitted && errorControl.iTarea.errors?.required">{{ 'message.error.task' | translate }}</span>
             </div>
             <div class="input-groupform-check box-check" style="width: 35%;">
                 <!--<input type="checkbox" class="form-check-input">
@@ -59,45 +59,45 @@
         </div>
         <div class="row mb-3" *ngIf="mostrarTareas">
             <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">GST</label>
+                <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.gst' | translate }}</label>
                 <select class="form-select" id="iGst"  formControlName="iGst" id="iGst" >
-                    <option value="" >..seleccionar GST</option>
+                    <option value="" >{{ 'input.select.gst' | translate }}</option>
                     <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosGST" >{{usuario.nombre}}</option>
 
                 </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iGst.errors?.required">*El campo GST es requerido</span>
+                <span class="error" *ngIf="isSubmitted && errorControl.iGst.errors?.required">{{ 'message.error.gst' | translate }}</span>
             </div>
             <div class="col-3 input-group" style="width: 35%;">
-                <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">Backoffice</label>
+                <label for="basic-url" class="form-label" style="margin-right:10px;margin-top: 8px;">{{ 'label.backoffice' | translate }}</label>
                 <select class="form-select" id="iBko"  formControlName="iBko" id="iBko"  >
-                    <option value="" >..seleccionar BKO</option>
+                    <option value="" >{{ 'input.select.bko' | translate }}</option>
                     <option value="{{usuario._id}}" *ngFor="let usuario of listaUsuariosBKO">{{usuario.nombre}}</option>
                 </select>
-                <span class="error" *ngIf="isSubmitted && errorControl.iBko.errors?.required">*El campo BKO es requerido</span>
+                <span class="error" *ngIf="isSubmitted && errorControl.iBko.errors?.required">{{ 'message.error.bko' | translate }}</span>
             </div>
         
         </div>
 
         <div class="row mb-5" *ngIf="mostrarTareas">
-            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">Mensaje/Obs:</label>
-            <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder="Agradecemos tu ayuda para la revisión y validación de montos"></textarea>
-            <span class="error" *ngIf="isSubmitted && errorControl.iMensaje.errors?.required">*El campo mensaje es requerido</span>
+            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;width: 138px;">{{ 'label.message_observation' | translate }}</label>
+            <textarea class="form-control" id="iMensaje"  formControlName="iMensaje"   cols="10" rows="3"  style="width: 86%;"  placeholder=""></textarea>
+            <span class="error" *ngIf="isSubmitted && errorControl.iMensaje.errors?.required">{{ 'message.error.message_observation' | translate }}</span>
         </div>
         <hr *ngIf="mostrarTareas">
         <div class="py-3 mb-3" *ngIf="mostrarTareas">
-            <h2>ESTADO SOLICITUD</h2>
+            <h2>{{ 'title.request_status' | translate }}</h2>
         </div>
         <div class="row" *ngIf="mostrarTareas">
             
                     
         
                 <div class="col-3 input-group mb-3" style="width: 35%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Solicitud</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_request' | translate }}</label>
                     <input [min]="minDay" class="form-control" type="date" id="iFechaSolicitud"  formControlName="iFechaSolicitud"  value="{{minDay}}">
-                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaSolicitud.errors?.required">*La fecha solicitud es requerida</span>
+                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaSolicitud.errors?.required">{{ 'message.error.date_request' | translate }}</span>
                 </div>
                 <div class="col-3 input-group mb-3" style="width: 60%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Estado Solicitud</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.request_status' | translate }}</label>
                     <select class="form-select" id="iEstadoSolicitud"  disabled>
                         <option value={{estado._id}} *ngFor="let estado of listaSolicitudes">
                         {{estado.nombre_estado}}
@@ -108,18 +108,18 @@
         </div>
         <div class="row" *ngIf="mostrarTareas">
                 <div class="col-3 input-group mb-3" style="width: 35%;">
-                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Fecha Inicio</label>
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.date_start' | translate }}</label>
                     <input [min]="minDay" class="form-control" type="date" id="iFechaInicio"  formControlName="iFechaInicio"  value="{{minDay}}">
-                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaInicio.errors?.required">*La fecha inicio es requerida</span>
+                    <span class="error" *ngIf="isSubmitted && errorControl.iFechaInicio.errors?.required">{{ 'message.error.date_start' | translate }}</span>
                 </div>
                 <div class="col-3 input-group mb-3" style="width: 60%;">
-                    <p>Tiempo estimado : {{diasSLA}}</p>
+                    <p>{{ 'label.estimated_time' | translate }} : {{diasSLA}}</p>
                 </div>
         </div>
     
         <hr *ngIf="mostrarTareas">
         <div class="py-3 mb-3" *ngIf="mostrarTareas">
-            <h2>INFORMACION REQUERIDA</h2>
+            <h2>{{ 'title.required_information' | translate }}</h2>
         </div>
         <form [formGroup]="regFormFile" (submit)="addFileTarea()"  *ngIf="mostrarTareas">
             <div class="row mb-5">
@@ -127,24 +127,24 @@
                     <div class="col-6" style="display: flex;flex-wrap: wrap;align-items: self-end;">
 
                         <div class="col-3 input-group mb-3" style="width: 70%;">
-                            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Ruta</label>
+                            <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.file' | translate }}</label>
                             <input type="text" class="form-control" id="customFileLang" lang="es" readonly>
                             <input type="file" formControlName="iFile" id="file" style="display:none;" accept=".doc,.docx,.xls,.xlsx,.pdf" (change)="changeUploadFile()"/>
                             <img src="assets/icons/icon-upload.png" class="icon-upload" (click)="openUploadFile()" />
-                            <span class="error" *ngIf="isSubmittedFile && errorControlFile.iFile.errors?.required">*Seleccion un archivo a cargar</span>
+                            <span class="error" *ngIf="isSubmittedFile && errorControlFile.iFile.errors?.required">{{ 'message.error.file' | translate }}</span>
                         </div>
                         <div class="col-3  input-group mb-3" style="width: 70%;" >
-                            <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">Obs</label>
-                            <textarea class="form-control " id="iObsFile" cols="10" rows="3"  placeholder="Observaciones"></textarea>
+                            <label for="basic-url" class="form-label" style="margin-right: 8px;margin-top: 8px;">{{ 'label.observation' | translate }}</label>
+                            <textarea class="form-control " id="iObsFile" cols="10" rows="3"  placeholder="{{ 'input.placeholder.observation' | translate }}"></textarea>
                             
                         </div>
                         <div class="col-3  input-group mb-3" style="width: 30%;" >
-                            <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">Subir</button>
+                            <button type="submit" class="btn btn-success" style="width: 100%;margin-left: 10px;">{{ 'button.upload' | translate }}</button>
                         </div>
                         
                     </div>
                     <div class="col-6" >
-                        <h5 class="py-1">Lista Documentos Requeridos</h5>
+                        <h5 class="py-1">{{ 'title.required_documents_list' | translate }}</h5>
                         <hr>
                         
                         <div class="form-check" *ngFor="let item of listaTareaDocumentos">
@@ -167,14 +167,14 @@
         
         <input type="hidden" value="62fad65648d35ca4acd14682" id="iEstadoResultado"  />
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-            <button type="button" class="btn btn-success" (click)="addSolicitudTemp()">Guardar Solicitud</button>
-            <button type="submit" class="btn btn-success" >Enviar Solicitud</button>
+            <button type="button" class="btn btn-success" (click)="addSolicitudTemp()">{{ 'button.save_request' | translate }}</button>
+            <button type="submit" class="btn btn-success" >{{ 'button.send_request' | translate }}</button>
         </div>
         <div class="alert alert-success" role="alert" *ngIf="msjSucess">
-            Solicitud Agregada
+            {{ 'message.request_success' | translate }}
         </div>
         <div class="alert alert-warning" role="alert" *ngIf="msjNoSucess">
-            Faltan los documentos requeridos. Para poder enviar la solicitud se necesitan los documentos.
+            {{ 'message.error.files_required' | translate }}
         </div>
     </form>
 </div>
@@ -182,13 +182,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Notificación Sistema</h5>
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
         </div>
         <div class="modal-body">
-          <p> Solicitud Agregada</p>
+          <p>{{ 'message.request_success' | translate }}</p>
         </div>
         <div class="modal-footer">
           <!--<button type="button" class="btn btn-primary">Save changes</button>
@@ -202,7 +202,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Notificación Sistema</h5>
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>-->
@@ -211,8 +211,8 @@
           <p> Estas seguro de guardar esta solicitud?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addDataSolicitudTemp()">Guardar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTemp()">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="addDataSolicitudTemp()">{{ 'button.save' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalTemp()">{{ 'button.close' | translate }}</button>
         </div>
       </div>
     </div>

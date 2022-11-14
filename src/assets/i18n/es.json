@@ -1,0 +1,172 @@
+{
+    "menu":{
+        "new_request":"Nueva Solicitud",
+        "my_requests":"Mis Solicitudes",
+        "request_board":"Tablero Solicitudes",
+        "request_status":"Estado de Solicitudes",
+        "workload":"Carga de Trabajo",
+        "task_summary":"Resumen de Tareas",
+        "system_administration":"Administración Sistema",
+        "administration":{
+            "task_contract":"Tareas Contrato",
+            "entry_documentation":"Documentación Entrada",
+            "output_documentation":"Documentación Salida",
+            "contract_management":"Gestion Contrato",
+            "users":"Usuarios",
+            "contract_manager":"Contratos Gerencia"
+        },
+        "exit":"Salir"
+    },
+    "title":{
+        "system_notification":"Notificación Sistema",
+        "requests":"MIS SOLICITUDES",
+        "new_request":"NUEVA SOLICITUD DE REQUERIMIENTO",
+        "tasks":"Tareas",
+        "task_requested":"TAREA SOLICITADA",
+        "tasks_contract":"TAREAS CONTRATO",
+        "request_status":"ESTADO SOLICITUD",
+        "requests_status":"ESTADOS DE SOLICITUDES",
+        "required_information":"INFORMACION REQUERIDA",
+        "required_documents_list":"Lista Documentos Requeridos",
+        "tab":{
+            "assigned":"Asignadas",
+            "entered":"Ingresadas",
+            "saved":"Guardadas",
+            "list":"Lista",
+            "tasks":"Tareas",
+            "contracts":"Contratos"
+        },
+        "card":{
+            "result":"Resultado",
+            "without_observations":"Sin Observaciones"
+        },
+        "dashboard":{
+            "workload":"CARGA DE TRABAJO",
+            "task_summary":"RESUMEN DE TAREAS"
+        },
+        "modal":{
+            "register_task_contract":"Registro Tarea Contrato",
+            "update_task_contract":"Actualizar Tarea Contrato",
+            "register_task":"Registro Tarea",
+            "update_task":"Actualizar Tarea",
+            "register_contract":"Registro Contrato",
+            "update_contract":"Actualizar Contrato"
+        }
+    },
+    "label":{
+        "status":"Estado",
+        "observation":"Obs",
+        "file":"Archivo",
+        "estimated_time":"Tiempo estimado",
+        "request_status":"Estado Solicitud",
+        "management":"Gerencia",
+        "contract":"Contrato",
+        "task":"Tarea",
+        "gst":"GST",
+        "bko":"BKO",
+        "backoffice":"Backoffice",
+        "message_observation":"Mensaje/Obs",
+        "date_request":"Fecha Solicitud",
+        "date_start":"Fecha Inicio",
+        "date_delivery":"Fecha Entrega",
+        "date_from":"Desde",
+        "date_to":"Hasta",
+        "dashboard":{
+            "workload_for_taks":"Carga de trabajo por tarea",
+            "task_per_assigned_person":"Tarea por persona asignada",
+            "news_tasks":"Nuevas Tareas"
+        },
+        "modal":{
+            "task":"Tarea",
+            "contract":"Contrato",
+            "task_name":"Nombre Tarea",
+            "contract_name":"Nombre Contrato",
+            "number_contract":"Nro Contrato",
+            "adc":"ADC",
+            "sla":"SLA"
+        }
+    },
+    "input":{
+        "select":{
+            "management":"..Seleccionar Gerencia",
+            "task":"..Seleccionar Tarea",
+            "gst":"..Seleccionar GST",
+            "bko":"..Seleccionar BKO",
+            "request_status":"..Seleccionar Estado Solicitud",
+            "request_result":"..Seleccionar Estado Resultado",
+            "contract":"..Seleccionar Contrato",
+            "user_default":"..Seleccionar Usuario",
+            "status":"..Seleccionar Estado",
+            "frequency":"..Seleccionar Frecuencia"
+        },
+        "placeholder":{
+            "observation":"Observaciones"
+        }
+    },
+    "button":{
+        "filter":"Filtrar",
+        "clean":"Limpiar",
+        "generate_report":"Generar Reporte",
+        "show":"Ver",
+        "new":"Nueva",
+        "finish_request":"Finalizar Solicitud",
+        "upload":"Subir",
+        "save_request":"Guardar Solicitud",
+        "send_request":"Enviar Solicitud",
+        "save":"Guardar",
+        "close":"Cerrar",
+        "edit":"Editar",
+        "update":"Actualizar",
+        "register":"Registrar"
+    },
+    "message":{
+        "download_report":"Haga click para descargar el reporte",
+        "task_due_to_expire":"Tienes {{value}} tareas por vencer",
+        "task_expired":"Tienes {{value}} tareas vencidas",
+        "request_success":"Solicitud Agregada",
+        "error":{
+            "files_required":"Faltan los documentos requeridos. Para poder enviar la solicitud se necesitan los documentos.",
+            "date_start":"*La fecha inicio es requerida",
+            "date_request":"*La fecha solicitud es requerida",
+            "message_observation":"*El campo mensaje es requerido",
+            "bko":"*El campo BKO es requerido",
+            "gst":"*El campo GST es requerido",
+            "task":"*El campo tarea es requerido",
+            "contract":"*El campo contrato es requerido",
+            "management":"*El campo gerencia es requerido",
+            "file":"*Seleccion un archivo a cargar"
+        }
+    },
+    "table":{
+        "request":{
+            "applicant":"Solicitante",
+            "situation":"Situación",
+            "contract":"Contrato",
+            "task":"Tarea",
+            "date_request":"Fecha Solicitud",
+            "status":"Estado",
+            "assigned":"Asignada",
+            "date_start":"Fecha Inicio",
+            "result":"Resultado"
+        },
+        "task_contract":{
+            "contract":"Contrato",
+            "task":"Tarea",
+            "gst":"GST",
+            "bko":"BKO",
+            "status":"Estado"
+        },
+        "task":{
+            "name":"Tarea",
+            "frequency":"Frecuencia",
+            "sla":"SLA",
+            "status":"Estado"
+        },
+        "contract":{
+            "name":"Contrato",
+            "number_contract":"Nro Contrato",
+            "adc":"ADC",
+            "status":"Estado"
+        }
+    }
+}
