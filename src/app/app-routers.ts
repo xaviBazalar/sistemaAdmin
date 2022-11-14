@@ -16,6 +16,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ContratosGerenciaComponent } from './components/contratos-gerencia/contratos-gerencia.component';
 import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-de-trabajo/dashboard-carga-de-trabajo.component';
 import { DashboardGeneralComponent } from './components/dashboard-general/dashboard-general.component';
+import { RecoveryUsuarioComponent } from './components/recovery-usuario/recovery-usuario.component';
 
 const APP_ROUTES:Routes = [
 
@@ -36,6 +37,7 @@ const APP_ROUTES:Routes = [
   {path:'solicitudB/:id',component: VerSolicitudGstComponent},
   {path:'dashboard/carga-de-trabajo',component: DashboardCargaDeTrabajoComponent},
   {path:'dashboard',component: DashboardGeneralComponent},
+  {path:'recoveryUsuario/:id',component:RecoveryUsuarioComponent},
   {path:'**',pathMatch:'full', redirectTo:'home'}
   
   // {path:'about',componet:HomeComponent},

@@ -8,7 +8,8 @@ export const environment = {
   baseUrlGet:"http://localhost:8080",
   baseUrlApiEmail:"https://mailingperu.intico.com.pe/mailing/v1/demo/EnviarMailing",
   apiKey:"62940aa827dd600bfe1d65511282c1b5c577451c2b9002bfe326e83627fc0673",
-  userApiEmail:"Mining"
+  userApiEmail:"Mining",
+  baseUrlApp:"http://localhost:4200/"
 };
 
 /*

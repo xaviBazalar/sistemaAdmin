@@ -5,17 +5,15 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
-
+export class RecoveryUsuarioService {
   url:string=environment.baseUrl;
-  urlApp:string=environment.baseUrlApp;
   constructor(private http:HttpClient) { }
 
-  validate(body:any){
-    return this.http.post(`${this.url}/login`,body)
+  getRecoveryUsuario(id:string|null=""){
+    return this.http.get(`${this.url}/recovery?hash_id=${id}`) 
   }
 
-  recoveryAccount(email:string){
-    return this.http.get(`${this.url}/login?emailS=${email}&url=${this.urlApp}`)
+  updateRecoveryUsuario(id:string|null,data:any){
+    return this.http.put(`${this.url}/recovery/${id}`,data)
   }
 }

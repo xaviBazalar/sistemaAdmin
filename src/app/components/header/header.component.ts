@@ -115,6 +115,7 @@ export class HeaderComponent implements OnInit {
 
   showMenuAdmin(){
     let dataUser:any=localStorage.getItem("usuario")
+    if(dataUser=="" || dataUser===undefined) return
           
           this.usuario=JSON.parse(dataUser)
           if(

@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   loginForm:any;
   errorLogin:boolean=false;
   recoveryPassword:boolean=false;
+
   constructor(
     private router:Router, 
     public loginService:LoginService,
@@ -57,6 +58,7 @@ export class HomeComponent implements OnInit {
       login={
         login:this.loginForm.value.login,
         password:this.loginForm.value.password,
+
       }
 
       const dataLogin:any= await this.loginService.validate(login).toPromise();

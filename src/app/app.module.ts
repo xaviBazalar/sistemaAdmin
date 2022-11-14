@@ -31,6 +31,7 @@ import { DashboardCargaDeTrabajoComponent } from './components/dashboard-carga-d
 import { DashboardGeneralComponent } from './components/dashboard-general/dashboard-general.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RecoveryUsuarioComponent } from './components/recovery-usuario/recovery-usuario.component';
 
 export function HttpLoaderFactory(http:HttpClient){
   return new TranslateHttpLoader(http)
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http:HttpClient){
     ContratosGerenciaComponent,
     PaginadorComponent,
     DashboardCargaDeTrabajoComponent,
-    DashboardGeneralComponent
+    DashboardGeneralComponent,
+    RecoveryUsuarioComponent
   ],
   imports: [
     BrowserModule,

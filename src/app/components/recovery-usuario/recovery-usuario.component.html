@@ -1,0 +1,38 @@
+<!-- LOGIN -->
+<div class="box-login">
+    <div class="col-6 m-auto" >
+        <H3 class="text-center p-3 text-secondary">RESTABLECER CONTRASEÑA</H3>
+
+        <div class="mb-3">
+            <input type="password" class="form-control" name="passA" id="passA" placeholder="Ingrese su nueva contraseña" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" name="passB" id="passB" placeholder="Ingrese otra vez su nueva contraseña" required>
+        </div>
+        <button *ngIf="!expiro" type="button" class="btn btn-primary form-control" name="btnEnviar" (click)="validateRecoveryUser()">ACTUALIZAR </button>
+    </div>
+    <div class="col-6 m-auto mt-2" >
+        <div class="alert alert-danger" role="alert" *ngIf="expiro">
+            El codigó ya expiro
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="validatePass">
+            Las conrtraseñas a cambiar no coinciden
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            Se reestablecio la contraseña correctamente. Inicia sesión con tu nueva contraseña!
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
