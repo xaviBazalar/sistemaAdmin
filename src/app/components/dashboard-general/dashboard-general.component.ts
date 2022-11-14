@@ -135,7 +135,6 @@ export class DashboardGeneralComponent implements OnInit {
         })
       }
 
-      console.log(this.listaTareasTerminadas)
 
       let dataShowIngresosTitle:any=[]
       let dataShowIngresosTotal:any=[]
