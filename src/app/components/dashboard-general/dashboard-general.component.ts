@@ -14,6 +14,8 @@ export class DashboardGeneralComponent implements OnInit {
 
   listaCargaDeTrabajo:any=[]
   listaTareas:any=[]
+  listaSolicitudesTerminadasTiempo:any=[]
+  listaTareasTerminadas:any=[]
 
   constructor(public dashboardService:DashboardService,
     public translate:TranslateService) { 
@@ -95,6 +97,8 @@ export class DashboardGeneralComponent implements OnInit {
     this.chartSolicitudesNuevas(desdeIni.value,hastaFin.value)
   }
 
+  
+
   getDateNow(){
     let hoy:any = new Date();
    
@@ -114,6 +118,25 @@ export class DashboardGeneralComponent implements OnInit {
     let lbl_task_per_assigned_person:string= await this.translate.get('label.dashboard.task_per_assigned_person').toPromise()
     let dataExtra="fec_desde="+desde+"&fec_hasta="+hasta+"&hoy="+this.getDateNow()
     this.dashboardService.getCargaDeTrabajoMasVencidos(dataExtra).subscribe((data:any)=>{
+      this.listaTareasTerminadas=[]
+      for(let solicitudT of data.solicitudes_terminadas_tiempo){
+        let fecA:any=new Date(solicitudT.fecha_inicio)
+        let fecB:any=new Date(solicitudT.fecha_termino)
+        let resta = fecB.getTime() - fecA.getTime()
+        let dias_termino_real:any=Math.round(resta/ (1000*60*60*24))
+        this.listaTareasTerminadas.push({
+          nro:solicitudT.idsecuencia,
+          nombre:solicitudT.tarea.nombre_tarea,
+          fecha_inicio:solicitudT.fecha_inicio,
+          fecha_termino:solicitudT.fecha_termino,
+          sla:solicitudT.tarea.SLA,
+          tiempo:dias_termino_real,
+          t_sla:dias_termino_real/parseInt(solicitudT.tarea.SLA)
+        })
+      }
+
+      console.log(this.listaTareasTerminadas)
+
       let dataShowIngresosTitle:any=[]
       let dataShowIngresosTotal:any=[]
       for(let info of data.solicitudes_nuevas_semana){
