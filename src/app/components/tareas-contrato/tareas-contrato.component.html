@@ -180,7 +180,7 @@
                         <td>#</td>
                         <td>{{contrato.contrato}}</td>
                         <td>{{contrato.contradoid}}</td>
-                        <td>{{contrato.adc.nombre}}</td>
+                        <td>{{(contrato.adc)?contrato.adc.nombre:""}}</td>
                         <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>{{'button.edit' | translate }}</button>

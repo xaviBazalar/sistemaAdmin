@@ -272,7 +272,7 @@ export class TareasContratoComponent implements OnInit {
     contrato.value=data.contrato
     contradoid.value=data.contradoid
     estado.value=(data.estado)?"1":"0"
-    adc.value=data.adc._id
+    adc.value=(data.adc)?data.adc._id:""
     id.value=data._id
     
     this.openModalContrato()

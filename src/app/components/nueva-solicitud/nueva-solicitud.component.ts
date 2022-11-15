@@ -428,7 +428,7 @@ export class NuevaSolicitudComponent implements OnInit {
         tarea:this.regForm.value.iTarea,
         gst:this.regForm.value.iGst,
         bko:this.regForm.value.iBko,
-        estado_solicitud:"62fad5ed48d35ca4acd1467d",
+        estado_solicitud:"62fad5db48d35ca4acd1467c",
         estado_resultado:"62fad65648d35ca4acd14682",
         observacion:this.regForm.value.iMensaje,
         fecha_solicitud:this.regForm.value.iFechaSolicitud,
