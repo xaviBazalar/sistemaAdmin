@@ -189,7 +189,7 @@ export class TableroComponent implements OnInit {
     let contratoTxt=target.value;
     let idContrato:string=""
     for(let contrato of this.listaContrato){
-      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+      if((contrato.contrato+"-"+contrato.contradoid+"-"+contrato.adc.nombre)==contratoTxt.trim()){
         idContrato=contrato._id
       }
     } 

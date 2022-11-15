@@ -58,7 +58,7 @@
                 <div class="col-3">
                     <input placeholder="{{ 'input.select.contract' | translate }}" autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
                     <datalist id="listaContrato"  >
-                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}-{{contrato.adc.nombre}}</option>
                     </datalist>
                     <input type="hidden" class="form-select" id="contratoC" />
                 </div>
