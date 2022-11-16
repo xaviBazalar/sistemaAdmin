@@ -437,7 +437,7 @@ export class MisSolicitudesComponent implements OnInit {
 
     let perfilUser=this.usuario.perfil.sigla
     let dataFilterAsignado:any;
-    if(perfilUser=="GST" || perfilUser=="GST-SUP" || perfilUser=="GST-ADM"){
+    if(perfilUser=="GST" ){//|| perfilUser=="GST-SUP" || perfilUser=="GST-ADM"
       dataFilterAsignado={
         ingresado:true,
         gst:this.usuario._id,
