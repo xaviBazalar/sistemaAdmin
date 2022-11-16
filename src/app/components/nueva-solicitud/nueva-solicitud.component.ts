@@ -174,10 +174,11 @@ export class NuevaSolicitudComponent implements OnInit {
     
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-
-      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre)==contratoTxt){
+      let nTemp=contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre
+      if((nTemp.trim())==contratoTxt.trim()){
         idContrato=contrato.contrato._id
         this.contratoTemp=contrato.contrato._id
+        //console.log("match")
       }
     } 
 

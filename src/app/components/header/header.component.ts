@@ -119,10 +119,10 @@ export class HeaderComponent implements OnInit {
           
           this.usuario=JSON.parse(dataUser)
           if(
-            this.usuario._id=="630a34772b1569b707e2ebf8"
-            ||
-            this.usuario.perfil._id=="63719e786138680cfa534eba"
-          ){
+            this.usuario.perfil.sigla=="GST-SUP" ||
+            this.usuario.perfil.sigla=="GST-ADM" ||
+            this.usuario.perfil.sigla=="SS"
+           ){
             this.itemMenu= [
               {
                 titulo:this.menu_new_request,
@@ -153,48 +153,51 @@ export class HeaderComponent implements OnInit {
                 submenu:[],
                 icon:"icon-dash.png"
               },
-              {
-                titulo:this.menu_system_administration,
-                url:"#",
-                submenu:[
-                  {
-                    titulo:this.menu_admin_task_contract,
-                    url:"/tareasContrato",
-                    icon:"icon-conf.png"
-                  },
-                  {
-                    titulo:this.menu_admin_entry_documentation,
-                    url:"/documentosEntradaCT",
-                    icon:"icon-conf.png"
-                  },
-                  {
-                    titulo:this.menu_admin_output_documentation,
-                    url:"/documentosSalidaCT",
-                    icon:"icon-conf.png"
-                  },
-                  {
-                    titulo:this.menu_admin_contract_management,
-                    url:"/documentosGestionCT",
-                    icon:"icon-conf.png"
-                  },
-                  {
-                    titulo:this.menu_admin_users,
-                    url:"/usuarios",
-                    icon:"icon-conf.png"
-                  },
-                  {
-                    titulo:this.menu_admin_contract_manager,
-                    url:"/contratosGerencia",
-                    icon:"icon-conf.png"
-                  }
-                ],
-                icon:"icon-conf.png"
-              }
+              
             ]
           }
 
-          if(this.usuario.perfil._id=="63719e786138680cfa534eba"){
-            console.log(this.itemMenu[5].submenu)
+
+          if(this.usuario.perfil.sigla=="GST-ADM" || this.usuario.perfil.sigla=="SS"){
+            this.itemMenu.push({
+              titulo:this.menu_system_administration,
+              url:"#",
+              submenu:[{
+                titulo:this.menu_admin_task_contract,
+                url:"/tareasContrato",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_entry_documentation,
+                url:"/documentosEntradaCT",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_output_documentation,
+                url:"/documentosSalidaCT",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_contract_management,
+                url:"/documentosGestionCT",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_users,
+                url:"/usuarios",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_contract_manager,
+                url:"/contratosGerencia",
+                icon:"icon-conf.png"
+              }],
+              icon:"icon-conf.png"
+            })
+          }
+          
+
+          if(this.usuario.perfil.sigla=="SS"){
             this.itemMenu[5].submenu.push({
                 titulo:"Empresas",
                 url:"/usuarios",

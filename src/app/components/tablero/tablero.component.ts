@@ -38,6 +38,10 @@ export class TableroComponent implements OnInit {
     page:0
   }
 
+  usuario:{
+    _id:string|null,
+    perfil:any
+  }  =JSON.parse(localStorage.getItem("usuario") || '{}');
   constructor(
     public contratosService:ContratosService,
     public solicitudService:SolicitudesService,
@@ -51,7 +55,18 @@ export class TableroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.solicitudService.getSolicitudes(1,0).subscribe((data:any)=>{
+    let dataFilterIngresadas:any
+    if(this.usuario.perfil.sigla=="GST" || this.usuario.perfil.sigla=="BKO"){
+      dataFilterIngresadas={
+        ingresado:true,
+        solicitante:this.usuario._id,
+        page:1,
+        options:0
+      }
+    }
+
+
+    this.solicitudService.getSolicitudesFilter(dataFilterIngresadas).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
       this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
         return solicitud.estado_solicitud.nombre_estado=="En Proceso"
@@ -132,6 +147,12 @@ export class TableroComponent implements OnInit {
       options:0
     }
 
+    if(this.usuario.perfil.sigla=="GST" || this.usuario.perfil.sigla=="BKO" || this.usuario.perfil.sigla=="ADC"){
+      dataFilter.ingresado=true
+      dataFilter.solicitante=this.usuario._id
+      dataFilter.page=1
+    }
+
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
       this.listaSolicitudes=data.solicitudes;
       this.listaEnProceso=data.solicitudes.filter((solicitud:any) => {
@@ -158,6 +179,12 @@ export class TableroComponent implements OnInit {
 
     let dataFilter:any={
       options:0
+    }
+
+    if(this.usuario.perfil.sigla=="GST" || this.usuario.perfil.sigla=="BKO" || this.usuario.perfil.sigla=="ADC"){
+      dataFilter.ingresado=true
+      dataFilter.solicitante=this.usuario._id
+      dataFilter.page=1
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{

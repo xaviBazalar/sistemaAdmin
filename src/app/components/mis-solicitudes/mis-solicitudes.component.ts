@@ -213,7 +213,7 @@ export class MisSolicitudesComponent implements OnInit {
  
       let perfil=this.usuario.perfil.sigla
       let dataFilterAsignado:any;
-      if(perfil=="GST"){
+      if(perfil=="GST" ){//|| perfil=="GST-SUP" || perfil=="GST-ADM"
         dataFilterAsignado={
           ingresado:true,
           gst:this.usuario._id
@@ -351,7 +351,7 @@ export class MisSolicitudesComponent implements OnInit {
 
     let perfilUser=this.usuario.perfil.sigla
     let dataFilterAsignado:any;
-    if(perfilUser=="GST"){
+    if(perfilUser=="GST" ){//|| perfilUser=="GST-SUP" || perfilUser=="GST-ADM"
       dataFilter.solicitante=""
       dataFilter.ingresado=true
       dataFilter.gst=this.usuario._id
@@ -361,6 +361,11 @@ export class MisSolicitudesComponent implements OnInit {
       dataFilter.solicitante=""
       dataFilter.ingresado=true
       dataFilter.bko=this.usuario._id
+    }
+
+    if(perfilUser=="ADC"){
+      dataFilter.bko=this.usuario._id
+      dataFilter.gst=this.usuario._id
     }
 
     
@@ -403,6 +408,7 @@ export class MisSolicitudesComponent implements OnInit {
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      console.log("Solicitudes")
       this.pagSolicitudes.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
@@ -419,6 +425,7 @@ export class MisSolicitudesComponent implements OnInit {
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilterPen).subscribe((data:any)=>{
+      console.log("Solicitudes Ingresadas")
       this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
@@ -430,7 +437,7 @@ export class MisSolicitudesComponent implements OnInit {
 
     let perfilUser=this.usuario.perfil.sigla
     let dataFilterAsignado:any;
-    if(perfilUser=="GST"){
+    if(perfilUser=="GST" || perfilUser=="GST-SUP" || perfilUser=="GST-ADM"){
       dataFilterAsignado={
         ingresado:true,
         gst:this.usuario._id,
@@ -447,7 +454,19 @@ export class MisSolicitudesComponent implements OnInit {
         options:1
       }
     }
+
+    if(perfilUser=="ADC"){
+      dataFilterAsignado={
+        ingresado:true,
+        adc:this.usuario._id,
+        bko:this.usuario._id,
+        page:page,
+        options:1
+      }
+    }
+
     this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
+      console.log("Solicitudes Asignadas")
       this.pagSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)

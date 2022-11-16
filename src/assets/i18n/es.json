@@ -146,6 +146,7 @@
             "date_request":"Fecha Solicitud",
             "status":"Estado",
             "assigned":"Asignada",
+            "assigned_bko":"BKO",
             "date_start":"Fecha Inicio",
             "result":"Resultado"
         },
