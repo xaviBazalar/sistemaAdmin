@@ -75,7 +75,7 @@ export class TareasContratoComponent implements OnInit {
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
       
       for (const usuario of data.usuarios) {
-        if(usuario.perfil.sigla=="GST"){
+        if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP"){
           this.listaUsuariosGST.push(usuario)
         }
 

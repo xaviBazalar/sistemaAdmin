@@ -174,6 +174,7 @@ export class NuevaSolicitudComponent implements OnInit {
     
     let idContrato:string=""
     for(let contrato of this.listaContratos){
+      console.log(contrato)
       let nTemp=contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre
       if((nTemp.trim())==contratoTxt.trim()){
         idContrato=contrato.contrato._id
@@ -203,6 +204,7 @@ export class NuevaSolicitudComponent implements OnInit {
     let gerencia=target.value;
     let contrato:any=document.querySelector("#iContrato")
     this.contratosGerenciaService.getContratosGerenciaActivos(gerencia,0).subscribe((data:any)=>{
+
       this.listaContratos=data.contratos_gerencia
       contrato.value=""
     });
@@ -412,10 +414,11 @@ export class NuevaSolicitudComponent implements OnInit {
     let idContrato:string=""
 
     for(let contrato of this.listaContratos){
-      
-      if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre)==this.regForm.value.iContrato){
-      //if(contrato.contrato==this.regForm.value.iContrato){
-        idContrato=contrato.contrato._id
+      if(contrato.contrato.adc.nombre){
+        if((contrato.contrato.contrato+"-"+contrato.contrato.contradoid+"-"+contrato.contrato.adc.nombre)==this.regForm.value.iContrato){
+        //if(contrato.contrato==this.regForm.value.iContrato){
+          idContrato=contrato.contrato._id
+        }
       }
     } 
 

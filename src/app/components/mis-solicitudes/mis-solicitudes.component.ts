@@ -142,6 +142,7 @@ export class MisSolicitudesComponent implements OnInit {
   }
 //getSolicitudes
   ngOnInit(): void {
+    
     if(this.usuario.perfil.sigla=="ADC"){
       let dataFilterIngresadas:any={
         ingresado:true,
@@ -193,6 +194,7 @@ export class MisSolicitudesComponent implements OnInit {
         this.pagSolicitudes.page=data.solicitudes.page
         this.listaSolicitudes=data.solicitudes.docs;
         this.paginadorSolicitudes.pagParams=this.pagSolicitudes
+        
       })
 
       let dataFilter:any={
@@ -233,6 +235,9 @@ export class MisSolicitudesComponent implements OnInit {
         this.paginadorSolicitudesA.page=data.solicitudes.page
         this.listaSolicitudesAsignadas=data.solicitudes.docs;
         this.paginadorSolicitudesA.pagParams=this.paginadorSolicitudesA
+        /*if(this.usuario.perfil.sigla=="GST-SUP" || this.usuario.perfil.sigla=="GST-ADM") {
+          this.paginadorSolicitudesA.pagParams=this.pagSolicitudes
+        }*/
       })
     }
     
@@ -279,7 +284,8 @@ export class MisSolicitudesComponent implements OnInit {
     let hasta:any = document.querySelector("#fecha_hasta")
     let dataPost={
       desde:desde.value,
-      hasta:hasta.value
+      hasta:hasta.value,
+      user:this.usuario._id
     }
     this.reporteService.generateExcel(dataPost).subscribe((data:any)=>{
       this.linkReporteExcel=data.archivo;
@@ -466,7 +472,6 @@ export class MisSolicitudesComponent implements OnInit {
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
-      console.log("Solicitudes Asignadas")
       this.pagSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudesA.totalPages=new Array(data.solicitudes.totalPages)
@@ -478,7 +483,8 @@ export class MisSolicitudesComponent implements OnInit {
 
   refreshListSA(page:string|number){
     let perfilUser=this.usuario.perfil.sigla
-    let dataFilterAsignado:any;
+    let dataFilterAsignado:any={};
+    
     if(perfilUser=="GST"){
       dataFilterAsignado={
         ingresado:true,
@@ -496,6 +502,8 @@ export class MisSolicitudesComponent implements OnInit {
         options:1
       }
     }
+
+    dataFilterAsignado.page=page
     this.solicitudService.getSolicitudesFilter(dataFilterAsignado).subscribe((data:any)=>{
       this.pagSolicitudesA.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudesA.hasPrevPage=data.solicitudes.hasPrevPage
