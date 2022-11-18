@@ -34,7 +34,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RecoveryUsuarioComponent } from './components/recovery-usuario/recovery-usuario.component';
 
 export function HttpLoaderFactory(http:HttpClient){
-  return new TranslateHttpLoader(http)
+  //return new TranslateHttpLoader(http)
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+
 }
 
 @NgModule({
