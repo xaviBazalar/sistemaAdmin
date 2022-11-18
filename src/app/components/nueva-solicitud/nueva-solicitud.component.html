@@ -19,7 +19,7 @@
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.contract' | translate }}</label>
                 <input autocomplete="off" (change)="getTareasContrato($event)" class="form-select" id="iContrato" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
-                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}-{{contrato.contrato.adc.nombre}}</option>
+                    <option *ngFor="let contrato of listaContratos" >{{contrato.contrato.contrato}}-{{contrato.contrato.contradoid}}</option>
                 </datalist>
                 <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">{{ 'message.error.contract' | translate }}</span>
             </div>
