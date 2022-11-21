@@ -309,8 +309,9 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     let contratoI:any=document.querySelector("#contratoC")
     let contratoTxt=target.value;
     let idContrato:string=""
-    for(let contrato of this.listaContrato){
-      if((contrato.contrato+"-"+contrato.contradoid)==contratoTxt.trim()){
+    for(let contrato of this.listaContrato){    
+      let contratTemp=contrato.contrato.replaceAll("  "," ").trim()+"-"+contrato.contradoid
+      if(contratTemp.trim()==contratoTxt.trim()){
         idContrato=contrato._id
       }
     } 

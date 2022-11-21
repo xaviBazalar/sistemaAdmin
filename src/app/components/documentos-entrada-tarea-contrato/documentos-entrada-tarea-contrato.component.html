@@ -134,7 +134,7 @@
                     <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
                     <input autocomplete="off" (keyup)="filterContratosFromTC()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
                     <datalist id="listaContrato"  >
-                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato.trim()}}-{{contrato.contradoid}}</option>
                     </datalist>
                     <input type="hidden" class="form-select" id="contratoC" />
                 </div>
