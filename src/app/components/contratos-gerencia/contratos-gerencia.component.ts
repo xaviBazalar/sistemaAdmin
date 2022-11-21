@@ -110,7 +110,7 @@ export class ContratosGerenciaComponent implements OnInit {
   filterContratosGerencia(){
     let contrato:any=document.querySelector("#searchContrato")
     let gerencia:any=document.querySelector("#searchGerencia")
-    let dataFilter="n_contrato="+contrato.value+"&n_gerencia="+gerencia.value
+    let dataFilter="n_contrato="+contrato.value.replaceAll("&","amp;")+"&n_gerencia="+gerencia.value
 
     this.contratosGerenciaService.getContratosGerencia(1,"",dataFilter).subscribe((data:any)=>{
       this.pagContratosGerencia.hasNextPage=data.contratos_gerencia.hasNextPage
@@ -136,7 +136,7 @@ export class ContratosGerenciaComponent implements OnInit {
 
   filterContrato(){
     let contrato:any=document.querySelector("#searchContratoG")
-    let dataFilter="n_contrato="+contrato.value
+    let dataFilter="n_contrato="+contrato.value.replaceAll("&","amp;")
     this.contratosService.getContratos(1,dataFilter).subscribe((data:any)=>{
       this.pagContratos.hasNextPage=data.contratos.hasNextPage
       this.pagContratos.hasPrevPage=data.contratos.hasPrevPage

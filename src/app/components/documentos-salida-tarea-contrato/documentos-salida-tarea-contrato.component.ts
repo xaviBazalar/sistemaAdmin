@@ -97,7 +97,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
   filterDSTareasContratos(){
     let contrato:any=document.querySelector("#searchContrato")
     let tarea:any=document.querySelector("#searchTarea")
-    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value
+    let dataFilter="n_contrato="+contrato.value.replaceAll("&","amp;")+"&n_tarea="+tarea.value
     this.tareaDocumentosSalidaService.getTareaDocumentosSalidaFilter("","",dataFilter).subscribe((data:any)=>{
       this.pagTareDocumentosSalida.hasNextPage=data.tarea_documentos_salida.hasNextPage
       this.pagTareDocumentosSalida.hasPrevPage=data.tarea_documentos_salida.hasPrevPage
@@ -322,7 +322,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   filterContratosFromTC(){
     let contrato:any=document.querySelector("#NcontratoC")
-    let dataFilter=`n_contrato=${contrato.value}`
+    let dataFilter=`n_contrato=${contrato.value.replaceAll("&","amp;")}`
     this.refreshListaContratos(1,dataFilter)
   }
 

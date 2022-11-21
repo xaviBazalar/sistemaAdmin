@@ -63,7 +63,7 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     let contrato:any=document.querySelector("#searchContrato")
     let tarea:any=document.querySelector("#searchTarea")
     let gestion:any=document.querySelector("#searchGestion")
-    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value+"&n_gestion="+gestion.value
+    let dataFilter="n_contrato="+contrato.value.replaceAll("&","amp;")+"&n_tarea="+tarea.value+"&n_gestion="+gestion.value
     this.documentacionSolicitudedService.getDocumentacionSolicitud("","",1,dataFilter).subscribe((data:any)=>{
       this.pagGestionContratos.hasNextPage=data.documentacion_solicitudes.hasNextPage
       this.pagGestionContratos.hasPrevPage=data.documentacion_solicitudes.hasPrevPage
@@ -95,7 +95,7 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
 
   filterContratosFromTC(){
     let contrato:any=document.querySelector("#NcontratoC")
-    let dataFilter=`n_contrato=${contrato.value}`
+    let dataFilter=`n_contrato=${contrato.value.replaceAll("&","amp;")}`
     this.refreshListaContratos(1,dataFilter)
   }
 

@@ -132,7 +132,7 @@ export class TareasContratoComponent implements OnInit {
     let tarea:any=document.querySelector("#searchTarea")
     let dataFilter={
       contrato:"",
-      n_contrato:contrato.value,
+      n_contrato:contrato.value.replaceAll("&","amp;"),
       n_tarea:tarea.value
     }
     this.tareasContratoService.getTareasContratoFilter(dataFilter).subscribe((data:any)=>{
@@ -143,7 +143,7 @@ export class TareasContratoComponent implements OnInit {
   filterContratos(){
     let contrato:any=document.querySelector("#searchContratoC")
     let nroContrato:any=document.querySelector("#searchNroContratoC")
-    let dataFilter=`n_contrato=${contrato.value}&nro_contrato=${nroContrato.value}`
+    let dataFilter=`n_contrato=${contrato.value.replaceAll("&","amp;")}&nro_contrato=${nroContrato.value}`
     this.refreshListaContratos(1,dataFilter)
   }
 

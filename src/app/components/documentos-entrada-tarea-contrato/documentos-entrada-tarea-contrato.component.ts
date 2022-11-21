@@ -92,7 +92,8 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
   filterDETareasContratos(){
     let contrato:any=document.querySelector("#searchContrato")
     let tarea:any=document.querySelector("#searchTarea")
-    let dataFilter="n_contrato="+contrato.value+"&n_tarea="+tarea.value
+
+    let dataFilter="n_contrato="+contrato.value.replaceAll("&","amp;")+"&n_tarea="+tarea.value
     
 
     this.tareaDocumentosEntradaService.getTareaDocumentosEntradaFilter("","",dataFilter).subscribe((data:any)=>{
@@ -319,7 +320,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
 
   filterContratosFromTC(){
     let contrato:any=document.querySelector("#NcontratoC")
-    let dataFilter=`n_contrato=${contrato.value}`
+    let dataFilter=`n_contrato=${contrato.value.replaceAll("&","amp;")}`
     this.refreshListaContratos(1,dataFilter)
   }
 
