@@ -103,7 +103,7 @@ export class NuevaSolicitudComponent implements OnInit {
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
       for (const usuario of data.usuarios) {
-        if(usuario.perfil.sigla=="GST" && usuario.estado ){
+        if((usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM") && usuario.estado ){
           //if(this.usuarioLogin._id!=usuario._id){
             this.listaUsuariosGST.push(usuario)
           //}
