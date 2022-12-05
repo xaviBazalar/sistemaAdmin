@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   menu_admin_contract_management:string=""
   menu_admin_users:string=""
   menu_admin_contract_manager:string=""
-
+  menu_admin_extra_alter:string=""
   constructor(
     private translate: TranslateService,
     private router: Router,
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
+    this.menu_admin_extra_alter=await this.translate.get('menu.extra_alert').toPromise()
     this.menu_new_request= await this.translate.get('menu.new_request').toPromise()
     this.menu_my_requests= await this.translate.get('menu.my_requests').toPromise()
     this.menu_request_board=await this.translate.get('menu.request_board').toPromise()
@@ -190,6 +190,11 @@ export class HeaderComponent implements OnInit {
               {
                 titulo:this.menu_admin_contract_manager,
                 url:"/contratosGerencia",
+                icon:"icon-conf.png"
+              },
+              {
+                titulo:this.menu_admin_extra_alter,
+                url:"/avisos-extra",
                 icon:"icon-conf.png"
               }],
               icon:"icon-conf.png"

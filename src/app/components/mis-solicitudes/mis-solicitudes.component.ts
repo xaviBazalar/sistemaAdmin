@@ -10,6 +10,8 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { ReportesService } from '../../services/reportes.service';
 import { environment } from '../../../environments/environment.prod';
 import { ContratosService } from '../../services/contratos.service';
+import { AutorizarSolicitudComponent } from '../autorizar-solicitud/autorizar-solicitud.component';
+import { AutorizarSolicitudService } from '../../services/autorizar-solicitud.service';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -33,6 +35,11 @@ export class MisSolicitudesComponent implements OnInit {
   listaEstadoResultado:any;
   listaPerfiles:any;
   listaUsuariosGST:any=[{
+    perfil:{
+      sigla:""
+    }
+  }];
+  listaUsuariosALLGST:any=[{
     perfil:{
       sigla:""
     }
@@ -72,6 +79,11 @@ export class MisSolicitudesComponent implements OnInit {
     page:0
   }
 
+  showModalTemp:boolean=false;
+  showModalAutorizacionTemp:boolean=false;
+  solicitudId:string=""
+
+
   PorVencer:string|number=0
   Vencidos:string|number=0
   linkReporteExcel:string=""
@@ -90,7 +102,8 @@ export class MisSolicitudesComponent implements OnInit {
     public perfilesService:PerfilesService,
     public usuariosService:UsuariosService,
     public reporteService:ReportesService,
-    public contratosService:ContratosService
+    public contratosService:ContratosService,
+    public autorizarSolicitudService:AutorizarSolicitudService
   ) { 
     let hoy:any = new Date();
    
@@ -245,9 +258,14 @@ export class MisSolicitudesComponent implements OnInit {
     this.usuariosService.getUsuarios(1,0).subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
       this.listaUsuariosGST=[]
+      this.listaUsuariosALLGST=[]
       for (const usuario of data.usuarios) {
         if(usuario.perfil.sigla=="GST"){
           this.listaUsuariosGST.push(usuario)
+        }
+
+        if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM"){
+          this.listaUsuariosALLGST.push(usuario)
         }
 
         if(usuario.perfil.sigla=="BKO"){
@@ -414,7 +432,6 @@ export class MisSolicitudesComponent implements OnInit {
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
-      console.log("Solicitudes")
       this.pagSolicitudes.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudes.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudes.totalPages=new Array(data.solicitudes.totalPages)
@@ -431,7 +448,6 @@ export class MisSolicitudesComponent implements OnInit {
     }
 
     this.solicitudService.getSolicitudesFilter(dataFilterPen).subscribe((data:any)=>{
-      console.log("Solicitudes Ingresadas")
       this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
       this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
       this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
@@ -541,6 +557,61 @@ export class MisSolicitudesComponent implements OnInit {
       this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
+  }
+
+  modalAutorizacion(solicitud:string=""){
+    this.solicitudId=solicitud
+    this.showModalTemp=true
+  }
+
+  acceptModal(){
+    
+    let usuarios_:any=[]
+    const selected:any = document.querySelectorAll('#users-gst-auth option:checked');
+    for(let opt of selected){
+      usuarios_.push(opt.value)
+    }
+
+    let dataSolicitud:any={
+      autorizacion:true,
+      usuarios_auth:usuarios_.toString()
+    }
+
+    this.solicitudService.updateSolicitud(this.solicitudId,dataSolicitud).subscribe((data:any)=>{
+      this.refreshListSA(1)
+      this.closeModal()
+    });
+  }
+
+  closeModal(){
+    this.solicitudId=""
+    this.showModalTemp=false;
+  }
+
+  showModalAutorizacion(solicitud:string="",dataSolicitud:any){
+    this.showModalAutorizacionTemp=true
+    let dataGet=`solicitud=${solicitud}`
+    let divPrint:any=document.querySelector("#print-section-autorizacion")
+    this.autorizarSolicitudService.validatePinAutorizacion(dataGet).subscribe((data:any) => {
+      let dataHtml:any=`<h4>SOLICITUD: ${dataSolicitud.contrato.contrato}-${dataSolicitud.contrato.contradoid}</h4>
+      <h5>TAREA: ${dataSolicitud.tarea.nombre_tarea}</h5>`
+      for(let autorizacion of data.autorizacion_solicitud){
+        dataHtml+=`<div>Autorizado por: ${autorizacion.usuario.nombre} el ${autorizacion.fecha_autorizacion} ${autorizacion.hora_autorizacion}</div>`
+      }
+
+      divPrint.innerHTML=dataHtml
+    });
+    
+  }
+
+  acceptModalAutorizacion(){
+    this.showModalAutorizacionTemp=false
+    let btnPrint:any=document.querySelector("#printAutorizacion")
+    btnPrint.click()
+  }
+
+  closeModalAutorizacion(){
+    this.showModalAutorizacionTemp=false
   }
 
 }

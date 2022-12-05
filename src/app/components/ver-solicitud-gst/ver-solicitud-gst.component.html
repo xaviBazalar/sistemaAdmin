@@ -40,7 +40,7 @@
                 <hr>
 
                 <div class="form-check" *ngFor="let item of listaTareaDocumentosEntradaSolicitud">
-                    <a class="link-download" target="blank" href="{{baseUrlGet}}{{item.url_ref}}"><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
+                    <a class="link-download" target="blank" [href]="validateUrl(item.url_ref)" ><img class="img-checked" src="assets/icons/icon-download.png" *ngIf="item.validado"/></a>
                     <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="item.validado"/>
                     
                     <img class="img-checked" src="assets/icons/icon-error.png" *ngIf="!item.validado"/>
@@ -366,12 +366,12 @@
                             role="button" aria-pressed="true">Ver</button>-->
                     </td>
                     <td >
-                        <a class="" href="{{baseUrlGet}}{{historial.url_file_pregunta}}" target="blank">
+                        <a class="" [href]="validateUrl(historial.url_file_pregunta)" target="blank">
                             <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file_pregunta!=''"/>
                         </a>
                     </td>
                     <td >
-                        <a class="" href="{{baseUrlGet}}{{historial.url_file}}" target="blank">
+                        <a class="" [href]="validateUrl(historial.url_file)" target="blank">
                             <img class="img-checked" src="assets/icons/icon-download.png" *ngIf="historial.url_file!=''"/>
                         </a>
                     </td>

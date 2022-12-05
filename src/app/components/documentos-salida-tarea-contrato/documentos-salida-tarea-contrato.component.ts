@@ -219,7 +219,6 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
       descripcion:descripcion.value,
     }
 
-    console.log(dataDocumentoSalida)
 
     this.documentosSalidaService.addDocumentoSalida(dataDocumentoSalida).subscribe((data:any)=>{
       this.refreshDocumentosSalida(1)

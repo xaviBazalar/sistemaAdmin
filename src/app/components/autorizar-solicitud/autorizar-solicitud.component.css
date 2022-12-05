@@ -1,0 +1,5 @@
+.modalApp{
+    background: #0000008a;
+    z-index: 99999;
+    display: block;
+}

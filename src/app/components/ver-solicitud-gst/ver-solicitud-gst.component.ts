@@ -16,6 +16,7 @@ import { TareaDocumentosSalidaSolicitudService } from '../../services/tarea-docu
 import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
 import { GestionSolicitudService } from '../../services/gestion-solicitud.service';
 import { ThisReceiver } from '@angular/compiler';
+import { UploadGoogleStorageService } from '../../services/upload-google-storage.service';
 
 @Component({
   selector: 'app-ver-solicitud-gst',
@@ -68,6 +69,7 @@ export class VerSolicitudGstComponent implements OnInit {
     public estadosService:EstadosSolicitudService,
     public estadoResultadoService:EstadoResultadoService,
     public uploadFileService:UploadFileService,
+    public uploadFileStorageService:UploadGoogleStorageService,
     public bitacoraSolicitudService:BitacoraSolicitudService,
     public documentacionSolicitudService:DocumentacionSolicitudedService,
     public tareaDocumentosSalidaService:TareaDocumentosSalidaService,
@@ -118,17 +120,23 @@ export class VerSolicitudGstComponent implements OnInit {
     this.listEstadosResultado=dataEstadoResultado.estadoResultados
     const dataDocumentacion:any = await this.documentacionSolicitudService.getDocumentacionSolicitud(this.tarea,this.solicitud.contrato._id,1,"").toPromise();
     this.listaDocumentacionSolicitud=dataDocumentacion.documentacion_solicitudes.docs;
-    console.log(this.solicitud.contrato)
     const dataBitacora:any = await this.bitacoraSolicitudService.getBitacoraSolicitud(idSolicitud).toPromise();
     this.listaBitacoraSolicitud=dataBitacora.bitacora_solicitud
 
     const dataDocumentoSalidaSolicitud:any = await this.tareaDocumentoSalidaSolicitud.getTareaDocumentosSalidaSolicitud(this.solicitud.randomId).toPromise();
     this.listaTareaDocumentosSalidaSolicitud=dataDocumentoSalidaSolicitud.tarea_documentos_salida_solicitud;
-    console.log(dataDocumentoSalidaSolicitud.tarea_documentos_salida_solicitud)
     const dataGestionSolicitud:any = await this.gestionSolicitudService.getGestionSolicitud(this.id_solicitud).toPromise();
     this.listaGestionSolicitud=dataGestionSolicitud.gestion_solicitud
     
     
+  }
+
+  validateUrl(url:string){
+    if(url.indexOf("http")>-1){
+      return url
+    }else{
+      return this.baseUrlGet+url
+    }
   }
 
   validateGs(color:string,id:string){
@@ -397,8 +405,11 @@ export class VerSolicitudGstComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-      this.urlRespuesta=data.urlFile
+    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+      if(data.validation){
+        this.urlRespuesta=data.urlFile
+      }
     })
   }
 
@@ -409,8 +420,11 @@ export class VerSolicitudGstComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-      this.urlPregunta=data.urlFile
+    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+        if(data.validation){
+          this.urlPregunta=data.urlFile
+        }
     })
   }
 
@@ -520,26 +534,30 @@ export class VerSolicitudGstComponent implements OnInit {
     this.isSubmittedFile=true;
     let observacion:any=document.querySelector("#iObsFile") 
     if (this.regFormFile.dirty && this.regFormFile.valid && this.idTareDocumentoRespuesta!="") {
-        this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-
+        //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+        this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
           let dataAdd={
             tarea_documento:this.idTareDocumentoRespuesta,
             validado:true,
-            url_ref:"/api/upload?id="+data.urlFile,
+            url_ref:data.urlFile,
             observacion:observacion.value,
             randomId:this.tokenTemp
           } 
 
-          this.tareaDocumentoSalidaSolicitud.addTareaDocumentosSalidaSolicitud(dataAdd).subscribe((data:any)=>{
-            //this.refreshTareaDocumentosEntrada()
-            this.refreshTareaDocumentosSalidaSolicitud()
-            this.isSubmittedFile=false
-            this.regFormFile.reset()
-            this.idTareDocumentoRespuesta=""
-            previewFile.value=""
-            this.isSubmittedFile=false;
-            observacion.value=""
-         })
+          if(data.validation){
+            this.tareaDocumentoSalidaSolicitud.addTareaDocumentosSalidaSolicitud(dataAdd).subscribe((data:any)=>{
+              //this.refreshTareaDocumentosEntrada()
+              this.refreshTareaDocumentosSalidaSolicitud()
+              this.isSubmittedFile=false
+              this.regFormFile.reset()
+              this.idTareDocumentoRespuesta=""
+              previewFile.value=""
+              this.isSubmittedFile=false;
+              observacion.value=""
+           })
+          }
+
+          
 
         })
     }

@@ -136,7 +136,6 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
   editDocumentoGestionTC(info:any){
     let data=JSON.parse(info.target.getAttribute("data"))
     this.showUpdateDS=true
-    console.log(data)
     let tarea:any=document.querySelector("#tareaC")
     let nombre_documento:any=document.querySelector("#gestionC")
     let contrato:any=document.querySelector("#NcontratoC")

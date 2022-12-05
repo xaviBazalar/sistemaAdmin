@@ -11,6 +11,7 @@ import { UploadFileService } from '../../services/upload-file.service';
 import { BitacoraSolicitudService } from '../../services/bitacora-solicitud.service';
 import { TareaDocumentosSalidaSolicitudService } from '../../services/tarea-documentos-salida-solicitud.service';
 import { GestionSolicitudService } from '../../services/gestion-solicitud.service';
+import { UploadGoogleStorageService } from '../../services/upload-google-storage.service';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class VerSolicitudComponent implements OnInit {
     public tareaDocumentosSalidaService:TareaDocumentosSalidaService,
     public documentacionSolicitudService:DocumentacionSolicitudedService,
     public uploadFileService: UploadFileService,
+    public uploadFileStorageService:UploadGoogleStorageService,
     public bitacoraSolicitudService:BitacoraSolicitudService,
     public gestionSolicitudService:GestionSolicitudService,
     public _route:ActivatedRoute,
@@ -89,9 +91,6 @@ export class VerSolicitudComponent implements OnInit {
     this.listaGestionSolicitud=dataGestionSolicitud.gestion_solicitud
 
     
-
-    console.log(this.listaDocumentacionSolicitud)
-    
   }
 
   refreshBitacoraSolicitud(){
@@ -107,8 +106,11 @@ export class VerSolicitudComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-      this.urlRespuesta=data.urlFile
+    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+      if(data.validation){
+        this.urlRespuesta=data.urlFile
+      }
     })
   }
 
@@ -119,8 +121,11 @@ export class VerSolicitudComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-      this.urlPregunta=data.urlFile
+    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+        if(data.validation){
+          this.urlPregunta=data.urlFile
+        }
     })
   }
 

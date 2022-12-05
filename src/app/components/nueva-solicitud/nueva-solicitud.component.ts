@@ -12,6 +12,7 @@ import { UploadFileService } from '../../services/upload-file.service';
 import { TareaDocumentosEntradaSolicitudService } from '../../services/tarea-documentos-entrada-solicitud.service';
 import { Router } from '@angular/router';
 import { ContratosGerenciaService } from '../../services/contratos-gerencia.service';
+import { UploadGoogleStorageService } from '../../services/upload-google-storage.service';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -60,6 +61,7 @@ export class NuevaSolicitudComponent implements OnInit {
     public tareaDocumentosService:TareaDocumentosEntradaService,
     public tareaDocumentoEntradaSolicitud:TareaDocumentosEntradaSolicitudService,
     public uploadFileService:UploadFileService,
+    public uploadFileStorageService:UploadGoogleStorageService,
     public contratosGerenciaService:ContratosGerenciaService,
     private router: Router,
     public formBuilder: FormBuilder) {
@@ -334,34 +336,31 @@ export class NuevaSolicitudComponent implements OnInit {
             observacion.value=""
          })
         }else{
-          this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-          
-            /*let dataUpdate={
-              _id:this.idTareDocumentoEntrada,
-              validado:true,
-              url_ref:"/api/upload?id="+data.urlFile,
-              observacion:observacion.value,
-              randomId:this.tokenTemp
-            } */
+          //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+          this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
   
             let dataAdd={
               tarea_documento:this.idTareDocumentoEntrada,
               validado:true,
-              url_ref:"/api/upload?id="+data.urlFile,
+              url_ref:data.urlFile,
               observacion:observacion.value,
               randomId:this.tokenTemp
             } 
-  
-            this.tareaDocumentoEntradaSolicitud.addTareaDocumentosEntradaSolicitud(dataAdd).subscribe((data:any)=>{
-              //this.refreshTareaDocumentosEntrada()
-              this.refreshTareaDocumentosEntradaSolicitud()
-              this.isSubmittedFile=false
-              this.regFormFile.reset()
-              this.idTareDocumentoEntrada=""
-              previewFile.value=""
-              this.isSubmittedFile=false;
-              observacion.value=""
-           })
+
+            //https://storage.googleapis.com/download/storage/v1/b/project-mining/o/Carnet%20(1).pdf?generation=1669402313620023&alt=media
+
+            if(data.validation){
+              this.tareaDocumentoEntradaSolicitud.addTareaDocumentosEntradaSolicitud(dataAdd).subscribe((data:any)=>{
+                  //this.refreshTareaDocumentosEntrada()
+                  this.refreshTareaDocumentosEntradaSolicitud()
+                  this.isSubmittedFile=false
+                  this.regFormFile.reset()
+                  this.idTareDocumentoEntrada=""
+                  previewFile.value=""
+                  this.isSubmittedFile=false;
+                  observacion.value=""
+              })
+            }
   
   
           })

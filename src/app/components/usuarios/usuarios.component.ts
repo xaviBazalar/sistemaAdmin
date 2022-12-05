@@ -115,6 +115,7 @@ export class UsuariosComponent implements OnInit {
     let password:any=document.querySelector("#clave_usuario")
     let perfil:any=document.querySelector("#perfil_usuario")
     let autorizar:any=document.querySelector("#autorizar")
+    let pin:any=document.querySelector("#pin_usuario")
 
     let dataUsuario:any={
       nombre:nombre.value,
@@ -123,7 +124,8 @@ export class UsuariosComponent implements OnInit {
       password:password.value,
       estado:true,
       perfil:perfil.value,
-      autorizar:autorizar.value
+      autorizar:autorizar.value,
+      pin:pin.value
     }
 
     this.usuariosService.addUsuario(dataUsuario).subscribe((data:any)=>{
@@ -144,7 +146,7 @@ export class UsuariosComponent implements OnInit {
     let estado:any=document.querySelector("#estadoU")
     let autorizar:any=document.querySelector("#autorizar")
     let id:any=document.querySelector("#id_usuario")
-    
+    let pin:any=document.querySelector("#pin_usuario")
 
     nombre.value=data.nombre
     correo.value=data.correo
@@ -154,6 +156,7 @@ export class UsuariosComponent implements OnInit {
     estado.value=(data.estado)?"1":"0"
     id.value=data._id
     autorizar=(data.autorizar)?"1":"0"
+    pin.value=data.pin
     this.openModalUsuario()
   }
 
@@ -166,6 +169,7 @@ export class UsuariosComponent implements OnInit {
     let autorizar:any=document.querySelector("#autorizar")
     let estado:any=document.querySelector("#estadoU")
     let id:any=document.querySelector("#id_usuario")
+    let pin:any=document.querySelector("#pin_usuario")
 
     let dataUpdate:any={
       nombre:nombre.value,
@@ -174,7 +178,8 @@ export class UsuariosComponent implements OnInit {
       perfil:perfil.value,
       autorizar:autorizar.value,
       estado:estado.value,
-      id:id.value
+      id:id.value,
+      pin:pin.value
     }
 
     if(password.value!==undefined){

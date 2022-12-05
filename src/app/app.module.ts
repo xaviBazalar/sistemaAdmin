@@ -32,6 +32,9 @@ import { DashboardGeneralComponent } from './components/dashboard-general/dashbo
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RecoveryUsuarioComponent } from './components/recovery-usuario/recovery-usuario.component';
+import { AvisosExtraComponent } from './components/avisos-extra/avisos-extra.component';
+import { AutorizarSolicitudComponent } from './components/autorizar-solicitud/autorizar-solicitud.component';
+import { NgxPrintModule } from 'ngx-print';
 
 export function HttpLoaderFactory(http:HttpClient){
   //return new TranslateHttpLoader(http)
@@ -61,7 +64,9 @@ export function HttpLoaderFactory(http:HttpClient){
     PaginadorComponent,
     DashboardCargaDeTrabajoComponent,
     DashboardGeneralComponent,
-    RecoveryUsuarioComponent
+    RecoveryUsuarioComponent,
+    AvisosExtraComponent,
+    AutorizarSolicitudComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +82,8 @@ export function HttpLoaderFactory(http:HttpClient){
           deps:[HttpClient]
         }
       }
-    )
+    ),
+    NgxPrintModule
     // AppRoutingModule
   ],
   providers: [],

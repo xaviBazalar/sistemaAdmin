@@ -1,5 +1,6 @@
 {
     "menu":{
+        "extra_alert":"Avisos Extra",
         "new_request":"Nueva Solicitud",
         "my_requests":"Mis Solicitudes",
         "request_board":"Tablero Solicitudes",
@@ -18,6 +19,8 @@
         "exit":"Salir"
     },
     "title":{
+        "extra_notifications":"Avisos Extra",
+        "authorize_request":"Autorizar Solicitud",
         "system_notification":"Notificación Sistema",
         "requests":"MIS SOLICITUDES",
         "new_request":"NUEVA SOLICITUD DE REQUERIMIENTO",
@@ -117,7 +120,10 @@
         "close":"Cerrar",
         "edit":"Editar",
         "update":"Actualizar",
-        "register":"Registrar"
+        "register":"Registrar",
+        "add":"Agregar",
+        "authorize":"Autorizar",
+        "accept":"Aceptar"
     },
     "message":{
         "download_report":"Haga click para descargar el reporte",

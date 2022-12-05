@@ -1,0 +1,87 @@
+<div class="row mt-5">
+    <div class="col-12">
+        <h2>{{ 'title.extra_notifications' | translate }}</h2>
+    </div>
+    
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="asignadas" role="tabpanel" aria-labelledby="asignadas-tab">
+            <table class="table table-light table-striped border border-1">
+
+
+                <thead class="bg-#F53621">
+                    
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col-3"></th>
+                    </tr>
+        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let aviso of listaUsuariosAvisos">
+                        <td>#</td>
+                        <td>{{aviso._id.email}}</td>
+                        <td>
+                            <button type="button" style="margin-right:10px;" class="btn btn-primary btn-sm"  (click)='verContratoAviso(aviso._id.email)'>Ver Contratos Relacionados</button>
+                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{ aviso| json}}' (click)='editUsuarioContratoAviso(aviso._id.email)'>Editar</button>
+                        </td>
+   
+        
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginador #pagAvisosExtra (pagParams)="pagAvisosExtra" (refreshLista)="refreshLista($event)"></app-paginador>
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary btn-sml px-5 " (click)="openModalUsuarioExtra()">Nueva</button>
+            </div>
+        </div>
+        
+      </div>
+</div>
+<div [ngClass]="(showModalUsuarioExtra) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf="!showUpdateU" class="modal-title">Registro Usuario - Aviso</h5>
+          <h5 *ngIf="showUpdateU" class="modal-title">Actualizar Usuario - Aviso</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 input-group mb-3" style="display: none;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre</label>
+                    <input class="form-control" id="nombre_usuario" placeholder="Escribir Nombres"  value="-"/>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Correo</label>
+                    <input type="email" class="form-control" id="correo_usuario" placeholder="Escribir Correo" />
+                </div>
+                
+                <div class="col-12 input-group mb-3"  *ngIf="!showUpdateU">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                    <input autocomplete="off" (keyup)="filterContratos()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                    <datalist id="listaContrato"  >
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="contratoC" />
+                </div>
+                <div class="col-12 mb-3" *ngIf="validacionFormC" >
+                    <div class="alert alert-danger" role="alert">
+                        **Todos los campos son necesarios
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" id="id_usuario"  />
+                
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="showUpdateU" type="button" class="btn btn-primary" (click)="updateUsuarioExtra()">Actualizar</button>
+          <button *ngIf="!showUpdateU" type="button" class="btn btn-primary" (click)="addUsuarioExtra()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalUsuarioExtra()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

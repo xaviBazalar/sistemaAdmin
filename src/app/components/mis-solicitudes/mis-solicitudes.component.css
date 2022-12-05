@@ -40,3 +40,31 @@
     width: 28px;
     margin-left: 6px;
 }
+
+.text-center{
+    display: flex;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.modalApp{
+    background: #0000008a;
+    z-index: 99999;
+    display: block;
+}
+
+.alert-autorizacion{
+    text-align: center;
+    padding: 5px 20px;
+    margin: 0;
+    position: relative;
+}
+
+.alert-success{
+    cursor: pointer;
+}
+
+#print-section-autorizacion{
+    display: none;
+}

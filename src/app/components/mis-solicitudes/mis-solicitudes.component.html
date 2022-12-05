@@ -147,6 +147,7 @@
                         <th scope="col">{{ 'table.request.date_start' | translate }}</th>
                         <th scope="col">{{ 'table.request.result' | translate }}</th>
                         <th scope="col-3"></th>
+                        <th scope="col-3"></th>
                     </tr>
         
                 </thead>
@@ -197,7 +198,17 @@
                         <td>
                             <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
                         </td>
-        
+                        <td>
+                            
+                            <div *ngIf="(solicitud.autorizacion && !solicitud.autorizacion_terminada)" class="alert alert-danger alert-autorizacion" role="alert">
+                                Requiere Autorización!
+                            </div>
+                            <div (click)="showModalAutorizacion(solicitud._id,solicitud)" *ngIf="(solicitud.autorizacion && solicitud.autorizacion_terminada)" class="alert alert-success alert-autorizacion" role="alert">
+                                    Solicitud Autorizada
+                            </div>
+                            <p *ngIf="!solicitud.autorizacion" class="text-center" (click)="modalAutorizacion(solicitud._id)">¿Desea agregar Autorización?</p>
+                            <!--<button class="btn btn-small btn-warning">Autorizar</button>-->
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -268,6 +279,7 @@
                             </a>
                         </td>
                         <td>
+                            
                             <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
                         </td>
         
@@ -358,15 +370,58 @@
 
         </div>
       </div>
-    
-
-    
-
+        
 </div>
 
 
+<div [ngClass]="(showModalTemp) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Usuarios a validar la autorización</p>
+            <select multiple id="users-gst-auth" class="form-select" aria-label="Default select example">
+                <option value="{{item._id}}" *ngFor="let item of listaUsuariosALLGST">{{item.nombre}}</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="acceptModal()">{{ 'button.add' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">{{ 'button.close' | translate }}</button>
+        </div>
+      </div>
+    </div>
+</div>
 
-   
+<div [ngClass]="(showModalAutorizacionTemp) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <p>¿Desea ver la autorización?</p>
+            <div id="print-section-autorizacion">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="acceptModalAutorizacion()">{{ 'button.accept' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalAutorizacion()">{{ 'button.close' | translate }}</button>
+        </div>
+      </div>
+    </div>
+</div>
+<button style="display: none;" id="printAutorizacion" printSectionId="print-section-autorizacion" ngxPrint></button> 
+
+
+
        
     
 
