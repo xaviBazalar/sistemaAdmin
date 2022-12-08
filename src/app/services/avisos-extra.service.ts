@@ -18,7 +18,7 @@ export class AvisosExtraService {
     return this.http.put(`${this.url}/aviso-extra`,data)
   }
 
-  getAvisosExtra(){
-    return this.http.get(`${this.url}/aviso-extra`)
+  getAvisosExtra(dataExtra:string){
+    return this.http.get(`${this.url}/aviso-extra?${dataExtra}`)
   }
 }

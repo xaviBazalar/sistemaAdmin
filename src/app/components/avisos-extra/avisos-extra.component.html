@@ -22,7 +22,7 @@
                         <td>#</td>
                         <td>{{aviso._id.email}}</td>
                         <td>
-                            <button type="button" style="margin-right:10px;" class="btn btn-primary btn-sm"  (click)='verContratoAviso(aviso._id.email)'>Ver Contratos Relacionados</button>
+                            <button type="button" style="margin-right:10px;" class="btn btn-primary btn-sm"  (click)='showContratosAvisoUser(aviso._id.email)'>Ver Contratos Relacionados</button>
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{ aviso| json}}' (click)='editUsuarioContratoAviso(aviso._id.email)'>Editar</button>
                         </td>
    
@@ -83,5 +83,75 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalUsuarioExtra()">Cerrar</button>
         </div>
       </div>
+    </div>
+</div>
+
+
+<div [ngClass]="(showModalUsuarioExtra) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 *ngIf="!showUpdateU" class="modal-title">Registro Usuario - Aviso</h5>
+          <h5 *ngIf="showUpdateU" class="modal-title">Actualizar Usuario - Aviso</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 input-group mb-3" style="display: none;">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Nombre</label>
+                    <input class="form-control" id="nombre_usuario" placeholder="Escribir Nombres"  value="-"/>
+                </div>
+                <div class="col-12 input-group mb-3" >
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Correo</label>
+                    <input type="email" class="form-control" id="correo_usuario" placeholder="Escribir Correo" />
+                </div>
+                
+                <div class="col-12 input-group mb-3"  *ngIf="!showUpdateU">
+                    <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">Contrato</label>
+                    <input autocomplete="off" (keyup)="filterContratos()" (change)="getTareasContrato($event)" class="form-select" id="NcontratoC" list="listaContrato">
+                    <datalist id="listaContrato"  >
+                        <option *ngFor="let contrato of listaContrato" >{{contrato.contrato}}-{{contrato.contradoid}}</option>
+                    </datalist>
+                    <input type="hidden" class="form-select" id="contratoC" />
+                </div>
+                <div class="col-12 mb-3" *ngIf="validacionFormC" >
+                    <div class="alert alert-danger" role="alert">
+                        **Todos los campos son necesarios
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" id="id_usuario"  />
+                
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="showUpdateU" type="button" class="btn btn-primary" (click)="updateUsuarioExtra()">Actualizar</button>
+          <button *ngIf="!showUpdateU" type="button" class="btn btn-primary" (click)="addUsuarioExtra()">Registrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalUsuarioExtra()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div [ngClass]="(showModalContratosUsuario) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Contratos Relacionados</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <ul class="list-group">
+                        <li *ngFor="let info of listaContratosUsuarioAvisos" class="list-group-item">
+                            {{info.contrato.contrato}}-{{info.contrato.contradoid}}
+                        </li>
+                    </ul>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalContratoUsuarioExtra()">Cerrar</button>
+            </div>
+        </div>
+        </div>
     </div>
 </div>

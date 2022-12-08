@@ -11,10 +11,12 @@ import { AvisosExtraService } from '../../services/avisos-extra.service';
 export class AvisosExtraComponent implements OnInit {
 
   showModalUsuarioExtra:boolean=false
+  showModalContratosUsuario:boolean=false
   showUpdateU:boolean=false
   listaUsuarios:any=[];
   listaContrato:any=[];
   listaUsuariosAvisos:any=[];
+  listaContratosUsuarioAvisos:any=[];
   validacionFormC:boolean=false
   emailTemp:string=""
   pagAvisosExtra:any={
@@ -39,7 +41,7 @@ export class AvisosExtraComponent implements OnInit {
       this.listaContrato=data.contratos.docs
     })
 
-    this.avisosExtraService.getAvisosExtra().subscribe((data:any)=>{
+    this.avisosExtraService.getAvisosExtra("").subscribe((data:any)=>{
       this.listaUsuariosAvisos=data.avisos_extra
     })
   }
@@ -74,7 +76,7 @@ export class AvisosExtraComponent implements OnInit {
   }
 
   refreshLista(e:any){
-    this.avisosExtraService.getAvisosExtra().subscribe((data:any)=>{
+    this.avisosExtraService.getAvisosExtra("").subscribe((data:any)=>{
       this.listaUsuariosAvisos=data.avisos_extra
     })
   }
@@ -122,6 +124,17 @@ export class AvisosExtraComponent implements OnInit {
       this.closeModalUsuarioExtra()
     })
 
+  }
+
+  showContratosAvisoUser(email:string){
+    this.avisosExtraService.getAvisosExtra(`email=${email}`).subscribe((data:any)=>{
+      this.listaContratosUsuarioAvisos=data.avisos_extra
+      this.showModalContratosUsuario=true
+    })
+  }
+
+  closeModalContratoUsuarioExtra(){
+    this.showModalContratosUsuario=false
   }
 
   openModalUsuarioExtra(){
