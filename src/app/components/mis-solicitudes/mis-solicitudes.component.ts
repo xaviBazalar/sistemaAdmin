@@ -593,8 +593,19 @@ export class MisSolicitudesComponent implements OnInit {
     let dataGet=`solicitud=${solicitud}`
     let divPrint:any=document.querySelector("#print-section-autorizacion")
     this.autorizarSolicitudService.validatePinAutorizacion(dataGet).subscribe((data:any) => {
-      let dataHtml:any=`<h4>SOLICITUD: ${dataSolicitud.contrato.contrato}-${dataSolicitud.contrato.contradoid}</h4>
-      <h5>TAREA: ${dataSolicitud.tarea.nombre_tarea}</h5>`
+      let dataHtml:any=`
+      <h3>NRO SOLICITUD: ${dataSolicitud.idsecuencia}</h3>
+      <h4>SOLICITUD: ${dataSolicitud.contrato.contrato}-${dataSolicitud.contrato.contradoid}</h4>
+      <h5>TAREA: ${dataSolicitud.tarea.nombre_tarea}</h5>
+      <h5>GERENCIA: ${dataSolicitud.gerencia.nombre_gerencia}</h5>
+      <h5>Tiempo de Entrega: ${dataSolicitud.tarea.SLA} días</h5>
+      <h5>Estado de solicitud: ${dataSolicitud.estado_solicitud.nombre_estado} </h5>
+      <h5>Estado de resultado: ${dataSolicitud.estado_resultado.nombre_resultado} </h5>
+      <h5>Fecha Inicio: ${dataSolicitud.fecha_inicio} </h5>
+      <h5>Fecha Termino: ${dataSolicitud.fecha_termino} </h5>
+      
+      `
+      
       for(let autorizacion of data.autorizacion_solicitud){
         dataHtml+=`<div>Autorizado por: ${autorizacion.usuario.nombre} el ${autorizacion.fecha_autorizacion} ${autorizacion.hora_autorizacion}</div>`
       }
