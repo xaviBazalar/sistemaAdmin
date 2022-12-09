@@ -22,6 +22,7 @@ export class TableroComponent implements OnInit {
   listaEstadoResultado:any;
   listaPerfiles:any;
   listaUsuariosGST:any=[];
+  listaUsuariosALLGST:any=[];
   listaUsuariosBKO:any=[];
   listaContrato:any=[]
   listaUsuarios:any;
@@ -90,9 +91,14 @@ export class TableroComponent implements OnInit {
 
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
+      this.listaUsuariosALLGST=[]
       for (const usuario of data.usuarios) {
         if(usuario.perfil.sigla=="GST"){
           this.listaUsuariosGST.push(usuario)
+        }
+
+        if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM"){
+          this.listaUsuariosALLGST.push(usuario)
         }
 
         if(usuario.perfil.sigla=="BKO"){

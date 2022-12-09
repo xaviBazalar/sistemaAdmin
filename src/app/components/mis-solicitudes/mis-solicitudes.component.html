@@ -28,7 +28,7 @@
                 <div class="col-3">
                     <select id="perfil" class="form-select" aria-label="Default select example">
                         <option value="">{{ 'input.select.gst' | translate }}</option>
-                        <option value="{{item._id}}" *ngFor="let item of listaUsuariosGST">{{item.nombre}}</option>
+                        <option value="{{item._id}}" *ngFor="let item of listaUsuariosALLGST">{{item.nombre}}</option>
                     </select>
                 </div>
                 <div class="col-3">
@@ -195,8 +195,11 @@
                                 {{solicitud.estado_resultado.nombre_resultado}}
                             </a>
                         </td>
-                        <td>
-                            <a [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
+                        <td style="display: inline-flex;gap:10px;">
+                            <a *ngIf="(usuario.perfil.sigla!='GST-ADM' && usuario.perfil.sigla!='GST-SUP')" [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
+                            <a *ngIf="(usuario.perfil.sigla=='GST-ADM' ||  usuario.perfil.sigla=='GST-SUP')" [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm" >{{ 'button.show' | translate }}</button></a>
+                            <a *ngIf="(usuario.perfil.sigla=='GST-ADM' ||  usuario.perfil.sigla=='GST-SUP')" [routerLink]="['/solicitudB/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm" >{{ 'button.edit' | translate }}</button></a>
+
                         </td>
                         <td>
                             

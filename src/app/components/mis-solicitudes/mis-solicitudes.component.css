@@ -68,3 +68,7 @@
 #print-section-autorizacion{
     display: none;
 }
+
+.table td{
+    min-height: 72px;
+}

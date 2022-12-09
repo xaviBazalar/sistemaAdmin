@@ -86,6 +86,7 @@ export class DashboardCargaDeTrabajoComponent implements OnInit {
 
 
   filterDashboard(){
+    this.listaCargaDeTrabajo=[]
     let desdeIni:any=document.querySelector("#fecIni")
     let hastaFin:any=document.querySelector("#fecFin")
     let dataExtra="fec_desde="+desdeIni.value+"&fec_hasta="+hastaFin.value+"&hoy="+this.getDateNow()

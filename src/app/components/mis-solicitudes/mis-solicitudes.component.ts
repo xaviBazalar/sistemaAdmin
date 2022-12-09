@@ -334,7 +334,7 @@ export class MisSolicitudesComponent implements OnInit {
     let fecha_inicio:any=document.querySelector("#fecha_inicio")
     let fecha_entrega:any=document.querySelector("#fecha_entrega")
     let contrato:any=document.querySelector("#contratoC")
-
+   
     let dataFilter:any={
       contrato:contrato.value,
       gerencia:gerencia.value,
@@ -379,6 +379,11 @@ export class MisSolicitudesComponent implements OnInit {
       dataFilter.solicitante=""
       dataFilter.ingresado=true
       dataFilter.gst=this.usuario._id
+    }
+
+    if(perfilUser=="GST-SUP" || perfilUser=="GST-ADM" ){
+      dataFilter.solicitante=""
+      dataFilter.ingresado=true
     }
 
     if(perfilUser=="BKO"){
@@ -535,7 +540,9 @@ export class MisSolicitudesComponent implements OnInit {
     let contratoTxt=target.value;
     let idContrato:string=""
     for(let contrato of this.listaContrato){
-      if((contrato.contrato+"-"+contrato.contradoid+"-"+contrato.adc.nombre)==contratoTxt.trim()){
+      
+      let tempContra=contrato.contrato+"-"+contrato.contradoid+"-"+contrato.adc.nombre
+      if(tempContra.trim()==contratoTxt.trim()){
         idContrato=contrato._id
       }
     } 
