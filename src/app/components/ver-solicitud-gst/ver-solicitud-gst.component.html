@@ -260,13 +260,14 @@
                     <hr>
                     
                     <div class="form-check" *ngFor="let item of listaTareaDocumentosSalida">
-                        <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="validateTareDocumentoSolicitud(item._id)"/>
-                        <input class="form-check-input" type="radio" name="iTypeDocFile" (click)="saveTypeDocFile(item._id,item.documento_salida.tipo_documento)" value="{{item._id}}" id="iTypeDocFile" [disabled]="validateTareDocumentoSolicitud(item._id)" ><!--checked-->
-                        <label class="form-check-label" for="flexCheckDefault">
-                        {{item.documento_salida.descripcion}} - 
-                        <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
-                        </label>
-                        
+                        <ng-container *ngIf="item.documento_salida">
+                            <img class="img-checked" src="assets/icons/icon-check.png" *ngIf="validateTareDocumentoSolicitud(item._id)"/>
+                            <input class="form-check-input" type="radio" name="iTypeDocFile" (click)="saveTypeDocFile(item._id,item.documento_salida.tipo_documento)" value="{{item._id}}" id="iTypeDocFile" [disabled]="validateTareDocumentoSolicitud(item._id)" ><!--checked-->
+                            <label class="form-check-label" for="flexCheckDefault">
+                            {{item.documento_salida.descripcion}} - 
+                            <img class="iconFile" src="assets/icons/icon-{{item.documento_salida.tipo_documento}}.png"  />
+                            </label>
+                        </ng-container> 
                     </div>
                     
                 </div>

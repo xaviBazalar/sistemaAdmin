@@ -178,6 +178,8 @@ export class VerSolicitudComponent implements OnInit {
   validateUrl(url:string){
     if(url.indexOf("http")>-1){
       return url
+    }else if(url.indexOf("/api/upload?id=")==-1){
+      return this.baseUrlGet+"/api/upload?id="+url
     }else{
       return this.baseUrlGet+url
     }
