@@ -28,6 +28,7 @@ export class UsuariosComponent implements OnInit {
 
   showModalUsuario:boolean=false
   showUpdateU:boolean=false
+  showModalDelete:boolean=false
 
   pagUsuario:any={
     hasNextPage:false,
@@ -219,5 +220,42 @@ export class UsuariosComponent implements OnInit {
     id.value=""
   }
 
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="usuario"){
+      this.deleteUsuario(inputDelete.value)
+    }
+  }
+
+  deleteUsuario(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.usuariosService.deleteUsuario(params).subscribe((data:any)=>{
+      this.refreshUsuarios(1)
+      this.closeModalDelete()
+    })
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
+  }
 
 }

@@ -25,4 +25,8 @@ export class DocumentosSalidaService {
   updateDocumentoSalida(data:any){
     return this.http.put(`${this.url}/documentosSalida`,data)
   }
+
+  deleteDocumentoSalida(params: any){
+    return this.http.delete(`${ this.url }/documentosSalida`,{body: params} )
+  }
 }

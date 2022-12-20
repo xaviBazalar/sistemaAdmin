@@ -55,17 +55,19 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let tareaDS of listaTareaDocumentosSalida">
-                        <td>#</td>
-                        <td>{{tareaDS.contrato.contrato}}-{{tareaDS.contrato.contradoid}}</td>
-                        <td>{{tareaDS.tarea.nombre_tarea}}</td>
-                        <td>{{tareaDS.documento_salida.descripcion}}</td>
-                        <td>{{tareaDS.documento_salida.tipo_documento}}</td>
-                        <td>{{tareaDS.estado?'Activo':'Inactivo'}}</td>
-                        
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm" attr.data='{{tareaDS| json}}' (click)='editDocumentoSalidaTC($event)'>Editar</button>
-                        </td>
-        
+                        <ng-container *ngIf="tareaDS.documento_salida">
+                            <td>#</td>
+                            <td>{{tareaDS.contrato.contrato}}-{{tareaDS.contrato.contradoid}}</td>
+                            <td>{{tareaDS.tarea.nombre_tarea}}</td>
+                            <td>{{tareaDS.documento_salida.descripcion}}</td>
+                            <td>{{tareaDS.documento_salida.tipo_documento}}</td>
+                            <td>{{tareaDS.estado?'Activo':'Inactivo'}}</td>
+                            
+                            <td class="cell-btn">
+                                <button type="button" class="btn btn-primary btn-sm" attr.data='{{tareaDS| json}}' (click)='editDocumentoSalidaTC($event)'>Editar</button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete("documento-salida-tarea",tareaDS._id)'>Eliminar</button>
+                            </td>
+                        </ng-container>
                     </tr>
                 </tbody>
             </table>
@@ -104,8 +106,9 @@
                         <td>{{documentoSalida.descripcion}}</td>
                         <td>{{documentoSalida.tipo_documento}}</td>
                         <td>{{documentoSalida.estado?'Activo':'Inactivo'}}</td>
-                        <td>
+                        <td class="cell-btn">
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{documentoSalida| json}}' (click)='editDocumentoSalida($event)'>Editar</button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete("documento-salida",documentoSalida._id)'>Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -226,6 +229,27 @@
           <button *ngIf="showUpdateDocumentoS" type="button" class="btn btn-primary" (click)="updateDocumentoSalida()">Actualizar</button>
           <button *ngIf="!showUpdateDocumentoS" type="button" class="btn btn-primary" (click)="addDocumentoSalida()">Registrar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDocumentoSalida()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div [ngClass]="(showModalDelete) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Estas seguro de eliminar este registro?</p>
+          <input type="hidden" value="" id="idDelete" />
+          <input type="hidden" value="" id="tipoDelete" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="actionDeleteModal()">{{ 'button.delete' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDelete()">{{ 'button.close' | translate }}</button>
         </div>
       </div>
     </div>

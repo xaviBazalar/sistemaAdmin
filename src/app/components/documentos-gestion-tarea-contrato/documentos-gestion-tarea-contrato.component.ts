@@ -33,6 +33,7 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
 
   showModalDocumentoGestionTC:boolean=false
   showUpdateDS:boolean=false
+  showModalDelete:boolean=false
 
   constructor(public tareaService:TareasService,
     public contratosService:ContratosService,
@@ -200,6 +201,45 @@ export class DocumentosGestionTareaContratoComponent implements OnInit {
     id.value=""
   }
 
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="documento-gestion-tarea"){
+      this.deleteDocumentoGestionTarea(inputDelete.value)
+    }
+
+  }
+
+  deleteDocumentoGestionTarea(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.documentacionSolicitudedService.deleteDocumentacionSolicitud(params).subscribe((data:any) => {
+      this.refreshDocumentosGestion(1)
+      this.closeModalDelete()
+    });
+    
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
+  }
 
 
 }

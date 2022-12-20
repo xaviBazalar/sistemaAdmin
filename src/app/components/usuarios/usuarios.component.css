@@ -7,3 +7,8 @@
 .form-label{
     width:132px;
 }
+
+.cell-btn{
+    display: flex;
+    gap: 10px;
+}

@@ -65,8 +65,9 @@
                         <td>{{tareaContrato.gst.nombre}}</td>
                         <td>{{tareaContrato.bko.nombre}}</td>
                         <td>{{tareaContrato.estado?'Activo':'Inactivo'}}</td>
-                        <td>
+                        <td class="cell-btn">
                             <button id="{{tareaContrato._id}}" type="button" class="btn btn-primary btn-sm" attr.data='{{tareaContrato| json}}' (click)='editTareaContrato($event)'>{{'button.edit' | translate }}</button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete("tarea-contrato",tareaContrato._id)'>Eliminar</button>
                         </td>
         
                     </tr>
@@ -124,8 +125,9 @@
                         <td>{{tarea.frecuencia}}</td>
                         <td>{{tarea.SLA}}</td>
                         <td>{{tarea.estado?'Activo':'Inactivo'}}</td>
-                        <td>
+                        <td class="cell-btn">
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{tarea| json}}' (click)='editTarea($event)'>{{'button.edit' | translate }}</button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete("tarea",tarea._id)'>Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -182,8 +184,9 @@
                         <td>{{contrato.contradoid}}</td>
                         <td>{{(contrato.adc)?contrato.adc.nombre:""}}</td>
                         <td>{{contrato.estado?'Activo':'Inactivo'}}</td>
-                        <td>
+                        <td class="cell-btn">
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{contrato| json}}' (click)='editContrato($event)'>{{'button.edit' | translate }}</button>
+                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
                         </td>
         
                     </tr>
@@ -381,3 +384,25 @@
       </div>
     </div>
 </div>
+
+<div [ngClass]="(showModalDelete) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Estas seguro de eliminar este registro?</p>
+          <input type="hidden" value="" id="idDelete" />
+          <input type="hidden" value="" id="tipoDelete" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="actionDeleteModal()">{{ 'button.delete' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDelete()">{{ 'button.close' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>

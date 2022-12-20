@@ -29,5 +29,9 @@ export class GerenciasService {
   updateGerencia(data:any){
     return this.http.put(`${this.url}/gerencia`,data)
   }
+
+  deleteGerencia(params: any){
+    return this.http.delete(`${ this.url }/gerencia`,{body: params} )
+  }
   
 }

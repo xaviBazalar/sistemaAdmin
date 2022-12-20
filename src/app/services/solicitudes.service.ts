@@ -33,8 +33,8 @@ export class SolicitudesService {
     return this.http.post(`${this.url}/solicitudes`,body)
   }
   
-
-
-
+  deleteSolicitud(params: any){
+    return this.http.delete(`${ this.url }/solicitudes`,{body: params} )
+  }
  
 }

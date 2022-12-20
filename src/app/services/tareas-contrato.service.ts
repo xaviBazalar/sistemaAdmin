@@ -24,7 +24,12 @@ export class TareasContratoService {
 
   getTareasContratoFilter(dataSend:any){
     // var queryString = Object.keys(dataSend).map(key => key + '=' + dataSend[key]).join('&');
- 
      return this.http.get(`${this.url}/tareasContrato?page=1`,{params: dataSend})
-   }
+  }
+
+  deleteTareaContrato(params: any){
+    return this.http.delete(`${ this.url }/tareasContrato`,{body: params} )
+  }
+
+
 }

@@ -25,5 +25,9 @@ export class TareaDocumentosEntradaService {
   updateTareaDocumentosEntrada(data:any){
     return this.http.put(`${this.url}/tareaDocumentosEntrada/`,data)
   }
+
+  deleteTareaDocumentosEntrada(params: any){
+    return this.http.delete(`${ this.url }/tareaDocumentosEntrada`,{body: params} )
+  }
 }
 //http://localhost:8080/api/tareaDocumentosEntrada?tarea=62fad69c48d35ca4acd14687

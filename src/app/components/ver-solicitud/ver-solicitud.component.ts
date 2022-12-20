@@ -106,11 +106,11 @@ export class VerSolicitudComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
-      if(data.validation){
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+      //if(data.validation){
         this.urlRespuesta=data.urlFile
-      }
+      //}
     })
   }
 
@@ -121,11 +121,11 @@ export class VerSolicitudComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
-        if(data.validation){
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+        //if(data.validation){
           this.urlPregunta=data.urlFile
-        }
+        //}
     })
   }
 

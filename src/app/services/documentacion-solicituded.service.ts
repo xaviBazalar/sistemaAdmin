@@ -22,4 +22,8 @@ export class DocumentacionSolicitudedService {
     return this.http.put(`${this.url}/documentacionSolicitudes`,data)
   }
 
+  deleteDocumentacionSolicitud(params: any){
+    return this.http.delete(`${ this.url }/documentacionSolicitudes`,{body: params} )
+  }
+
 }

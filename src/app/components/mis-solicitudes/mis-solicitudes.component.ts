@@ -80,6 +80,7 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   showModalTemp:boolean=false;
+  showModalDelete:boolean=false;
   showModalAutorizacionTemp:boolean=false;
   solicitudId:string=""
 
@@ -185,6 +186,7 @@ export class MisSolicitudesComponent implements OnInit {
         this.pagSolicitudesG.page=data.solicitudes.page
         this.listaSolicitudesPendiente=data.solicitudes.docs;
         this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
+        console.log(this.listaSolicitudesPendiente)
       })
 
       
@@ -223,6 +225,7 @@ export class MisSolicitudesComponent implements OnInit {
         this.pagSolicitudesG.page=data.solicitudes.page
         this.listaSolicitudesPendiente=data.solicitudes.docs;
         this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
+
       })
 
  
@@ -264,7 +267,9 @@ export class MisSolicitudesComponent implements OnInit {
           this.listaUsuariosGST.push(usuario)
         }
 
-        if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM"){
+        //if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM"){
+        if(usuario.autorizar){
+
           this.listaUsuariosALLGST.push(usuario)
         }
 
@@ -630,6 +635,45 @@ export class MisSolicitudesComponent implements OnInit {
 
   closeModalAutorizacion(){
     this.showModalAutorizacionTemp=false
+  }
+  
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="solicitud"){
+      this.deleteSolicitud(inputDelete.value)
+    }
+
+  }
+
+  deleteSolicitud(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.solicitudService.deleteSolicitud(params).subscribe((data:any)=>{
+      this.filterListReset(1)
+      this.closeModalDelete()
+    })
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
   }
 
 }

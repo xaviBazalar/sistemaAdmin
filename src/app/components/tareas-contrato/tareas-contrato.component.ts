@@ -32,6 +32,7 @@ export class TareasContratoComponent implements OnInit {
     perfil:any
   }  =JSON.parse(localStorage.getItem("usuario") || '{}');
 
+  showModalDelete:boolean=false
   showModalContrato:boolean=false
   showModalTarea:boolean=false
   showModalTareaContrato:boolean=false
@@ -239,6 +240,78 @@ export class TareasContratoComponent implements OnInit {
     id.value=data._id
     
     this.openModalTareaContrato()
+  }
+
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="tarea-contrato"){
+      this.deleteTareaContrato(inputDelete.value)
+    }
+
+    if(tipoDelete.value=="tarea"){
+      this.deleteTarea(inputDelete.value)
+    }
+
+    if(tipoDelete.value=="contrato"){
+      this.deleteContrato(inputDelete.value)
+    }
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
+  }
+
+  deleteTareaContrato(tareaContrato:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:tareaContrato
+    }
+    this.tareasContratoService.deleteTareaContrato(params).subscribe((data:any) => {
+      this.refreshListaTareasContrato(1)
+      this.closeModalDelete()
+    });
+    
+  }
+
+  deleteTarea(tarea:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:tarea
+    }
+    this.tareaService.deleteTarea(params).subscribe((data:any) => {
+      this.refreshListaTareas(1)
+      this.closeModalDelete()
+    });
+    
+  }
+
+  deleteContrato(tarea:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:tarea
+    }
+    this.contratosService.deleteContrato(params).subscribe((data:any) => {
+      this.refreshListaContratos(1)
+      this.closeModalDelete()
+    });
+    
   }
 
   editTarea(info:any){

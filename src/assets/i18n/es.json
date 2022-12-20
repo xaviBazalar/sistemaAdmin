@@ -123,7 +123,8 @@
         "register":"Registrar",
         "add":"Agregar",
         "authorize":"Autorizar",
-        "accept":"Aceptar"
+        "accept":"Aceptar",
+        "delete":"Eliminar"
     },
     "message":{
         "download_report":"Haga click para descargar el reporte",

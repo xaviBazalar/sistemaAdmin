@@ -25,4 +25,8 @@ export class DocumentosEntradaService {
   updateDocumentoEntrada(data:any){
     return this.http.put(`${this.url}/documentosEntrada`,data)
   }
+
+  deleteDocumentoEntrada(params: any){
+    return this.http.delete(`${ this.url }/documentosEntrada`,{body: params} )
+  }
 }

@@ -27,7 +27,7 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
 
   showUpdateDocumentoSTC:boolean=false
   showUpdateDocumentoS:boolean=false
-
+  showModalDelete:boolean=false
   pagTareDocumentosSalida:any={
     hasNextPage:false,
     hasPrevPage:false,
@@ -333,6 +333,62 @@ export class DocumentosSalidaTareaContratoComponent implements OnInit {
       this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
+  }
+
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="documento-salida-tarea"){
+      this.deleteDocumentoSalidaTarea(inputDelete.value)
+    }
+
+    if(tipoDelete.value=="documento-salida"){
+      this.deleteDocumentoSalida(inputDelete.value)
+    }
+    
+  }
+
+  deleteDocumentoSalidaTarea(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.tareaDocumentosSalidaService.deleteTareaDocumentosSalida(params).subscribe((data:any)=>{
+      this.refreshTareaDocumentosSalida(1)
+      this.closeModalDelete()
+    })
+  }
+
+  deleteDocumentoSalida(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.documentosSalidaService.deleteDocumentoSalida(params).subscribe((data:any)=>{
+      this.refreshDocumentosSalida(1)
+      this.closeModalDelete()
+    })
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
   }
 
 }

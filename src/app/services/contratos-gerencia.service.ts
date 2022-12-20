@@ -25,4 +25,8 @@ export class ContratosGerenciaService {
   updateContratoGerencia(data:any){
     return this.http.put(`${this.url}/contratosGerencia`,data)
   }
+
+  deleteContratoGerencia(params: any){
+    return this.http.delete(`${ this.url }/contratosGerencia`,{body: params} )
+  }
 }

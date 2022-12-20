@@ -247,6 +247,7 @@ export class NuevaSolicitudComponent implements OnInit {
   validateTareDocumentoSolicitud(id:string){
     let validacion=false
     for(let tareDocumentoSolicitud of this.listaTareaDocumentosEntradaSolicitud){
+
       if(tareDocumentoSolicitud.tarea_documento._id==id && tareDocumentoSolicitud.randomId==this.tokenTemp){
         validacion=true
         break
@@ -336,8 +337,8 @@ export class NuevaSolicitudComponent implements OnInit {
             observacion.value=""
          })
         }else{
-          //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-          this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+          this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+          //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{ // Service para cargar en google storage
   
             let dataAdd={
               tarea_documento:this.idTareDocumentoEntrada,
@@ -349,7 +350,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
             //https://storage.googleapis.com/download/storage/v1/b/project-mining/o/Carnet%20(1).pdf?generation=1669402313620023&alt=media
 
-            if(data.validation){
+            //if(data.validation){
               this.tareaDocumentoEntradaSolicitud.addTareaDocumentosEntradaSolicitud(dataAdd).subscribe((data:any)=>{
                   //this.refreshTareaDocumentosEntrada()
                   this.refreshTareaDocumentosEntradaSolicitud()
@@ -360,7 +361,7 @@ export class NuevaSolicitudComponent implements OnInit {
                   this.isSubmittedFile=false;
                   observacion.value=""
               })
-            }
+            //}
   
   
           })
@@ -474,10 +475,14 @@ export class NuevaSolicitudComponent implements OnInit {
 
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-      if(contrato.contrato==this.regForm.value.iContrato){
-        idContrato=contrato._id
+      let nTemp:any=this.regForm.value.iContrato
+      let contrato_text:any=(contrato.contrato.contrato+"-"+contrato.contrato.contradoid)
+      if(contrato_text.trim()==nTemp.trim()){
+        idContrato=contrato.contrato._id
       }
     } 
+
+  
 
     if (this.regForm.dirty && this.regForm.valid) {
       
@@ -505,8 +510,11 @@ export class NuevaSolicitudComponent implements OnInit {
     let solicitud:any
     let idContrato:string=""
     for(let contrato of this.listaContratos){
-      if(contrato.contrato==this.regForm.value.iContrato){
-        idContrato=contrato._id
+      let nTemp:any=this.regForm.value.iContrato
+      let contrato_text:any=(contrato.contrato.contrato+"-"+contrato.contrato.contradoid)
+
+      if(contrato_text.trim()==nTemp.trim()){
+        idContrato=contrato.contrato._id
       }
     } 
     solicitud={

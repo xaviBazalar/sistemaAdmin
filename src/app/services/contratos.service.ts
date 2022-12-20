@@ -26,4 +26,8 @@ export class ContratosService {
   updateContrato(data:any){
     return this.http.put(`${this.url}/contratos`,data)
   }
+
+  deleteContrato(params: any){
+    return this.http.delete(`${ this.url }/contratos`,{body: params} )
+  }
 }

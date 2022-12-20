@@ -25,4 +25,8 @@ export class TareaDocumentosSalidaService {
   updateTareaDocumentosSalida(data:any){
     return this.http.put(`${this.url}/tareaDocumentosSalida`,data)
   }
+
+  deleteTareaDocumentosSalida(params: any){
+    return this.http.delete(`${ this.url }/tareaDocumentosSalida`,{body: params} )
+  }
 }

@@ -405,11 +405,11 @@ export class VerSolicitudGstComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
-      if(data.validation){
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+      //if(data.validation){
         this.urlRespuesta=data.urlFile
-      }
+      //}
     })
   }
 
@@ -420,11 +420,11 @@ export class VerSolicitudGstComponent implements OnInit {
     ? docfile.files[0] : ''
     formData.append("archivo", docProd);
 
-    //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-    this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
-        if(data.validation){
+    this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+    //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+        //if(data.validation){
           this.urlPregunta=data.urlFile
-        }
+        //}
     })
   }
 
@@ -534,8 +534,8 @@ export class VerSolicitudGstComponent implements OnInit {
     this.isSubmittedFile=true;
     let observacion:any=document.querySelector("#iObsFile") 
     if (this.regFormFile.dirty && this.regFormFile.valid && this.idTareDocumentoRespuesta!="") {
-        //this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
-        this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
+        this.uploadFileService.addFileToApp(formData).subscribe((data:any)=>{
+        //this.uploadFileStorageService.addFileToStorage(formData).subscribe((data:any)=>{
           let dataAdd={
             tarea_documento:this.idTareDocumentoRespuesta,
             validado:true,
@@ -544,7 +544,7 @@ export class VerSolicitudGstComponent implements OnInit {
             randomId:this.tokenTemp
           } 
 
-          if(data.validation){
+          //if(data.validation){
             this.tareaDocumentoSalidaSolicitud.addTareaDocumentosSalidaSolicitud(dataAdd).subscribe((data:any)=>{
               //this.refreshTareaDocumentosEntrada()
               this.refreshTareaDocumentosSalidaSolicitud()
@@ -555,7 +555,7 @@ export class VerSolicitudGstComponent implements OnInit {
               this.isSubmittedFile=false;
               observacion.value=""
            })
-          }
+          //}
 
           
 

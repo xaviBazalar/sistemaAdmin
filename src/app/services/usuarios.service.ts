@@ -28,4 +28,8 @@ export class UsuariosService {
     return this.http.put(`${this.url}/usuarios`,data)
   }
 
+  deleteUsuario(params: any){
+    return this.http.delete(`${ this.url }/usuarios`,{body: params} )
+  }
+
 }

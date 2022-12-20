@@ -12,3 +12,8 @@
     width: 100%;
     overflow: scroll;
 }
+
+.cell-btn{
+    display: flex;
+    gap: 10px;
+}

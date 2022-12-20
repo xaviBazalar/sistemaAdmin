@@ -27,6 +27,7 @@ export class ContratosGerenciaComponent implements OnInit {
   showUpdateCG:boolean=false
   showUpdateG:boolean=false
   showUpdateC:boolean=false
+  showModalDelete:boolean=false
 
   usuario:{
     _id:string|null,
@@ -413,5 +414,77 @@ export class ContratosGerenciaComponent implements OnInit {
     contradoid.value=""
     estado.value=""
     id.value=""
+  }
+
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="contrato-gerencia"){
+      this.deleteContratoGerencia(inputDelete.value)
+    }
+
+    if(tipoDelete.value=="contrato"){
+      this.deleteContrato(inputDelete.value)
+    }
+    
+    if(tipoDelete.value=="gerencia"){
+      this.deleteGerencia(inputDelete.value)
+    }
+  }
+
+  deleteContratoGerencia(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.contratosGerenciaService.deleteContratoGerencia(params).subscribe((data:any) => {
+      this.refreshListaContratosGerencia(1)
+      this.closeModalDelete()
+    });
+  }
+
+  deleteContrato(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.contratosService.deleteContrato(params).subscribe((data:any) => {
+      this.refreshListaContratos(1)
+      this.closeModalDelete()
+    });
+  }
+
+  deleteGerencia(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.gerenciasService.deleteGerencia(params).subscribe((data:any) => {
+      this.refreshListaGerencia(1)
+      this.closeModalDelete()
+    });
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
   }
 }

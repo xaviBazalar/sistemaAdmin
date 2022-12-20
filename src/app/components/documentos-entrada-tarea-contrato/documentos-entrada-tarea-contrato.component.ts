@@ -24,7 +24,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
 
   showModalDocumentoEntradaTC:boolean=false
   showModalDocumentoEntrada:boolean=false
-
+  showModalDelete:boolean=false
   showUpdateDocumentoETC:boolean=false
   showUpdateDocumentoE:boolean=false
 
@@ -88,6 +88,7 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
     this.listaTareaDocumentosEntrada=resultsTDE.tarea_documentos_entrada.docs
     this.paginator.pagParams=this.pagTareDocumentosEntrada
   }
+  
 
   filterDETareasContratos(){
     let contrato:any=document.querySelector("#searchContrato")
@@ -333,6 +334,62 @@ export class DocumentosEntradaTareaContratoComponent implements OnInit {
       this.pagContratos.page=data.contratos.page
       this.listaContrato=data.contratos.docs
     })
+  }
+
+  openModalDelete(tipo:string,id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=id
+    tipoDelete.value=tipo
+
+    this.showModalDelete=true
+  }
+
+  actionDeleteModal(){
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    let inputDelete:any=document.querySelector("#idDelete")
+    if(tipoDelete.value=="documento-entrada-tarea"){
+      this.deleteDocumentoEntradaTarea(inputDelete.value)
+    }
+
+    if(tipoDelete.value=="documento-entrada"){
+      this.deleteDocumentoEntrada(inputDelete.value)
+    }
+  }
+
+  deleteDocumentoEntradaTarea(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.tareaDocumentosEntradaService.deleteTareaDocumentosEntrada(params).subscribe((data:any) => {
+      this.refreshTareaDocumentosEntrada(1)
+      this.closeModalDelete()
+    });
+    
+  }
+
+  deleteDocumentoEntrada(id:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    let params:any={
+      id:id
+    }
+
+    this.documentosEntradaService.deleteDocumentoEntrada(params).subscribe((data:any) => {
+      this.refreshDocumentosEntrada(1)
+      this.closeModalDelete()
+    });
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    let tipoDelete:any=document.querySelector("#tipoDelete")
+    inputDelete.value=""
+    tipoDelete.value=""
+    this.showModalDelete=false
   }
 
 

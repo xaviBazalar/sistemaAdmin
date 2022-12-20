@@ -237,6 +237,7 @@
                         <th scope="col">{{ 'table.request.date_start' | translate }}</th>
                         <th scope="col">{{ 'table.request.result' | translate }}</th>
                         <th scope="col-3"></th>
+                        <th scope="col-3"></th>
                     </tr>
         
                 </thead>
@@ -284,6 +285,9 @@
                         <td>
                             
                             <a [routerLink]="['/solicitud/',solicitud._id]"><button type="submit" class="btn btn-primary btn-sm px-5" >{{ 'button.show' | translate }}</button></a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete("solicitud",solicitud._id)'>Eliminar</button>
                         </td>
         
                     </tr>
@@ -424,7 +428,27 @@
 <button style="display: none;" id="printAutorizacion" printSectionId="print-section-autorizacion" ngxPrint></button> 
 
 
-
+<div [ngClass]="(showModalDelete) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Estas seguro de eliminar este registro?</p>
+          <input type="hidden" value="" id="idDelete" />
+          <input type="hidden" value="" id="tipoDelete" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="actionDeleteModal()">{{ 'button.delete' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDelete()">{{ 'button.close' | translate }}</button>
+        </div>
+      </div>
+    </div>
+</div>
        
     
 

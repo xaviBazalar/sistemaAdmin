@@ -14,8 +14,8 @@
                 <span class="error" *ngIf="isSubmitted && errorControl.iGerencia.errors?.required">{{ 'message.error.management' | translate }}</span>
             </div>
         </div>
-        <div class="row mb-5">
-            <div class="col-3 input-group mb-3" style="width: 35%;">
+        <div class="row mb-">
+            <div class="col-6 input-group mb-3" style="width: 50%;">
                 <label for="basic-url" class="form-label" style="margin-right: 10px;margin-top: 8px;">{{ 'label.contract' | translate }}</label>
                 <input autocomplete="off" (change)="getTareasContrato($event)" class="form-select" id="iContrato" formControlName="iContrato"  list="listaContrato">
                 <datalist   id="listaContrato"  >
@@ -23,13 +23,7 @@
                 </datalist>
                 <span class="error" *ngIf="isSubmitted && errorControl.iContrato.errors?.required">{{ 'message.error.contract' | translate }}</span>
             </div>
-            <div class="input-group mb-3 form-check box-check" style="width: 25%;">
-                <!--<input type="checkbox" class="form-check-input"id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Contrato nuevo</label>-->
-            </div>
-            <div  class="input-group mb-3 form-check " style="width: 40%;">
-                <!--<button type="submit" class="btn btn-success  px-5">Buscar</button>-->
-            </div>
+
         </div>
         <hr>
         

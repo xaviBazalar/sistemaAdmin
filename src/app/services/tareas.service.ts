@@ -22,5 +22,9 @@ export class TareasService {
   updateTarea(data:any){
     return this.http.put(`${this.url}/tareas`,data)
   }
+
+  deleteTarea(params: any){
+    return this.http.delete(`${ this.url }/tareas`,{body: params} )
+  }
   
 }
