@@ -70,7 +70,7 @@ export class SolicitudPendienteComponent implements OnInit {
         iGerencia:['', Validators.required],
         iContrato:['', Validators.required],
         iTarea:['', Validators.required],
-        iGst:['63005b09a608b63a870dfd59', Validators.required],
+        iGst:['', Validators.required],
         iBko:['', Validators.required],
         iMensaje:['', Validators.required],
         iFechaSolicitud:[this.getFecActual(), Validators.required],
@@ -92,7 +92,7 @@ export class SolicitudPendienteComponent implements OnInit {
       iGerencia:[this.dataSolicitud.gerencia._id, Validators.required],
       iContrato:[this.dataSolicitud.contrato.contrato, Validators.required],
       iTarea:[this.dataSolicitud.tarea._id, Validators.required],
-      iGst:['63005b09a608b63a870dfd59', Validators.required],
+      iGst:[this.dataSolicitud.gst._id, Validators.required],
       iBko:[this.dataSolicitud.bko._id, Validators.required],
       iMensaje:[this.dataSolicitud.observacion, Validators.required],
       iFechaSolicitud:[this.dataSolicitud.fecha_solicitud, Validators.required],
@@ -124,7 +124,7 @@ export class SolicitudPendienteComponent implements OnInit {
     this.usuariosService.getUsuarios().subscribe((data:any)=>{
       this.listaUsuarios=data.usuarios;
       for (const usuario of data.usuarios) {
-        if(usuario.perfil.sigla=="GST"){
+        if(usuario.perfil.sigla=="GST" || usuario.perfil.sigla=="GST-SUP" || usuario.perfil.sigla=="GST-ADM"){
           this.listaUsuariosGST.push(usuario)
         }
 
@@ -140,8 +140,7 @@ export class SolicitudPendienteComponent implements OnInit {
     })
 
     this.contratosServicio.getContratos(1,"").subscribe((data:any)=>{
-      this.listaContratos=data.contratos;
-     
+      this.listaContratos=data.contratos.docs;
     })
 
 
@@ -198,8 +197,20 @@ export class SolicitudPendienteComponent implements OnInit {
     } 
 
     this.tareasContratoService.getTareasContrato(1,idContrato).subscribe((data:any)=>{
-      if(data.tareas.length>0){
+      /*if(data.tareas.length>0){
         this.listaTareasContrato=data.tareas;
+        this.mostrarTareas=true;
+      }else{
+        this.mostrarTareas=false;
+      }*/
+      if(data.contratos.docs.length>0 ){
+        //this.listaTareasContrato=data.contratos;
+        this.listaTareasContrato=[]
+        for (const contrato of data.contratos.docs) {
+          if(contrato.estado==true || contrato.estado==1){
+            this.listaTareasContrato.push(contrato)
+          }
+        }
         this.mostrarTareas=true;
       }else{
         this.mostrarTareas=false;
@@ -209,8 +220,20 @@ export class SolicitudPendienteComponent implements OnInit {
 
   getTareasContratoTemp(idcontrato:string){
     this.tareasContratoService.getTareasContrato(1,idcontrato).subscribe((data:any)=>{
-      if(data.tareas.length>0){
+      /*if(data.tareas.length>0){
         this.listaTareasContrato=data.tareas;
+        this.mostrarTareas=true;
+      }else{
+        this.mostrarTareas=false;
+      }*/
+      if(data.contratos.docs.length>0 ){
+        //this.listaTareasContrato=data.contratos;
+        this.listaTareasContrato=[]
+        for (const contrato of data.contratos.docs) {
+          if(contrato.estado==true || contrato.estado==1){
+            this.listaTareasContrato.push(contrato)
+          }
+        }
         this.mostrarTareas=true;
       }else{
         this.mostrarTareas=false;
@@ -221,13 +244,13 @@ export class SolicitudPendienteComponent implements OnInit {
   getTareaDocumentosEntrada({ target }:any) {
     this.tareaSelected=target.value
     let tarea=target.value;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato,1,0).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato._id,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
 
   getTareaDocumentosEntradaTemp(tarea:string) {
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato,1,0).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato._id,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
@@ -240,7 +263,7 @@ export class SolicitudPendienteComponent implements OnInit {
 
   refreshTareaDocumentosEntrada(){
     let tarea=this.tareaSelected;
-    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato.contrato,1,0).subscribe((data:any)=>{
+    this.tareaDocumentosService.getTareaDocumentosEntrada(tarea,this.dataSolicitud.contrato._id,1,0).subscribe((data:any)=>{
       this.listaTareaDocumentos=data.tarea_documentos_entrada;
     })
   }
