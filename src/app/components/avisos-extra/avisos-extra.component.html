@@ -21,9 +21,10 @@
                     <tr *ngFor="let aviso of listaUsuariosAvisos">
                         <td>#</td>
                         <td>{{aviso._id.email}}</td>
-                        <td>
+                        <td class="box-btn">
                             <button type="button" style="margin-right:10px;" class="btn btn-primary btn-sm"  (click)='showContratosAvisoUser(aviso._id.email)'>Ver Contratos Relacionados</button>
                             <button type="button" class="btn btn-primary btn-sm" attr.data='{{ aviso| json}}' (click)='editUsuarioContratoAviso(aviso._id.email)'>Editar</button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)='openModalDelete(aviso._id.email)'>Eliminar</button>
                         </td>
    
         
@@ -107,5 +108,27 @@
             </div>
         </div>
         </div>
+    </div>
+</div>
+
+
+<div [ngClass]="(showModalDelete) ? 'modal modalApp': 'modal '" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ 'title.system_notification' | translate }}</h5>
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
+        </div>
+        <div class="modal-body">
+          <p> Estas seguro de eliminar este registro?</p>
+          <input type="hidden" value="" id="idDelete" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="actionDeleteModal()">{{ 'button.delete' | translate }}</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDelete()">{{ 'button.close' | translate }}</button>
+        </div>
+      </div>
     </div>
 </div>

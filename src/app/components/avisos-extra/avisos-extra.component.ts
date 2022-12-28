@@ -9,7 +9,7 @@ import { AvisosExtraService } from '../../services/avisos-extra.service';
   styleUrls: ['./avisos-extra.component.css']
 })
 export class AvisosExtraComponent implements OnInit {
-
+  showModalDelete:boolean=false
   showModalUsuarioExtra:boolean=false
   showModalContratosUsuario:boolean=false
   showUpdateU:boolean=false
@@ -34,6 +34,34 @@ export class AvisosExtraComponent implements OnInit {
     
   }
 
+  openModalDelete(info:string){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=info
+
+    this.showModalDelete=true;
+  }
+
+  actionDeleteModal(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    this.deleteSolicitud(inputDelete.value)
+  }
+
+  deleteSolicitud(info:string){
+    let params:any={
+      email:info
+    }
+
+    this.avisosExtraService.deleteAvisosExtra(params).subscribe((data:any)=>{
+      this.refreshLista(1)
+      this.closeModalDelete()
+    })
+  }
+
+  closeModalDelete(){
+    let inputDelete:any=document.querySelector("#idDelete")
+    inputDelete.value=""
+    this.showModalDelete=false;
+  }
 
 
   ngOnInit(): void {

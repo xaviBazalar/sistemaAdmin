@@ -21,4 +21,8 @@ export class AvisosExtraService {
   getAvisosExtra(dataExtra:string){
     return this.http.get(`${this.url}/aviso-extra?${dataExtra}`)
   }
+
+  deleteAvisosExtra(params: any){
+    return this.http.delete(`${ this.url }/aviso-extra`,{body: params} )
+  }
 }

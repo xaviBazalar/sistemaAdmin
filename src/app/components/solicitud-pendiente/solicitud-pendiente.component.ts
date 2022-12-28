@@ -446,7 +446,7 @@ export class SolicitudPendienteComponent implements OnInit {
     }
   }
 
-  addSolicitudTemp() {
+  saveSolicitudTemp() {
     let solicitud:any
     this.isSubmitted=true;
     
@@ -503,9 +503,11 @@ export class SolicitudPendienteComponent implements OnInit {
       fecha_solicitud:this.regForm.value.iFechaSolicitud,
       fecha_inicio:this.regForm.value.iFechaInicio,
       randomId:this.tokenTemp,
-      ingresado:false
+      solicitante:this.usuarioLogin._id,
+      ingresado:false,
+      continueUpdate:true
     }
-    this.solicitudService.addSolicitud(solicitud).subscribe((data:any)=>{
+    this.solicitudService.updateSolicitud(this.id_solicitud,solicitud).subscribe((data:any)=>{
       this.isSubmitted=false;
       this.showModalTemp=true;
       this.regForm.reset();
