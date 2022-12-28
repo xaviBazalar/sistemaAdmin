@@ -121,7 +121,14 @@ export class AvisosExtraComponent implements OnInit {
     this.validacionFormC=false
 
     this.avisosExtraService.addAvisoExtra(dataSend).subscribe((data:any)=>{
+      if(data?.error){
+        alert(data.msg)
+      }else{
+        this.refreshLista("")
+      }
       this.closeModalUsuarioExtra()
+      
+      
     })
 
   }

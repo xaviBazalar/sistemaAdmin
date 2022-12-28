@@ -326,7 +326,26 @@ export class MisSolicitudesComponent implements OnInit {
       this.filterListReset(info)
     }else if(tipo=="SolicitudesA"){
       this.refreshListSA(info)
+    }else if(tipo=="SolicitudesG"){
+      this.refreshListSG(info)
     }
+  }
+
+  refreshListSG(pagina:number){
+    let dataFilter:any={
+      ingresado:false,
+      solicitante:this.usuario._id,
+      page:pagina,
+      options:1
+    }
+    this.solicitudService.getSolicitudesFilter(dataFilter).subscribe((data:any)=>{
+      this.pagSolicitudesG.hasNextPage=data.solicitudes.hasNextPage
+      this.pagSolicitudesG.hasPrevPage=data.solicitudes.hasPrevPage
+      this.pagSolicitudesG.totalPages=new Array(data.solicitudes.totalPages)
+      this.pagSolicitudesG.page=data.solicitudes.page
+      this.listaSolicitudesPendiente=data.solicitudes.docs;
+      this.paginadorSolicitudesG.pagParams=this.pagSolicitudesG
+    })
   }
 
   filterList(){
